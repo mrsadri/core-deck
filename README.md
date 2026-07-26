@@ -9,7 +9,7 @@ An internal presentation introducing BimeBazar's core insurance platform to seni
 19 slides, one idea each. The narrative arc:
 
 1. Title
-2. The team
+2. The team, in two tiers
 3. Today, every new insurance line starts from zero
 4. The same shape, built again every time
 5. Engineering capacity decides the roadmap
