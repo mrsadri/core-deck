@@ -1,6 +1,6 @@
 # Core
 
-An internal presentation introducing BimeBazar's core insurance platform to senior managers and business stakeholders. It runs immediately before a live product demo.
+An internal presentation introducing Shoraka's core insurance platform to senior managers and business stakeholders. It runs immediately before a live product demo.
 
 **Live:** https://mrsadri.github.io/core-deck/
 
