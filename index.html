@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Core | BimeBazar</title>
+<meta name="description" content="Why launching a new insurance line used to take months at BimeBazar, and what the core platform changes about that.">
+<meta name="author" content="BimeBazar">
+<meta name="theme-color" content="#D8C3A2">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Core | BimeBazar">
+<meta property="og:description" content="Why launching a new insurance line used to take months, and what the core platform changes about that.">
+<meta property="og:image" content="https://mrsadri.github.io/core-deck/assets/og.jpg">
+<meta property="og:url" content="https://mrsadri.github.io/core-deck/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<style>
+/* ============================================================
+   CORE / BimeBazar internal deck
+   Motif: the rowlock arch. Bricks set on edge, radiating.
+   Palette: kraft paper, brick brown, brick yellow, Claude orange.
+   ============================================================ */
+
+:root{
+  --kraft:        #d8c3a2;
+  --kraft-hi:     #e7d8bd;
+  --kraft-lo:     #c3a77e;
+  --brick:        #7c3f2a;
+  --brick-deep:   #55271a;
+  --yellow:       #c1872a;
+  --yellow-lo:    #9c6c1d;
+  --orange:       #d97757;
+  --ink:          #2b1b12;
+  --ink-60:       rgba(43,27,18,.62);
+  --ink-38:       rgba(43,27,18,.38);
+  --ink-14:       rgba(43,27,18,.14);
+
+  --serif: "Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Times New Roman",serif;
+  --sans: -apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+
+  --ease: cubic-bezier(.2,.72,.2,1);
+  --pad-y: 7vh;
+  --pad-x: 7vw;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+
+body{
+  background-color:var(--kraft);
+  background-image:
+    radial-gradient(120% 90% at 50% 0%, rgba(231,216,189,.55) 0%, rgba(231,216,189,0) 58%),
+    radial-gradient(100% 80% at 50% 108%, rgba(85,39,26,.16) 0%, rgba(85,39,26,0) 60%);
+  color:var(--ink);
+  font-family:var(--sans);
+  overflow:hidden;
+  cursor:default;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* paper grain */
+body::after{
+  content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
+  opacity:.42;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+/* ---------- deck shell ---------- */
+.deck{position:fixed;inset:0}
+
+.slide{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  padding:var(--pad-y) var(--pad-x) calc(var(--pad-y) + 24px);
+  opacity:0;visibility:hidden;
+  transition:opacity .40s var(--ease), visibility 0s .40s;
+}
+.slide.is-active{opacity:1;visibility:visible;transition:opacity .40s var(--ease)}
+.wrap{width:min(1440px,100%)}
+
+/* enter animation */
+[data-anim]{
+  opacity:0;transform:translateY(18px);
+  transition:opacity .55s var(--ease), transform .55s var(--ease);
+  transition-delay:calc(var(--d,0) * 65ms);
+}
+.is-active [data-anim]{opacity:1;transform:none}
+
+/* ---------- type ---------- */
+.eyebrow{
+  font-family:var(--sans);
+  font-size:clamp(.7rem,.92vw,1rem);
+  font-weight:600;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--yellow-lo);
+  display:flex;align-items:center;gap:.85em;
+}
+.eyebrow::before{content:"";width:clamp(20px,2.6vw,42px);height:7px;background:var(--orange);border-radius:1px;flex:none}
+
+h1{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(4rem,13vw,15rem);line-height:.86;letter-spacing:-.035em;
+}
+h2{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(2.4rem,5.7vw,6.1rem);line-height:1.0;letter-spacing:-.022em;
+  max-width:20ch;text-wrap:balance;
+}
+h2.tight{max-width:16ch}
+.lead{
+  font-size:clamp(1.05rem,1.95vw,2.05rem);line-height:1.42;
+  color:var(--ink-60);max-width:34ch;font-weight:400;text-wrap:pretty;
+}
+.support{
+  font-size:clamp(.9rem,1.3vw,1.32rem);line-height:1.5;
+  color:var(--brick);max-width:40ch;
+}
+.stack{display:flex;flex-direction:column;gap:clamp(1rem,2.2vh,1.9rem);align-items:flex-start}
+.stack.center{align-items:center;text-align:center}
+.stack.center .eyebrow{justify-content:center}
+.stack.center .lead{max-width:38ch}
+
+/* ---------- arch (rowlock voussoirs) ---------- */
+.arch{position:relative;width:100%;margin-inline:auto}
+.vsr{position:absolute;left:50%;bottom:0;transform-origin:50% 100%;display:block}
+.vsr > i{
+  position:absolute;top:0;left:0;right:0;display:block;
+  background:linear-gradient(180deg,var(--brick) 0%,var(--brick-deep) 100%);
+  border-radius:1.5px;
+  box-shadow:inset 0 1px 0 rgba(231,216,189,.22);
+  opacity:0;transform:scale(.86);
+  transition:opacity .5s var(--ease), transform .5s var(--ease);
+  transition-delay:calc(var(--i) * 34ms + 160ms);
+}
+.is-active .vsr > i{opacity:1;transform:none}
+.vsr.is-ghost > i{
+  background:none;border:1.5px dashed rgba(43,27,18,.34);box-shadow:none;
+}
+.vsr.is-new > i{background:linear-gradient(180deg,var(--yellow) 0%,var(--yellow-lo) 100%)}
+.vsr.is-key > i{background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%)}
+.arch.flat .vsr > i{transition-delay:0ms}
+
+/* springing line under an arch */
+.plinth{height:10px;background:var(--brick-deep);border-radius:2px;opacity:.9}
+
+/* ---------- title ---------- */
+.title-grid{display:grid;gap:clamp(1.4rem,3.4vh,2.6rem);justify-items:center;text-align:center}
+.title-arch{width:min(560px,58vw)}
+.hint{
+  font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-38);
+  animation:fade 6s ease forwards;animation-delay:2.4s;
+}
+@keyframes fade{to{opacity:0}}
+
+/* ---------- team ---------- */
+.team{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(.7rem,1.5vw,1.6rem)}
+.member{width:clamp(96px,10.6vw,158px);text-align:center}
+.niche{
+  position:relative;aspect-ratio:3/4;width:100%;
+  padding:6px;margin-bottom:.9rem;
+  border-radius:50% 50% 7px 7px / 37% 37% 7px 7px;
+  background:linear-gradient(165deg,var(--brick) 0%,var(--brick-deep) 100%);
+  box-shadow:0 12px 26px -16px rgba(43,27,18,.72);
+}
+.niche::after{ /* keystone tick */
+  content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%);
+  width:12px;height:12px;background:var(--orange);border-radius:2px;
+}
+.niche img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  border-radius:50% 50% 4px 4px / 36% 36% 4px 4px;
+  background:#6b3423;
+  filter:saturate(.86) contrast(1.03);
+}
+.niche.glyph{display:grid;place-items:center}
+.niche.glyph .inner{
+  width:100%;height:100%;border-radius:50% 50% 4px 4px / 36% 36% 4px 4px;
+  background:linear-gradient(168deg,#f0e4ce 0%,#dcc9a8 100%);
+  display:flex;align-items:center;justify-content:center;padding-bottom:6%;
+}
+/* official Claude mark, unmodified, in its own #D97757 */
+.niche.glyph .mark{
+  width:60%;height:auto;object-fit:contain;border-radius:0;background:none;filter:none;
+}
+.m-name{
+  font-size:clamp(.8rem,1.05vw,1.1rem);font-weight:600;line-height:1.28;letter-spacing:-.012em;
+  min-height:2.56em; /* keeps every role on the same baseline */
+}
+.m-role{font-size:clamp(.7rem,.9vw,.94rem);color:var(--brick);margin-top:.28rem;letter-spacing:.02em}
+
+/* ---------- split layout ---------- */
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,6vw,7rem);align-items:center}
+.split.tip{grid-template-columns:1fr 1fr}
+@media (max-aspect-ratio:1/1){
+  .split{grid-template-columns:1fr;gap:clamp(1.6rem,4vh,3rem)}
+}
+
+/* ---------- repeated builds ---------- */
+.repeat{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.9rem,2.4vw,2.4rem);width:100%}
+.rep-col{text-align:center}
+.rep-col .arch{width:100%}
+.rep-name{font-size:clamp(.8rem,1.05vw,1.1rem);font-weight:600;margin-top:.8rem;letter-spacing:.04em;text-transform:uppercase}
+.rep-cost{font-size:clamp(.74rem,.95vw,1rem);color:var(--brick);margin-top:.2rem}
+
+/* ---------- key/legend ---------- */
+.legend{display:flex;flex-direction:column;gap:.85rem;margin-top:.4rem}
+.leg{display:flex;align-items:center;gap:.7rem;font-size:clamp(.84rem,1.15vw,1.18rem);color:var(--ink-60)}
+.leg b{width:16px;height:16px;border-radius:2px;flex:none}
+.leg b.brown{background:var(--brick)}
+.leg b.yellow{background:var(--yellow)}
+.leg b.dash{border:1.5px dashed rgba(43,27,18,.4)}
+.leg span{color:var(--ink);font-weight:600}
+
+/* ---------- three cards on an arc ---------- */
+.arcrow{
+  position:relative;display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(1rem,3vw,3rem);align-items:stretch;
+  padding:clamp(1.4rem,4vh,3.2rem) 0 clamp(.6rem,2vh,1.6rem);
+}
+.pier{
+  position:relative;background:rgba(231,216,189,.55);
+  border:1px solid rgba(124,63,42,.26);
+  border-radius:46% 46% 6px 6px / 26% 26% 6px 6px;
+  padding:clamp(1.5rem,3.2vh,2.4rem) clamp(1rem,1.9vw,1.9rem) clamp(1.2rem,2.6vh,2rem);
+  text-align:center;
+  display:flex;flex-direction:column;justify-content:center;
+  transform-origin:50% 100%;
+  box-shadow:0 14px 30px -24px rgba(43,27,18,.6);
+}
+/* the three piers radiate, like voussoirs around a curve */
+.pier:nth-child(1){transform:rotate(-3.4deg) translateY(clamp(8px,1.6vh,20px))}
+.pier:nth-child(2){transform:translateY(calc(-1 * clamp(12px,2.4vh,32px)))}
+.pier:nth-child(3){transform:rotate(3.4deg) translateY(clamp(8px,1.6vh,20px))}
+.pier .num{
+  font-family:var(--serif);font-size:clamp(1.5rem,2.4vw,2.4rem);color:var(--orange);line-height:1;
+  margin-bottom:.5rem;display:block;
+}
+.pier .pt{font-size:clamp(1rem,1.62vw,1.72rem);line-height:1.32;font-weight:500;letter-spacing:-.01em}
+.pier .ps{font-size:clamp(.78rem,1.02vw,1.04rem);color:var(--brick);margin-top:.55rem;line-height:1.4}
+
+/* ---------- big number ---------- */
+.punch{display:flex;align-items:baseline;gap:clamp(1rem,3vw,3rem);flex-wrap:wrap;justify-content:center}
+.was{
+  font-family:var(--serif);font-size:clamp(2rem,5.4vw,5.4rem);color:var(--ink-38);
+  position:relative;line-height:1;
+}
+.was::after{content:"";position:absolute;left:-4%;right:-4%;top:52%;height:5px;background:var(--brick);opacity:.55;border-radius:3px}
+.arrowg{font-size:clamp(1.6rem,3.4vw,3.4rem);color:var(--orange);line-height:1}
+.now{font-family:var(--serif);font-size:clamp(3.4rem,9.2vw,10.5rem);line-height:.9;letter-spacing:-.03em}
+.now em{font-style:normal;color:var(--orange)}
+
+/* ---------- BFF geometry ---------- */
+.bff{width:100%}
+.bff-row{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,2.6vw,2.6rem);align-items:end}
+.opening{
+  position:relative;aspect-ratio:1/.86;
+  border:2px solid var(--brick);border-bottom:none;
+  border-radius:50% 50% 0 0 / 62% 62% 0 0;
+  background:linear-gradient(180deg,rgba(231,216,189,.62),rgba(231,216,189,0));
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:9%;
+}
+.opening span{font-size:clamp(.85rem,1.3vw,1.34rem);font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.base{
+  margin-top:10px;height:clamp(38px,5.4vh,62px);border-radius:3px;
+  background:linear-gradient(180deg,var(--brick) 0%,var(--brick-deep) 100%);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--kraft-hi);letter-spacing:.34em;text-transform:uppercase;
+  font-size:clamp(.72rem,1.02vw,1.06rem);font-weight:600;
+}
+
+/* ---------- before / after ---------- */
+.ba{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(1.4rem,4vw,4rem);align-items:center;width:100%}
+.ba-col .k{font-size:clamp(.72rem,.95vw,1rem);letter-spacing:.26em;text-transform:uppercase;color:var(--yellow-lo);margin-bottom:.9rem;font-weight:600}
+.ba-col .v{font-family:var(--serif);font-size:clamp(1.5rem,3.3vw,3.5rem);line-height:1.12;letter-spacing:-.02em}
+.ba-col.after .v{color:var(--brick)}
+.ba-rule{width:3px;align-self:stretch;background:repeating-linear-gradient(180deg,var(--brick) 0 14px,transparent 14px 24px);opacity:.5;border-radius:2px}
+
+/* ---------- vocabulary ---------- */
+.term{display:flex;flex-direction:column;gap:clamp(.6rem,1.6vh,1.2rem)}
+.acr{font-family:var(--serif);font-size:clamp(4rem,12.5vw,14rem);line-height:.84;letter-spacing:-.04em}
+.expand{
+  font-size:clamp(1.1rem,2.5vw,2.6rem);color:var(--brick);font-weight:500;letter-spacing:-.01em;
+}
+.tbd{position:relative;border-bottom:2px dotted var(--orange);padding-bottom:2px}
+.tbd em{
+  position:absolute;top:-.4em;right:-.6em;transform:translateX(100%);
+  font-style:normal;font-size:.42em;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--orange);white-space:nowrap;font-weight:600;
+}
+.term .lead{max-width:30ch;font-size:clamp(1.05rem,2vw,2.1rem);color:var(--ink-60)}
+.stepdots{display:flex;gap:8px;align-items:center}
+.stepdots b{width:26px;height:9px;border-radius:2px;background:var(--ink-14)}
+.stepdots b.on{background:var(--orange)}
+
+/* ---------- closing ---------- */
+.closing .lead{max-width:30ch}
+.sign{display:flex;gap:.7rem;align-items:center;color:var(--brick);font-size:clamp(.8rem,1.05vw,1.08rem);letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+
+/* ---------- HUD ---------- */
+.hud{
+  position:fixed;left:var(--pad-x);right:var(--pad-x);bottom:clamp(16px,3vh,30px);
+  z-index:50;display:flex;align-items:center;justify-content:space-between;gap:2rem;
+  pointer-events:none;
+}
+.ticks{display:flex;gap:4px;align-items:center}
+.ticks b{width:12px;height:4px;border-radius:2px;background:rgba(43,27,18,.16);transition:background .3s var(--ease)}
+.ticks b.on{background:rgba(124,63,42,.72)}
+.nav{display:flex;gap:8px;pointer-events:auto;opacity:.5;transition:opacity .25s var(--ease)}
+.nav:hover{opacity:1}
+.nav button{
+  width:34px;height:34px;padding:0 0 2px;
+  border:1px solid rgba(124,63,42,.32);
+  border-radius:50% 50% 4px 4px / 62% 62% 4px 4px;
+  background:rgba(231,216,189,.42);color:var(--brick);
+  font:inherit;font-size:1.05rem;line-height:1;cursor:pointer;
+  display:grid;place-items:center;
+  transition:background .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease);
+}
+.nav button:hover{background:rgba(231,216,189,.92);border-color:var(--brick)}
+.nav button:active{transform:translateY(1px)}
+.nav button:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+.count{font-size:.82rem;letter-spacing:.14em;color:var(--ink-38);font-variant-numeric:tabular-nums;font-weight:600}
+.count b{color:var(--brick)}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:.01ms !important;animation-duration:.01ms !important;transition-delay:0ms !important}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- 01 TITLE -->
+  <section class="slide">
+    <div class="wrap title-grid">
+      <div class="eyebrow" data-anim>BimeBazar &nbsp;/&nbsp; Internal preview</div>
+      <h1 data-anim>Core</h1>
+      <div class="title-arch" data-anim><div class="arch" data-bricks="15" data-depth=".2" data-key="1"></div><div class="plinth"></div></div>
+      <p class="lead" data-anim style="max-width:40ch">The layer every insurance line will be built on.</p>
+      <p class="hint" data-anim>A short walk through, then the live demo</p>
+    </div>
+  </section>
+
+  <!-- 02 TEAM -->
+  <section class="slide">
+    <div class="wrap stack center">
+      <div class="eyebrow" data-anim>The team</div>
+      <h2 class="tight" data-anim>Seven people building it.</h2>
+      <div class="team" data-anim>
+        <div class="member">
+          <div class="niche"><img src="assets/team/mehdi-mohammad-rezaei.jpg" alt="Mehdi Mohammad Rezaei" style="object-position:58% 38%"></div>
+          <div class="m-name">Mehdi<br>Mohammad Rezaei</div><div class="m-role">Tech Lead</div>
+        </div>
+        <div class="member">
+          <div class="niche"><img src="assets/team/mohammadreza-hosseinzadeh.jpg" alt="MohammadReza HosseinZadeh" style="object-position:34% 26%"></div>
+          <div class="m-name">MohammadReza<br>HosseinZadeh</div><div class="m-role">Backend</div>
+        </div>
+        <div class="member">
+          <div class="niche"><img src="assets/team/amirhossein-khanzadeh.jpg" alt="AmirHossein KhanZadeh" style="object-position:46% 42%;transform:scale(1.06)"></div>
+          <div class="m-name">AmirHossein<br>KhanZadeh</div><div class="m-role">Backend</div>
+        </div>
+        <div class="member">
+          <div class="niche"><img src="assets/team/shabnam-nouri.jpg" alt="Shabnam Nouri" style="object-position:50% 22%"></div>
+          <div class="m-name">Shabnam<br>Nouri</div><div class="m-role">Frontend</div>
+        </div>
+        <div class="member">
+          <div class="niche"><img src="assets/team/masih-sadri.jpg" alt="Masih Sadri" style="object-position:48% 26%"></div>
+          <div class="m-name">Masih<br>Sadri</div><div class="m-role">Designer</div>
+        </div>
+        <div class="member">
+          <div class="niche"><img src="assets/team/vida-golzadeh.jpg" alt="Vida GolZadeh" style="object-position:66% 58%"></div>
+          <div class="m-name">Vida<br>GolZadeh</div><div class="m-role">QA</div>
+        </div>
+        <div class="member">
+          <div class="niche glyph"><div class="inner"><img class="mark" src="assets/team/claude-mark.svg" alt="Claude" width="248" height="248" loading="eager"></div></div>
+          <div class="m-name">Claude<br>by Anthropic</div><div class="m-role">AI assistant</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 PROBLEM: from zero -->
+  <section class="slide">
+    <div class="wrap split">
+      <div class="stack">
+        <div class="eyebrow" data-anim>Today</div>
+        <h2 data-anim>Every new insurance line starts from zero.</h2>
+        <p class="lead" data-anim>New product, new code, written by hand, from the ground up.</p>
+      </div>
+      <div data-anim style="--d:2">
+        <div class="arch" data-bricks="15" data-depth=".2" data-fill="4"></div>
+        <div class="plinth"></div>
+        <p class="support" style="margin-top:1.4rem;text-align:center">Travel insurance, still being laid.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 PROBLEM: the repetition -->
+  <section class="slide">
+    <div class="wrap stack center">
+      <div class="eyebrow" data-anim>The pattern</div>
+      <h2 class="tight" data-anim>Same shape. Built again every time.</h2>
+      <div class="repeat" data-anim style="--d:2">
+        <div class="rep-col"><div class="arch" data-bricks="9" data-depth=".24"></div><div class="plinth"></div><div class="rep-name">Car</div><div class="rep-cost js-dur"></div></div>
+        <div class="rep-col"><div class="arch" data-bricks="9" data-depth=".24"></div><div class="plinth"></div><div class="rep-name">Travel</div><div class="rep-cost js-dur"></div></div>
+        <div class="rep-col"><div class="arch" data-bricks="9" data-depth=".24"></div><div class="plinth"></div><div class="rep-name">Fire</div><div class="rep-cost js-dur"></div></div>
+        <div class="rep-col"><div class="arch" data-bricks="9" data-depth=".24"></div><div class="plinth"></div><div class="rep-name">Life</div><div class="rep-cost js-dur"></div></div>
+      </div>
+      <p class="lead" data-anim style="--d:3;max-width:44ch">Four products, four foundations, and almost nothing shared between them.</p>
+    </div>
+  </section>
+
+  <!-- 05 PROBLEM: the real cost -->
+  <section class="slide">
+    <div class="wrap stack">
+      <div class="eyebrow" data-anim>The real cost</div>
+      <h2 data-anim style="--d:1">Engineering capacity decides the roadmap.</h2>
+      <p class="lead" data-anim style="--d:2;max-width:38ch">Not the market, and not the business. What we can build is what we can sell.</p>
+    </div>
+  </section>
+
+  <!-- 06 WHAT CORE IS -->
+  <section class="slide">
+    <div class="wrap split">
+      <div class="stack">
+        <div class="eyebrow" data-anim>Core</div>
+        <h2 data-anim>The part we stop rebuilding.</h2>
+        <p class="lead" data-anim style="--d:2">Built once, shared by every line. A new product only adds the last few bricks.</p>
+        <div class="legend" data-anim style="--d:3">
+          <div class="leg"><b class="brown"></b><span>Core</span>&nbsp;built once, used by all</div>
+          <div class="leg"><b class="yellow"></b><span>The new line</span>&nbsp;the only part that changes</div>
+        </div>
+      </div>
+      <div data-anim style="--d:2">
+        <div class="arch" data-bricks="15" data-depth=".2" data-new="3"></div>
+        <div class="plinth"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 THE PROMISE -->
+  <section class="slide">
+    <div class="wrap stack center">
+      <div class="eyebrow" data-anim>The promise</div>
+      <h2 class="tight" data-anim>Three things change.</h2>
+      <div class="arcrow" data-anim style="--d:2;width:100%">
+        <div class="pier"><span class="num">01</span><div class="pt">A new line in one week</div><div class="ps">Instead of a build that runs for months</div></div>
+        <div class="pier"><span class="num">02</span><div class="pt">One place sets the price</div><div class="ps">Every channel quotes from the same engine</div></div>
+        <div class="pier"><span class="num">03</span><div class="pt">Published without a build</div><div class="ps">Set up and released by the product team</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 ONE WEEK -->
+  <section class="slide">
+    <div class="wrap stack center">
+      <div class="eyebrow" data-anim>Speed</div>
+      <div class="punch" data-anim style="--d:1">
+        <span class="was js-dur-cap"></span>
+        <span class="arrowg">&rarr;</span>
+        <span class="now">One <em>week</em></span>
+      </div>
+      <p class="lead" data-anim style="--d:2;max-width:40ch">From the decision to sell a new line, to that line being live for customers.</p>
+    </div>
+  </section>
+
+  <!-- 09 CENTRAL PRICING -->
+  <section class="slide">
+    <div class="wrap split">
+      <div class="stack">
+        <div class="eyebrow" data-anim>Pricing</div>
+        <h2 data-anim>One place decides the price.</h2>
+        <p class="lead" data-anim style="--d:2">Every channel asks the same engine, so the number a customer sees is always the same number.</p>
+        <p class="support" data-anim style="--d:3">One place to change it. One place to check it.</p>
+      </div>
+      <div data-anim style="--d:2">
+        <div class="arch" data-bricks="13" data-depth=".22" data-key="1"></div>
+        <div class="plinth"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 BFF -->
+  <section class="slide">
+    <div class="wrap split tip">
+      <div class="stack">
+        <div class="eyebrow" data-anim>BFF</div>
+        <h2 data-anim style="font-size:clamp(2rem,4.4vw,4.6rem)">Backend For Frontend</h2>
+        <p class="lead" data-anim style="--d:2">Every customer facing surface gets its own service counter, served from the same core.</p>
+        <p class="support" data-anim style="--d:3">The app, the website and our partners stop queueing behind each other.</p>
+      </div>
+      <div class="bff" data-anim style="--d:2">
+        <div class="bff-row">
+          <div class="opening"><span>App</span></div>
+          <div class="opening"><span>Website</span></div>
+          <div class="opening"><span>Partners</span></div>
+        </div>
+        <div class="base">One core</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 GO RULES -->
+  <section class="slide">
+    <div class="wrap split">
+      <div class="stack">
+        <div class="eyebrow" data-anim>go rules</div>
+        <h2 data-anim>The business logic lives as rules.</h2>
+        <p class="lead" data-anim style="--d:2">Pricing, eligibility and product behaviour become settings that the business can change.</p>
+        <p class="support" data-anim style="--d:3">This is the keystone. It is what makes publishing without engineering real.</p>
+      </div>
+      <div data-anim style="--d:2">
+        <div class="arch" data-bricks="13" data-depth=".24" data-key="1"></div>
+        <div class="plinth"></div>
+        <p class="support" style="margin-top:1.4rem;text-align:center;max-width:none">Take the keystone out and nothing stands.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 BEFORE / AFTER -->
+  <section class="slide">
+    <div class="wrap stack center">
+      <div class="eyebrow" data-anim>What that looks like</div>
+      <h2 class="tight" data-anim>Changing a price band.</h2>
+      <div class="ba" data-anim style="--d:2">
+        <div class="ba-col"><div class="k">Before</div><div class="v">A ticket, a release,<br>a place in the queue.</div></div>
+        <div class="ba-rule"></div>
+        <div class="ba-col after"><div class="k">After</div><div class="v">A rule change,<br>live the same day.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 VOCABULARY INTRO -->
+  <section class="slide">
+    <div class="wrap stack">
+      <div class="eyebrow" data-anim>Vocabulary</div>
+      <h2 data-anim style="--d:1">Three words you will hear in the demo.</h2>
+      <p class="lead" data-anim style="--d:2">All three are steps in one customer journey.</p>
+    </div>
+  </section>
+
+  <!-- 14 RFQ -->
+  <section class="slide">
+    <div class="wrap split">
+      <div class="term">
+        <div class="stepdots" data-anim><b class="on"></b><b></b><b></b></div>
+        <div class="acr" data-anim style="--d:1">RFQ</div>
+        <div class="expand" data-anim style="--d:2">Request For Quote</div>
+        <p class="lead" data-anim style="--d:3">The moment a customer asks to see what is available for them.</p>
+      </div>
+      <div data-anim style="--d:2">
+        <div class="arch" data-bricks="13" data-depth=".22" data-fill="5"></div>
+        <div class="plinth"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 QUOTE LIST -->
+  <section class="slide">
+    <div class="wrap split">
+      <div class="term">
+        <div class="stepdots" data-anim><b class="on"></b><b class="on"></b><b></b></div>
+        <div class="acr" data-anim style="--d:1;font-size:clamp(2.6rem,7.4vw,8.4rem)">Quote list</div>
+        <div class="expand" data-anim style="--d:2">The offers that come back</div>
+        <p class="lead" data-anim style="--d:3">What we return, side by side, for the customer to compare and choose from.</p>
+      </div>
+      <div data-anim style="--d:2">
+        <div class="arch" data-bricks="13" data-depth=".22" data-fill="9"></div>
+        <div class="plinth"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 RFS -->
+  <section class="slide">
+    <div class="wrap split">
+      <div class="term">
+        <div class="stepdots" data-anim><b class="on"></b><b class="on"></b><b class="on"></b></div>
+        <div class="acr" data-anim style="--d:1">RFS</div>
+        <div class="expand" data-anim style="--d:2"><span class="tbd" id="rfsExpand"></span></div>
+        <p class="lead" data-anim style="--d:3">Everything we still need to collect before the policy can be issued.</p>
+      </div>
+      <div data-anim style="--d:2">
+        <div class="arch" data-bricks="13" data-depth=".22" data-key="1"></div>
+        <div class="plinth"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 THE JOURNEY -->
+  <section class="slide">
+    <div class="wrap stack center">
+      <div class="eyebrow" data-anim>The journey</div>
+      <h2 class="tight" data-anim>Ask. Compare. Issue.</h2>
+      <div class="arcrow" data-anim style="--d:2;width:100%">
+        <div class="pier"><span class="num">RFQ</span><div class="pt">The customer asks</div></div>
+        <div class="pier"><span class="num">Quote list</span><div class="pt">The customer chooses</div></div>
+        <div class="pier"><span class="num">RFS</span><div class="pt">The policy is issued</div></div>
+      </div>
+      <p class="lead" data-anim style="--d:3;max-width:42ch">One span, three stones. You will watch all three in a moment.</p>
+    </div>
+  </section>
+
+  <!-- 18 HOLD QUESTIONS -->
+  <section class="slide">
+    <div class="wrap stack closing">
+      <div class="eyebrow" data-anim>Before we start</div>
+      <h2 data-anim style="--d:1">Let us run the whole thing first.</h2>
+      <p class="lead" data-anim style="--d:2">The flow lands better as one piece. Every question is welcome the moment it ends, with the whole team in the room.</p>
+      <p class="support" data-anim style="--d:3">Keep them coming. We would rather answer them all at once.</p>
+    </div>
+  </section>
+
+  <!-- 19 HANDOFF -->
+  <section class="slide">
+    <div class="wrap title-grid">
+      <div class="title-arch" data-anim><div class="arch" data-bricks="15" data-depth=".2" data-key="1"></div><div class="plinth"></div></div>
+      <h1 data-anim style="--d:1;font-size:clamp(2.8rem,8.4vw,9rem)">Now, the demo.</h1>
+      <div class="sign" data-anim style="--d:2">Core, live</div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="hud">
+  <div class="ticks" id="ticks"></div>
+  <div class="nav">
+    <button id="prevBtn" type="button" aria-label="Previous slide">&lsaquo;</button>
+    <button id="nextBtn" type="button" aria-label="Next slide">&rsaquo;</button>
+  </div>
+  <div class="count"><b id="cNow">01</b> <span id="cAll">/ 19</span></div>
+</footer>
+
+<script>
+/* ------------------------------------------------------------------
+   EDIT HERE before presenting
+   ------------------------------------------------------------------ */
+const CONFIG = {
+  // Confirm with the team, then set RFS_CONFIRMED to true to drop the marker.
+  RFS_EXPANSION: 'Request For Submission',
+  RFS_CONFIRMED: false,
+
+  // How long a new line takes today. Swap in the real figure if you have it.
+  TODAY_DURATION: 'Months',        // used on the big before/after slide
+  TODAY_DURATION_SMALL: 'months of work'  // used under each repeated arch
+};
+/* ---------------------------------------------------------------- */
+
+/* copy injection */
+document.querySelectorAll('.js-dur').forEach(function(el){ el.textContent = CONFIG.TODAY_DURATION_SMALL; });
+document.querySelectorAll('.js-dur-cap').forEach(function(el){ el.textContent = CONFIG.TODAY_DURATION; });
+
+var rfs = document.getElementById('rfsExpand');
+rfs.textContent = CONFIG.RFS_EXPANSION;
+if (CONFIG.RFS_CONFIRMED) {
+  rfs.classList.remove('tbd');
+} else {
+  var tag = document.createElement('em');
+  tag.textContent = 'to confirm';
+  rfs.appendChild(tag);
+}
+
+/* ---------- arch builder: rowlock voussoirs radiating on a curve ---------- */
+function buildArch(el){
+  var w = el.clientWidth;
+  if (!w) return;
+  var n      = parseInt(el.dataset.bricks || '13', 10);
+  var depthR = parseFloat(el.dataset.depth || '0.22');
+  var fill   = el.dataset.fill  !== undefined ? parseInt(el.dataset.fill, 10)  : n;
+  var newTop = el.dataset.new   !== undefined ? parseInt(el.dataset.new, 10)   : 0;
+  var key    = el.dataset.key   !== undefined;
+
+  var R = w / 2;
+  var D = R * depthR;
+  var Rmid = R - D / 2;
+  var slot = Math.PI * Rmid / n;
+  var bw = Math.max(3, slot * 0.84);          // mortar gap
+
+  el.style.height = R + 'px';
+  el.textContent = '';
+
+  var newStart = Math.floor((n - newTop) / 2);
+  var mid = (n - 1) / 2;
+
+  for (var i = 0; i < n; i++){
+    var ang = -90 + ((i + 0.5) / n) * 180;
+
+    var b = document.createElement('span');
+    b.className = 'vsr';
+    b.style.height = R + 'px';
+    b.style.width = bw + 'px';
+    b.style.marginLeft = (-bw / 2) + 'px';
+    b.style.transform = 'rotate(' + ang.toFixed(3) + 'deg)';
+
+    // bricks reveal outward from the springing line
+    b.style.setProperty('--i', Math.round(Math.abs(i - mid)));
+
+    if (i >= fill) b.classList.add('is-ghost');
+    else if (newTop && i >= newStart && i < newStart + newTop) b.classList.add('is-new');
+    else if (key && Math.abs(i - mid) < 0.5) b.classList.add('is-key');
+
+    var face = document.createElement('i');
+    face.style.height = D + 'px';
+    b.appendChild(face);
+    el.appendChild(b);
+  }
+}
+
+var arches = Array.prototype.slice.call(document.querySelectorAll('.arch'));
+function buildAll(){ arches.forEach(buildArch); }
+buildAll();
+window.addEventListener('resize', function(){
+  clearTimeout(window.__rt);
+  window.__rt = setTimeout(buildAll, 120);
+});
+window.addEventListener('load', buildAll);
+
+/* ---------- stagger order ---------- */
+document.querySelectorAll('.slide').forEach(function(s){
+  var items = s.querySelectorAll('[data-anim]');
+  items.forEach(function(el, i){
+    if (!el.style.getPropertyValue('--d')) el.style.setProperty('--d', i);
+  });
+});
+
+/* ---------- navigation ---------- */
+var slides = document.querySelectorAll('.slide');
+var total = slides.length;
+var idx = 0;
+
+var ticks = document.getElementById('ticks');
+for (var t = 0; t < total; t++) ticks.appendChild(document.createElement('b'));
+var tickEls = ticks.children;
+document.getElementById('cAll').textContent = '/ ' + String(total).padStart(2, '0');
+
+function show(n){
+  idx = Math.max(0, Math.min(total - 1, n));
+  slides.forEach(function(s, i){ s.classList.toggle('is-active', i === idx); });
+  for (var i = 0; i < total; i++) tickEls[i].classList.toggle('on', i <= idx);
+  document.getElementById('cNow').textContent = String(idx + 1).padStart(2, '0');
+  if (location.hash !== '#' + (idx + 1)) history.replaceState(null, '', '#' + (idx + 1));
+}
+function next(){ show(idx + 1); }
+function prev(){ show(idx - 1); }
+
+document.addEventListener('keydown', function(e){
+  switch (e.key){
+    case 'ArrowRight': case 'ArrowDown': case 'PageDown': case ' ': case 'Enter':
+      e.preventDefault(); next(); break;
+    case 'ArrowLeft': case 'ArrowUp': case 'PageUp': case 'Backspace':
+      e.preventDefault(); prev(); break;
+    case 'Home': e.preventDefault(); show(0); break;
+    case 'End':  e.preventDefault(); show(total - 1); break;
+    case 'f': case 'F':
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen();
+      break;
+  }
+});
+
+/* click: right side forward, far left back */
+document.addEventListener('click', function(e){
+  if (e.clientX < window.innerWidth * 0.14) prev(); else next();
+});
+
+document.getElementById('prevBtn').addEventListener('click', function(e){ e.stopPropagation(); prev(); });
+document.getElementById('nextBtn').addEventListener('click', function(e){ e.stopPropagation(); next(); });
+
+/* touch */
+var tx = null;
+document.addEventListener('touchstart', function(e){ tx = e.changedTouches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', function(e){
+  if (tx === null) return;
+  var dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 45){ dx < 0 ? next() : prev(); }
+  tx = null;
+}, {passive:true});
+
+var start = parseInt((location.hash || '').replace('#',''), 10);
+show(isNaN(start) ? 0 : start - 1);
+</script>
+</body>
+</html>
