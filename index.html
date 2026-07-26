@@ -42,6 +42,8 @@
   --ease: cubic-bezier(.2,.72,.2,1);
   --pad-y: 7vh;
   --pad-x: 7vw;
+  /* one tile size for every member, in both tiers */
+  --tile: min(158px, 18vh);
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -153,19 +155,16 @@ h2.tight{max-width:16ch}
 @keyframes fade{to{opacity:0}}
 
 /* ---------- team ---------- */
-/* both team tiers share one 7 column grid so the rows align exactly */
-.team{
+/* both team tiers share one 7 column grid and one tile size, so every
+   member is set at the same weight */
+.team,.wider-row{
   display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
   gap:clamp(.4rem,1.1vw,1.3rem);justify-items:center;width:100%;
 }
-.member{width:100%;max-width:158px;text-align:center}
-@media (max-aspect-ratio:1/1){
-  .team{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:1.4rem}
-  .member{max-width:130px}
-}
+.member,.wm{width:100%;text-align:center}
 .niche{
   position:relative;aspect-ratio:3/4;width:100%;
-  padding:6px;margin-bottom:.9rem;
+  max-width:var(--tile);margin:0 auto .9rem;padding:6px;
   border-radius:50% 50% 7px 7px / 37% 37% 7px 7px;
   background:linear-gradient(165deg,var(--brick) 0%,var(--brick-deep) 100%);
   box-shadow:0 12px 26px -16px rgba(43,27,18,.72);
@@ -207,18 +206,7 @@ h2.tight{max-width:16ch}
 .wider-label::before,.wider-label::after{
   content:"";height:2px;flex:1;background:rgba(124,63,42,.26);border-radius:1px;
 }
-.wider-row{
-  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
-  gap:clamp(.4rem,1.1vw,1.3rem);text-align:center;
-}
 .wm{display:flex;flex-direction:column;align-items:center}
-/* same niche, set one course shorter, so the tier still reads as secondary */
-.wm .niche{
-  max-width:clamp(64px,7vw,104px);padding:5px;margin-bottom:.6rem;
-  border-radius:50% 50% 5px 5px / 37% 37% 5px 5px;
-  box-shadow:0 8px 18px -12px rgba(43,27,18,.66);
-}
-.wm .niche::after{width:9px;height:9px;top:-4px}
 .wm b{
   display:block;font-size:clamp(.72rem,.97vw,1.02rem);font-weight:600;
   line-height:1.28;letter-spacing:-.012em;min-height:2.56em;
@@ -228,12 +216,15 @@ h2.tight{max-width:16ch}
   display:block;font-style:normal;font-size:clamp(.66rem,.84vw,.88rem);
   color:var(--brick);margin-top:.18rem;letter-spacing:.02em;
 }
-@media (max-aspect-ratio:1/1){
-  .wider-row{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:1.1rem}
-  /* two tiers of portraits will not fit a tall frame: shrink the second one */
-  .wm .niche{max-width:50px;padding:4px;margin-bottom:.45rem}
-  .wm .niche::after{width:7px;height:7px;top:-3px}
-  .wm b{min-height:0}
+
+/* a narrow, tall frame: fewer columns and smaller tiles, both tiers alike */
+@media (max-width:760px) and (max-aspect-ratio:1/1){
+  :root{--tile:58px}
+  .team,.wider-row{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:1rem}
+  .niche{margin-bottom:.45rem;padding:4px}
+  .niche::after{width:8px;height:8px;top:-4px}
+  .m-name,.wm b{font-size:.7rem}
+  .m-role,.wm i{font-size:.66rem}
 }
 
 /* ---------- split layout ---------- */
