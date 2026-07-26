@@ -155,12 +155,13 @@ h2.tight{max-width:16ch}
 /* ---------- team ---------- */
 /* both team tiers share one 7 column grid so the rows align exactly */
 .team{
-  display:grid;grid-template-columns:repeat(7,1fr);
+  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
   gap:clamp(.4rem,1.1vw,1.3rem);justify-items:center;width:100%;
 }
 .member{width:100%;max-width:158px;text-align:center}
 @media (max-aspect-ratio:1/1){
-  .team{grid-template-columns:repeat(4,1fr);row-gap:1.4rem}
+  .team{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:1.4rem}
+  .member{max-width:130px}
 }
 .niche{
   position:relative;aspect-ratio:3/4;width:100%;
@@ -192,6 +193,7 @@ h2.tight{max-width:16ch}
 .m-name{
   font-size:clamp(.8rem,1.05vw,1.1rem);font-weight:600;line-height:1.28;letter-spacing:-.012em;
   min-height:2.56em; /* keeps every role on the same baseline */
+  overflow-wrap:break-word;
 }
 .m-role{font-size:clamp(.7rem,.9vw,.94rem);color:var(--brick);margin-top:.28rem;letter-spacing:.02em}
 
@@ -206,19 +208,32 @@ h2.tight{max-width:16ch}
   content:"";height:2px;flex:1;background:rgba(124,63,42,.26);border-radius:1px;
 }
 .wider-row{
-  display:grid;grid-template-columns:repeat(7,1fr);
+  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
   gap:clamp(.4rem,1.1vw,1.3rem);text-align:center;
 }
+.wm{display:flex;flex-direction:column;align-items:center}
+/* same niche, set one course shorter, so the tier still reads as secondary */
+.wm .niche{
+  max-width:clamp(64px,7vw,104px);padding:5px;margin-bottom:.6rem;
+  border-radius:50% 50% 5px 5px / 37% 37% 5px 5px;
+  box-shadow:0 8px 18px -12px rgba(43,27,18,.66);
+}
+.wm .niche::after{width:9px;height:9px;top:-4px}
 .wm b{
   display:block;font-size:clamp(.72rem,.97vw,1.02rem);font-weight:600;
   line-height:1.28;letter-spacing:-.012em;min-height:2.56em;
+  overflow-wrap:break-word;
 }
 .wm i{
   display:block;font-style:normal;font-size:clamp(.66rem,.84vw,.88rem);
   color:var(--brick);margin-top:.18rem;letter-spacing:.02em;
 }
 @media (max-aspect-ratio:1/1){
-  .wider-row{grid-template-columns:repeat(4,1fr);row-gap:1.2rem}
+  .wider-row{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:1.1rem}
+  /* two tiers of portraits will not fit a tall frame: shrink the second one */
+  .wm .niche{max-width:50px;padding:4px;margin-bottom:.45rem}
+  .wm .niche::after{width:7px;height:7px;top:-3px}
+  .wm b{min-height:0}
 }
 
 /* ---------- split layout ---------- */
@@ -379,7 +394,6 @@ h2.tight{max-width:16ch}
   <section class="slide">
     <div class="wrap stack center">
       <div class="eyebrow" data-anim>The team</div>
-      <h2 class="tight" data-anim style="max-width:none;font-size:clamp(2rem,4.3vw,4.5rem)">Fourteen people building it.</h2>
       <div class="team" data-anim>
         <div class="member">
           <div class="niche"><img src="assets/team/mehdi-mohammad-rezaei.jpg" alt="Mehdi Mohammad Rezaei" style="object-position:58% 38%"></div>
@@ -413,13 +427,34 @@ h2.tight{max-width:16ch}
       <div class="wider" data-anim>
         <div class="wider-label"><span>And the wider team</span></div>
         <div class="wider-row">
-          <div class="wm"><b>Javid IzadFar</b><i>Frontend</i></div>
-          <div class="wm"><b>Sana MohammadZadeh</b><i>PM</i></div>
-          <div class="wm"><b>AmirReza Mahouti</b><i>APM</i></div>
-          <div class="wm"><b>Hamid BahramPour</b><i>Backend</i></div>
-          <div class="wm"><b>Reza Kashani</b><i>Backend</i></div>
-          <div class="wm"><b>MohammadMahdi Khakdaman</b><i>CRM Engineer</i></div>
-          <div class="wm"><b>Ali Bayat</b><i>CRM Engineer</i></div>
+          <div class="wm">
+            <div class="niche"><img src="assets/team/javid-izadfar.jpg" alt="Javid IzadFar"></div>
+            <b>Javid IzadFar</b><i>Frontend</i>
+          </div>
+          <div class="wm">
+            <div class="niche"><img src="assets/team/sana-mohammadzadeh.jpg" alt="Sana MohammadZadeh"></div>
+            <b>Sana MohammadZadeh</b><i>PM</i>
+          </div>
+          <div class="wm">
+            <div class="niche"><img src="assets/team/amirreza-mahouti.jpg" alt="AmirReza Mahouti"></div>
+            <b>AmirReza Mahouti</b><i>APM</i>
+          </div>
+          <div class="wm">
+            <div class="niche"><img src="assets/team/hamid-bahrampour.jpg" alt="Hamid BahramPour"></div>
+            <b>Hamid BahramPour</b><i>Backend</i>
+          </div>
+          <div class="wm">
+            <div class="niche"><img src="assets/team/reza-kashani.jpg" alt="Reza Kashani"></div>
+            <b>Reza Kashani</b><i>Backend</i>
+          </div>
+          <div class="wm">
+            <div class="niche"><img src="assets/team/mohammadmahdi-khakdaman.jpg" alt="MohammadMahdi Khakdaman"></div>
+            <b>MohammadMahdi Khakdaman</b><i>CRM Engineer</i>
+          </div>
+          <div class="wm">
+            <div class="niche"><img src="assets/team/ali-bayat.jpg" alt="Ali Bayat"></div>
+            <b>Ali Bayat</b><i>CRM Engineer</i>
+          </div>
         </div>
       </div>
     </div>
