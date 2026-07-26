@@ -153,8 +153,15 @@ h2.tight{max-width:16ch}
 @keyframes fade{to{opacity:0}}
 
 /* ---------- team ---------- */
-.team{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(.7rem,1.5vw,1.6rem)}
-.member{width:clamp(96px,10.6vw,158px);text-align:center}
+/* both team tiers share one 7 column grid so the rows align exactly */
+.team{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  gap:clamp(.4rem,1.1vw,1.3rem);justify-items:center;width:100%;
+}
+.member{width:100%;max-width:158px;text-align:center}
+@media (max-aspect-ratio:1/1){
+  .team{grid-template-columns:repeat(4,1fr);row-gap:1.4rem}
+}
 .niche{
   position:relative;aspect-ratio:3/4;width:100%;
   padding:6px;margin-bottom:.9rem;
@@ -187,6 +194,32 @@ h2.tight{max-width:16ch}
   min-height:2.56em; /* keeps every role on the same baseline */
 }
 .m-role{font-size:clamp(.7rem,.9vw,.94rem);color:var(--brick);margin-top:.28rem;letter-spacing:.02em}
+
+/* second tier: the wider team, carried on a shared springing line */
+.wider{width:100%;display:flex;flex-direction:column;gap:clamp(.7rem,1.7vh,1.3rem)}
+.wider-label{
+  display:flex;align-items:center;gap:clamp(.7rem,1.5vw,1.5rem);
+  font-size:clamp(.64rem,.84vw,.9rem);font-weight:600;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--yellow-lo);white-space:nowrap;
+}
+.wider-label::before,.wider-label::after{
+  content:"";height:2px;flex:1;background:rgba(124,63,42,.26);border-radius:1px;
+}
+.wider-row{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  gap:clamp(.4rem,1.1vw,1.3rem);text-align:center;
+}
+.wm b{
+  display:block;font-size:clamp(.72rem,.97vw,1.02rem);font-weight:600;
+  line-height:1.28;letter-spacing:-.012em;min-height:2.56em;
+}
+.wm i{
+  display:block;font-style:normal;font-size:clamp(.66rem,.84vw,.88rem);
+  color:var(--brick);margin-top:.18rem;letter-spacing:.02em;
+}
+@media (max-aspect-ratio:1/1){
+  .wider-row{grid-template-columns:repeat(4,1fr);row-gap:1.2rem}
+}
 
 /* ---------- split layout ---------- */
 .split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,6vw,7rem);align-items:center}
@@ -346,7 +379,7 @@ h2.tight{max-width:16ch}
   <section class="slide">
     <div class="wrap stack center">
       <div class="eyebrow" data-anim>The team</div>
-      <h2 class="tight" data-anim>Seven people building it.</h2>
+      <h2 class="tight" data-anim style="max-width:none;font-size:clamp(2rem,4.3vw,4.5rem)">Fourteen people building it.</h2>
       <div class="team" data-anim>
         <div class="member">
           <div class="niche"><img src="assets/team/mehdi-mohammad-rezaei.jpg" alt="Mehdi Mohammad Rezaei" style="object-position:58% 38%"></div>
@@ -375,6 +408,18 @@ h2.tight{max-width:16ch}
         <div class="member">
           <div class="niche glyph"><div class="inner"><img class="mark" src="assets/team/claude-mark.svg" alt="Claude" width="248" height="248" loading="eager"></div></div>
           <div class="m-name">Claude<br>by Anthropic</div><div class="m-role">AI assistant</div>
+        </div>
+      </div>
+      <div class="wider" data-anim>
+        <div class="wider-label"><span>And the wider team</span></div>
+        <div class="wider-row">
+          <div class="wm"><b>Javid IzadFar</b><i>Frontend</i></div>
+          <div class="wm"><b>Sana MohammadZadeh</b><i>PM</i></div>
+          <div class="wm"><b>AmirReza Mahouti</b><i>APM</i></div>
+          <div class="wm"><b>Hamid BahramPour</b><i>Backend</i></div>
+          <div class="wm"><b>Reza Kashani</b><i>Backend</i></div>
+          <div class="wm"><b>MohammadMahdi Khakdaman</b><i>CRM Engineer</i></div>
+          <div class="wm"><b>Ali Bayat</b><i>CRM Engineer</i></div>
         </div>
       </div>
     </div>
