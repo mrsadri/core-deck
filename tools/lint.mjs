@@ -89,6 +89,12 @@ const RULES = [
       return null;
     }
   }
+  ,
+  {
+    name: 'no inline stagger index',
+    applies: isContentFile,
+    check: text => text.includes('--d:') ? 'declares --d inline' : null
+  }
   // Later stages append their rules here.
 ];
 

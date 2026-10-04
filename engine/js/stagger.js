@@ -1,12 +1,13 @@
 (function (DECK) {
   'use strict';
 
-  /* The enter order: an element keeps a --d it already declares, and takes
-     its position in the slide otherwise. */
+  /* The enter order: an element takes the beat its slide declares in data-d,
+     and its position in the slide otherwise. */
   function applyStagger(root) {
     root.querySelectorAll('.slide').forEach(function (slide) {
       slide.querySelectorAll('[data-anim]').forEach(function (el, i) {
-        if (!el.style.getPropertyValue('--d')) el.style.setProperty('--d', i);
+        const declared = el.dataset.d;
+        el.style.setProperty('--d', declared === undefined ? i : declared);
       });
     });
   }

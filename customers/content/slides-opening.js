@@ -26,7 +26,7 @@ const CUSTOMERS_SLIDES_OPENING = [
     <div class="wrap stack center">
       <div class="eyebrow" data-anim>Why we are here</div>
       <h2 class="tight" data-anim>Review the design before we build it.</h2>
-      <div class="arcrow" data-anim style="--d:2;width:100%">
+      <div class="arcrow" data-anim data-d="2" style="width:100%">
         <div class="pier"><span class="num">01</span><div class="pt">The problems we heard</div><div class="ps">A short review of what partners told us</div></div>
         <div class="pier"><span class="num">02</span><div class="pt">The design</div><div class="ps">Customer Management, screen by screen</div></div>
         <div class="pier"><span class="num">03</span><div class="pt">Your feedback</div><div class="ps">Whether this fits the way you work</div></div>
@@ -41,12 +41,12 @@ const CUSTOMERS_SLIDES_OPENING = [
     <div class="wrap stack center">
       <div class="eyebrow" data-anim>What we found</div>
       <h2 class="tight" data-anim>Six problems, one missing piece.</h2>
-      <div class="motif-wide" data-anim style="--d:2;width:min(620px,60vw);margin-top:.5rem">
+      <div class="motif-wide" data-anim data-d="2" style="width:min(620px,60vw);margin-top:.5rem">
         <div class="loose" data-loose="20" data-rows="3"></div>
         <div class="plinth thin"></div>
         <div class="motif-cap">Orders, and no one to attach them to</div>
       </div>
-      <div class="plist" data-anim style="--d:3">
+      <div class="plist" data-anim data-d="3">
         <div class="pitem"><span class="n">01</span><span class="t">Work revolves around the order list, not the customer.</span></div>
         <div class="pitem"><span class="n">02</span><span class="t">Finding one customer takes too long.</span></div>
         <div class="pitem"><span class="n">03</span><span class="t">A customer's information is out of reach.</span></div>
