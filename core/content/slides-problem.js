@@ -15,7 +15,7 @@ const CORE_SLIDES_PROBLEM = [
       <div data-anim data-d="2">
         <div class="arch" data-bricks="15" data-depth=".2" data-fill="4"></div>
         <div class="plinth"></div>
-        <p class="support" style="margin-top:1.4rem;text-align:center">Travel insurance, still being laid.</p>
+        <p class="support note">Travel insurance, still being laid.</p>
       </div>
     </div>
 `
@@ -33,7 +33,7 @@ const CORE_SLIDES_PROBLEM = [
         <div class="rep-col"><div class="arch" data-bricks="9" data-depth=".24"></div><div class="plinth"></div><div class="rep-name">Fire</div><div class="rep-cost js-dur"></div></div>
         <div class="rep-col"><div class="arch" data-bricks="9" data-depth=".24"></div><div class="plinth"></div><div class="rep-name">Life</div><div class="rep-cost js-dur"></div></div>
       </div>
-      <p class="lead" data-anim data-d="3" style="max-width:44ch">Four products, four foundations, and almost nothing shared between them.</p>
+      <p class="lead repeat-sum" data-anim data-d="3">Four products, four foundations, and almost nothing shared between them.</p>
     </div>
 `
   },
@@ -44,7 +44,7 @@ const CORE_SLIDES_PROBLEM = [
     <div class="wrap stack">
       <div class="eyebrow" data-anim>The real cost</div>
       <h2 data-anim data-d="1">Engineering capacity decides the roadmap.</h2>
-      <p class="lead" data-anim data-d="2" style="max-width:38ch">Not the market, and not the business. What we can build is what we can sell.</p>
+      <p class="lead cost-sum" data-anim data-d="2">Not the market, and not the business. What we can build is what we can sell.</p>
     </div>
 `
   }

@@ -20,7 +20,7 @@ const CORE_SLIDES_CLOSING = [
     html: `
     <div class="wrap title-grid">
       <div class="title-arch" data-anim><div class="arch" data-bricks="15" data-depth=".2" data-key="1"></div><div class="plinth"></div></div>
-      <h1 data-anim data-d="1" style="font-size:clamp(2.8rem,8.4vw,9rem)">Now, the demo.</h1>
+      <h1 class="handoff" data-anim data-d="1">Now, the demo.</h1>
       <div class="sign" data-anim data-d="2">Core, live</div>
     </div>
 `

@@ -6,7 +6,6 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
 .stack.narrow{gap:clamp(.7rem,1.5vh,1.2rem)}
 /* ---------- the motif slot on a solution slide ---------- */
 .motif{width:min(300px,26vw);margin-top:.4rem}
-.motif-wide{width:min(560px,46vw)}
 .motif-cap{
   font-size:clamp(.68rem,.86vw,.92rem);letter-spacing:.2em;text-transform:uppercase;
   color:var(--ink-38);font-weight:600;margin-top:.7rem;
@@ -62,7 +61,6 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
   .sol{grid-template-columns:1fr;gap:clamp(1.2rem,3vh,2.2rem)}
   .sol .shot{order:-1}
   .motif{width:min(240px,42vw)}
-  .motif-wide{width:min(420px,70vw)}
   .plist{grid-template-columns:repeat(2,minmax(0,1fr))}
   .scope{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -71,3 +69,9 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
   .plist{grid-template-columns:1fr;gap:.7rem}
   .scope{grid-template-columns:1fr;gap:.7rem}
 }
+
+/* ---------- the motif slot, sized for what it carries ---------- */
+.motif-pile{width:min(620px,60vw);margin-top:.5rem}
+.motif-pair{width:min(400px,36vw)}
+.motif-span{width:min(300px,26vw)}
+h2.scope-title{font-size:clamp(2rem,4.2vw,4.4rem)}

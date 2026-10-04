@@ -8,8 +8,8 @@ const CUSTOMERS_SLIDES_CLOSING = [
     html: `
     <div class="wrap stack center narrow">
       <div class="eyebrow" data-anim>Phase 1</div>
-      <h2 class="tight" data-anim style="font-size:clamp(2rem,4.2vw,4.4rem)">Six capabilities, one section.</h2>
-      <div class="motif-wide" data-anim data-d="2" style="width:min(300px,26vw)">
+      <h2 class="tight scope-title" data-anim>Six capabilities, one section.</h2>
+      <div class="motif-span" data-anim data-d="2">
         <div class="arch" data-bricks="6" data-depth=".26"></div>
         <div class="plinth"></div>
       </div>
@@ -44,7 +44,7 @@ const CUSTOMERS_SLIDES_CLOSING = [
     html: `
     <div class="wrap title-grid">
       <div class="title-arch" data-anim><div class="arch" data-bricks="15" data-depth=".2" data-key="1"></div><div class="plinth"></div></div>
-      <h1 data-anim data-d="1" style="font-size:clamp(2.6rem,7.6vw,8.2rem)">One record each.</h1>
+      <h1 data-anim data-d="1">One record each.</h1>
       <div class="sign" data-anim data-d="2">My Customers &nbsp;/&nbsp; Phase 1</div>
     </div>
 `

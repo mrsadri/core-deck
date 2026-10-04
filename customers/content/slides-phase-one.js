@@ -11,7 +11,7 @@ const CUSTOMERS_SLIDES_PHASE_ONE = [
       <div class="pnote" data-anim data-d="1"><span><b>Today</b>Work revolves around the order list, not the customer.</span></div>
       <h2 class="sm" data-anim data-d="2">Every order belongs to a customer.</h2>
       <p class="lead sm" data-anim data-d="3">Each order is linked to one customer record, so the panel has someone to organise around.</p>
-      <div class="motif-wide" data-anim data-d="4" style="width:min(400px,36vw)">
+      <div class="motif-pair" data-anim data-d="4">
         <div class="twoarch">
           <div class="ta">
             <div class="loose" data-loose="9" data-rows="3"></div>
@@ -38,7 +38,7 @@ const CUSTOMERS_SLIDES_PHASE_ONE = [
         <div class="pnote" data-anim data-d="1"><span><b>Today</b>Finding a customer takes too long, and once found, their information is scattered.</span></div>
         <h2 class="sm" data-anim data-d="2">Find anyone, and see everything about them.</h2>
         <p class="lead sm" data-anim data-d="3">The customer list searches by name, national ID, phone number and licence plate &mdash; each result opens a comprehensive profile with everything the partner knows about that person.</p>
-        <div class="motif-wide" data-anim data-d="4" style="width:min(400px,36vw)">
+        <div class="motif-pair" data-anim data-d="4">
           <div class="twoarch">
             <div class="ta">
               <div class="arch" data-bricks="9" data-depth=".26" data-lift="6"></div>

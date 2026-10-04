@@ -66,3 +66,14 @@
 .stepdots{display:flex;gap:8px;align-items:center}
 .stepdots b{width:26px;height:9px;border-radius:2px;background:var(--ink-14)}
 .stepdots b.on{background:var(--orange)}
+
+/* ---------- one off measures and sizes, each named for its slide ---------- */
+.support.note{margin-top:1.4rem;text-align:center}
+.support.note.wide{max-width:none}
+.stack.center .lead.repeat-sum{max-width:44ch}
+.lead.cost-sum{max-width:38ch}
+.stack.center .lead.punch-sum{max-width:40ch}
+.stack.center .lead.journey-sum{max-width:42ch}
+h2.bff-title{font-size:clamp(2rem,4.4vw,4.6rem)}
+h1.handoff{font-size:clamp(2.8rem,8.4vw,9rem)}
+.acr.phrase{font-size:clamp(2.6rem,7.4vw,8.4rem)}

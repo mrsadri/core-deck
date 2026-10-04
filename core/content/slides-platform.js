@@ -30,7 +30,7 @@ const CORE_SLIDES_PLATFORM = [
     <div class="wrap stack center">
       <div class="eyebrow" data-anim>The promise</div>
       <h2 class="tight" data-anim>Three things change.</h2>
-      <div class="arcrow" data-anim data-d="2" style="width:100%">
+      <div class="arcrow" data-anim data-d="2">
         <div class="pier"><span class="num">01</span><div class="pt">A new line in one week</div><div class="ps">Instead of a build that runs for months</div></div>
         <div class="pier"><span class="num">02</span><div class="pt">One place sets the price</div><div class="ps">Every channel quotes from the same engine</div></div>
         <div class="pier"><span class="num">03</span><div class="pt">Published without a build</div><div class="ps">Set up and released by the product team</div></div>
@@ -49,7 +49,7 @@ const CORE_SLIDES_PLATFORM = [
         <span class="arrowg">&rarr;</span>
         <span class="now">One <em>week</em></span>
       </div>
-      <p class="lead" data-anim data-d="2" style="max-width:40ch">From the decision to sell a new line, to that line being live for customers.</p>
+      <p class="lead punch-sum" data-anim data-d="2">From the decision to sell a new line, to that line being live for customers.</p>
     </div>
 `
   },
@@ -78,7 +78,7 @@ const CORE_SLIDES_PLATFORM = [
     <div class="wrap split tip">
       <div class="stack">
         <div class="eyebrow" data-anim>BFF</div>
-        <h2 data-anim style="font-size:clamp(2rem,4.4vw,4.6rem)">Backend For Frontend</h2>
+        <h2 class="bff-title" data-anim>Backend For Frontend</h2>
         <p class="lead" data-anim data-d="2">Every customer facing surface gets its own service counter, served from the same core.</p>
         <p class="support" data-anim data-d="3">The app, the website and our partners stop queueing behind each other.</p>
       </div>
@@ -107,7 +107,7 @@ const CORE_SLIDES_PLATFORM = [
       <div data-anim data-d="2">
         <div class="arch" data-bricks="13" data-depth=".24" data-key="1"></div>
         <div class="plinth"></div>
-        <p class="support" style="margin-top:1.4rem;text-align:center;max-width:none">Take the keystone out and nothing stands.</p>
+        <p class="support note wide">Take the keystone out and nothing stands.</p>
       </div>
     </div>
 `

@@ -6,7 +6,7 @@
 }
 /* ---------- three cards on an arc ---------- */
 .arcrow{
-  position:relative;display:grid;grid-template-columns:repeat(3,1fr);
+  position:relative;display:grid;grid-template-columns:repeat(3,1fr);width:100%;
   gap:clamp(1rem,3vw,3rem);align-items:stretch;
   padding:clamp(1.4rem,4vh,3.2rem) 0 clamp(.6rem,2vh,1.6rem);
 }

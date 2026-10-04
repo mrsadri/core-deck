@@ -5,7 +5,8 @@
    an arch is a customer record, and a lifted brick is a search hit.
    ============================================================ */
 :root{
-  --h1: clamp(3.2rem,10vw,11.5rem);
+  /* the deck has one h1, on the closing slide */
+  --h1: clamp(2.6rem,7.6vw,8.2rem);
   --tile: min(204px, 24vh);
   --m-name: clamp(.86rem,1.15vw,1.22rem);
   --m-role: clamp(.74rem,.95vw,1rem);
