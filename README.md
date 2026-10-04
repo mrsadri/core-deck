@@ -54,7 +54,7 @@ Two values need confirming. Both live in the `CONFIG` object at the top of the `
 
 ## My Customers
 
-A design review of Customer Management ("مشتریان من"), a new section of the BimeBazar partner panel ("پنل شرکا"). Partners are independent insurance sellers who register orders for their own customers and earn commission. The deck runs in a meeting where the design is reviewed before implementation.
+A design review of Customer Management ("مشتریان من"), a new section of the BimeBazar partner panel ("Front Office"). Partners are independent insurance sellers who register orders for their own customers and earn commission. The deck runs in a meeting where the design is reviewed before implementation.
 
 **Live:** https://mrsadri.github.io/core-deck/customers/ (once this branch is merged)
 
@@ -89,7 +89,7 @@ Navigation, hash routing and fullscreen behave exactly as in Core. See the table
 Everything that needs filling lives in the `CONFIG` object at the top of the `<script>` block in `customers/index.html`.
 
 - **Screenshots.** All eight entries in `CONFIG.SCREENSHOTS` are `null`. Each one renders a dotted frame tagged SCREENSHOT PENDING, so the deck cannot be presented half dressed by accident. Capture at 1280 x 832, drop the files in `customers/assets/screens/`, then point each key at its file. The keys and the shot each one needs are listed in `customers/assets/screens/README.md`.
-- **Photos.** `CONFIG.PHOTOS` reuses Mehdi's and Masih's portraits from the Core deck. Ghazaleh's is `null` and renders a PHOTO PENDING niche. Add the file and set the path.
+- **Photos.** Done. `CONFIG.PHOTOS` carries all three portraits from `assets/team/`. Setting any one back to `null` renders a PHOTO PENDING niche in its place.
 - **The tech lead's name.** The deck follows the spelling used in the Core deck, "Mehdi Mohammad Rezaei". Confirm it before presenting.
 
 If the real captures come back at a size other than 1280 x 832, change `--shot-ratio` once in the stylesheet and every frame follows.

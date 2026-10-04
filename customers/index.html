@@ -436,7 +436,7 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
       <div class="eyebrow" data-anim>The team and the project</div>
       <div class="team3" data-anim>
         <div class="member">
-          <div class="niche" data-photo="ghazaleh" data-alt="Ghazaleh Ebrahimi"></div>
+          <div class="niche" data-photo="ghazaleh" data-alt="Ghazaleh Ebrahimi" data-pos="47% 50%"></div>
           <div class="m-name">Ghazaleh<br>Ebrahimi</div><div class="m-role">Product Designer</div>
         </div>
         <div class="member">
@@ -450,7 +450,7 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
       </div>
       <div class="proj" data-anim>
         <div class="pj"><div class="k">The project</div><div class="v">Customer Management<small>A new section, <span class="fa">My Customers</span></small></div></div>
-        <div class="pj"><div class="k">Where it lives</div><div class="v">Partner panel<small><span class="fa">پنل شرکا</span></small></div></div>
+        <div class="pj"><div class="k">Where it lives</div><div class="v">Partner panel<small><span class="fa">Front Office</span></small></div></div>
         <div class="pj"><div class="k">Who uses it</div><div class="v">Partners<small>Independent sellers who register orders and earn commission</small></div></div>
       </div>
     </div>
@@ -731,10 +731,10 @@ const CONFIG = {
     f8:    null    // slide 12  adding a prospective customer by hand
   },
 
-  // Team photos for slide 02. Two are reused from the root deck.
-  // Ghazaleh's is unset, so her niche renders a PHOTO PENDING tag.
+  // Team photos for slide 02, all three reused from the root deck's
+  // assets. Set one to null and that niche renders a PHOTO PENDING tag.
   PHOTOS: {
-    ghazaleh: null,
+    ghazaleh: '../assets/team/ghazale-ebrahimi.jpg',
     mehdi:    '../assets/team/mehdi-mohammad-rezaei.jpg',
     masih:    '../assets/team/masih-sadri.jpg'
   }
