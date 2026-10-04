@@ -234,8 +234,8 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
 
 /* ---------- team ---------- */
 .team3{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:clamp(1rem,3vw,3.4rem);justify-items:center;width:min(760px,100%);margin-inline:auto;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(1rem,3vw,3.4rem);justify-items:center;width:min(980px,100%);margin-inline:auto;
 }
 .member{width:100%;text-align:center}
 .niche{
@@ -394,7 +394,7 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
 }
 @media (max-width:760px) and (max-aspect-ratio:1/1){
   :root{--tile:84px}
-  .team3{gap:.8rem}
+  .team3{gap:.8rem;grid-template-columns:repeat(2,minmax(0,1fr))}
   .niche{margin-bottom:.5rem;padding:4px}
   .niche::after{width:8px;height:8px;top:-4px}
   .m-name{font-size:.78rem}
@@ -447,6 +447,10 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
           <div class="niche" data-photo="masih" data-alt="Masih Sadri" data-pos="48% 26%"></div>
           <div class="m-name">Masih<br>Sadri</div><div class="m-role">Product Manager</div>
         </div>
+        <div class="member">
+          <div class="niche" data-photo="sana" data-alt="Sana Mohammadzadeh"></div>
+          <div class="m-name">Sana<br>Mohammadzadeh</div><div class="m-role">PM Consultant</div>
+        </div>
       </div>
       <div class="proj" data-anim>
         <div class="pj"><div class="k">The project</div><div class="v">Customer Management<small>A new section, <span class="fa">My Customers</span></small></div></div>
@@ -483,7 +487,7 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
         <div class="pitem"><span class="n">01</span><span class="t">Work revolves around the order list, not the customer.</span></div>
         <div class="pitem"><span class="n">02</span><span class="t">Finding one customer takes too long.</span></div>
         <div class="pitem"><span class="n">03</span><span class="t">A customer's information is out of reach.</span></div>
-        <div class="pitem"><span class="n">04</span><span class="t">After an order, returning or new is unclear.</span></div>
+        <div class="pitem"><span class="n">04</span><span class="t">A customer's documents aren't filed under their record.</span></div>
         <div class="pitem"><span class="n">05</span><span class="t">Installments and purchase history are hard to read.</span></div>
         <div class="pitem"><span class="n">06</span><span class="t">Notes still live in a paper diary.</span></div>
       </div>
@@ -492,74 +496,62 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
 
   <!-- 05 P1 to F1 -->
   <section class="slide">
+    <div class="wrap stack center narrow">
+      <div class="eyebrow" data-anim>Problem 01 &nbsp;/&nbsp; F1</div>
+      <div class="pnote" data-anim style="--d:1"><span><b>Today</b>Work revolves around the order list, not the customer.</span></div>
+      <h2 class="sm" data-anim style="--d:2">Every order belongs to a customer.</h2>
+      <p class="lead sm" data-anim style="--d:3">Each order is linked to one customer record, so the panel has someone to organise around.</p>
+      <div class="motif-wide" data-anim style="--d:4;width:min(400px,36vw)">
+        <div class="twoarch">
+          <div class="ta">
+            <div class="loose" data-loose="9" data-rows="3"></div>
+            <div class="plinth thin"></div>
+            <div class="lbl">Loose orders</div>
+          </div>
+          <div class="ta">
+            <div class="arch" data-bricks="9" data-depth=".26" data-key="1"></div>
+            <div class="plinth thin"></div>
+            <div class="lbl">One record</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 P2 to F2, merged with P3 to F3 -->
+  <section class="slide">
     <div class="wrap sol">
       <div class="stack narrow">
-        <div class="eyebrow" data-anim>Problem 01 &nbsp;/&nbsp; F1</div>
-        <div class="pnote" data-anim style="--d:1"><span><b>Today</b>Work revolves around the order list, not the customer.</span></div>
-        <h2 class="sm" data-anim style="--d:2">Every order belongs to a customer.</h2>
-        <p class="lead sm" data-anim style="--d:3">Each order is linked to one customer record, so the panel has someone to organise around.</p>
+        <div class="eyebrow" data-anim>Problem 02&ndash;03 &nbsp;/&nbsp; F2&ndash;F3</div>
+        <div class="pnote" data-anim style="--d:1"><span><b>Today</b>Finding a customer takes too long, and once found, their information is scattered.</span></div>
+        <h2 class="sm" data-anim style="--d:2">Find anyone, and see everything about them.</h2>
+        <p class="lead sm" data-anim style="--d:3">The customer list searches by name, national ID, phone number and licence plate &mdash; each result opens a comprehensive profile with everything the partner knows about that person.</p>
         <div class="motif-wide" data-anim style="--d:4;width:min(400px,36vw)">
           <div class="twoarch">
             <div class="ta">
-              <div class="loose" data-loose="9" data-rows="3"></div>
+              <div class="arch" data-bricks="9" data-depth=".26" data-lift="6"></div>
               <div class="plinth thin"></div>
-              <div class="lbl">Loose orders</div>
+              <div class="lbl">Found</div>
             </div>
             <div class="ta">
               <div class="arch" data-bricks="9" data-depth=".26" data-key="1"></div>
               <div class="plinth thin"></div>
-              <div class="lbl">One record</div>
+              <div class="lbl">Known</div>
             </div>
           </div>
         </div>
       </div>
-      <div data-anim style="--d:2"><div class="shot" data-shot="p1_f1" data-what="An order showing the customer record it is linked to"></div></div>
+      <div data-anim style="--d:2"><div class="shot" data-shot="p2_f2" data-what="The customer list, opening into a customer's full profile"></div></div>
     </div>
   </section>
 
-  <!-- 06 P2 to F2 -->
-  <section class="slide">
-    <div class="wrap sol">
-      <div class="stack narrow">
-        <div class="eyebrow" data-anim>Problem 02 &nbsp;/&nbsp; F2</div>
-        <div class="pnote" data-anim style="--d:1"><span><b>Today</b>Finding a specific customer takes too long.</span></div>
-        <h2 class="sm" data-anim style="--d:2">Find anyone in one search.</h2>
-        <p class="lead sm" data-anim style="--d:3">The customer list searches by name, national ID, phone number and licence plate.</p>
-        <div class="motif" data-anim style="--d:4">
-          <div class="arch" data-bricks="13" data-depth=".22" data-lift="6"></div>
-          <div class="plinth thin"></div>
-          <div class="motif-cap">One stone, pulled clear</div>
-        </div>
-      </div>
-      <div data-anim style="--d:2"><div class="shot" data-shot="p2_f2" data-what="The customer list with a search in progress"></div></div>
-    </div>
-  </section>
-
-  <!-- 07 P3 to F3 -->
-  <section class="slide">
-    <div class="wrap sol">
-      <div class="stack narrow">
-        <div class="eyebrow" data-anim>Problem 03 &nbsp;/&nbsp; F3</div>
-        <div class="pnote" data-anim style="--d:1"><span><b>Today</b>Policies, documents, installments and contact details are not easily accessible.</span></div>
-        <h2 class="sm" data-anim style="--d:2">One page holds the whole customer.</h2>
-        <p class="lead sm" data-anim style="--d:3">A comprehensive profile, with everything the partner knows about that person in one place.</p>
-        <div class="motif" data-anim style="--d:4">
-          <div class="arch" data-bricks="13" data-depth=".22" data-key="1"></div>
-          <div class="plinth thin"></div>
-          <div class="motif-cap">Scattered bricks, gathered into one span</div>
-        </div>
-      </div>
-      <div data-anim style="--d:2"><div class="shot" data-shot="p3_f3" data-what="The customer profile page"></div></div>
-    </div>
-  </section>
-
-  <!-- 08 P3 to F5 -->
+  <!-- 07 P3 to F5 -->
   <section class="slide">
     <div class="wrap sol">
       <div class="stack narrow">
         <div class="eyebrow" data-anim>Problem 03 &nbsp;/&nbsp; F5</div>
         <div class="pnote" data-anim style="--d:1"><span><b>Today</b>A customer's policies and documents are spread across separate orders.</span></div>
-        <h2 class="sm" data-anim style="--d:2">Every policy in one place.</h2>
+        <h2 class="sm" data-anim style="--d:2">Every policy of each customer in one place.</h2>
         <p class="lead sm" data-anim style="--d:3">All of a customer's policies on the profile, each with its status and a file to download.</p>
         <div class="motif" data-anim style="--d:4">
           <div class="arch" data-bricks="13" data-depth=".22" data-new="5"></div>
@@ -571,34 +563,25 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
     </div>
   </section>
 
-  <!-- 09 P4 to F4 -->
+  <!-- 08 P4 to F4, documents -->
   <section class="slide">
     <div class="wrap sol">
       <div class="stack narrow">
         <div class="eyebrow" data-anim>Problem 04 &nbsp;/&nbsp; F4</div>
-        <div class="pnote" data-anim style="--d:1"><span><b>Today</b>After an order is placed, it is unclear whether the customer is returning or new.</span></div>
-        <h2 class="sm" data-anim style="--d:2">Returning or new, answered at once.</h2>
-        <p class="lead sm" data-anim style="--d:3">The panel tells the partner which one it is the moment the order is registered.</p>
-        <div class="motif-wide" data-anim style="--d:4;width:min(400px,36vw)">
-          <div class="twoarch">
-            <div class="ta">
-              <div class="arch" data-bricks="9" data-depth=".26"></div>
-              <div class="plinth thin"></div>
-              <div class="lbl">Returning</div>
-            </div>
-            <div class="ta is-new">
-              <div class="arch" data-bricks="9" data-depth=".26" data-fill="2"></div>
-              <div class="plinth thin"></div>
-              <div class="lbl">New</div>
-            </div>
-          </div>
+        <div class="pnote" data-anim style="--d:1"><span><b>Today</b>A customer's documents &mdash; identity, vehicle papers, technical inspection &mdash; aren't filed under the record they belong to.</span></div>
+        <h2 class="sm" data-anim style="--d:2">Document management of each customer.</h2>
+        <p class="lead sm" data-anim style="--d:3">Every document for every insured item, filed under the customer and vehicle it belongs to, with the related policies alongside it.</p>
+        <div class="motif" data-anim style="--d:4">
+          <div class="arch" data-bricks="13" data-depth=".22" data-key="1"></div>
+          <div class="plinth thin"></div>
+          <div class="motif-cap">Documents, filed under the record</div>
         </div>
       </div>
-      <div data-anim style="--d:2"><div class="shot" data-shot="p4_f4" data-what="The returning or new signal shown after an order is registered"></div></div>
+      <div data-anim style="--d:2"><div class="shot" data-shot="p4_f4" data-what="A vehicle's documents and related policies, filed under the customer"></div></div>
     </div>
   </section>
 
-  <!-- 10 P5 to F6 -->
+  <!-- 09 P5 to F6 -->
   <section class="slide">
     <div class="wrap sol">
       <div class="stack narrow">
@@ -616,7 +599,7 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
     </div>
   </section>
 
-  <!-- 11 P6 to F7, beyond phase 1 -->
+  <!-- 10 P6 to F7, beyond phase 1 -->
   <section class="slide">
     <div class="wrap sol">
       <div class="stack narrow">
@@ -635,7 +618,7 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
     </div>
   </section>
 
-  <!-- 12 F8, beyond phase 1 -->
+  <!-- 11 F8, beyond phase 1 -->
   <section class="slide">
     <div class="wrap sol">
       <div class="stack narrow">
@@ -654,7 +637,7 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
     </div>
   </section>
 
-  <!-- 13 PHASE 1 SCOPE -->
+  <!-- 12 PHASE 1 SCOPE -->
   <section class="slide">
     <div class="wrap stack center narrow">
       <div class="eyebrow" data-anim>Phase 1</div>
@@ -667,7 +650,7 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
         <div class="sc"><span class="b"></span><span class="f">F1</span><span class="t">Every order linked to a customer record</span></div>
         <div class="sc"><span class="b"></span><span class="f">F2</span><span class="t">Customer list with search by name, national ID, phone and licence plate</span></div>
         <div class="sc"><span class="b"></span><span class="f">F3</span><span class="t">A comprehensive profile page per customer</span></div>
-        <div class="sc"><span class="b"></span><span class="f">F4</span><span class="t">Returning against new detection after an order</span></div>
+        <div class="sc"><span class="b"></span><span class="f">F4</span><span class="t">Document management for each customer, alongside their policies</span></div>
         <div class="sc"><span class="b"></span><span class="f">F5</span><span class="t">All policies in one place, with status and file</span></div>
         <div class="sc"><span class="b"></span><span class="f">F6</span><span class="t">A view of the customer's financial status</span></div>
         <div class="sc sup"><span class="b"></span><span class="f">F7 &nbsp;Beyond phase 1</span><span class="t">Notes in the profile</span></div>
@@ -676,7 +659,7 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
     </div>
   </section>
 
-  <!-- 14 DISCUSSION -->
+  <!-- 13 DISCUSSION -->
   <section class="slide">
     <div class="wrap stack closing">
       <div class="eyebrow" data-anim>Over to you</div>
@@ -686,7 +669,7 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
     </div>
   </section>
 
-  <!-- 15 CLOSING -->
+  <!-- 14 CLOSING -->
   <section class="slide">
     <div class="wrap title-grid">
       <div class="title-arch" data-anim><div class="arch" data-bricks="15" data-depth=".2" data-key="1"></div><div class="plinth"></div></div>
@@ -721,14 +704,12 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
    ------------------------------------------------------------------ */
 const CONFIG = {
   SCREENSHOTS: {
-    p1_f1: null,   // slide 05  an order showing the customer it belongs to
-    p2_f2: null,   // slide 06  the customer list, mid search
-    p3_f3: null,   // slide 07  the customer profile page
-    p3_f5: null,   // slide 08  the policies list, with status and file
-    p4_f4: null,   // slide 09  the returning or new signal after an order
-    p5_f6: null,   // slide 10  the financial status view
-    f7:    null,   // slide 11  Notes in the profile
-    f8:    null    // slide 12  adding a prospective customer by hand
+    p2_f2: 'assets/screens/p2_f2.png',   // slide 06  the customer list, opening into a profile
+    p3_f5: 'assets/screens/p3_f5.png',   // slide 07  the policies list, with status and file
+    p4_f4: 'assets/screens/p4_f4.png',   // slide 08  a vehicle's documents and related policies
+    p5_f6: 'assets/screens/p5_f6.png',   // slide 09  the financial status view
+    f7:    'assets/screens/f7.png',      // slide 10  Notes in the profile
+    f8:    'assets/screens/f8.png'       // slide 11  adding a prospective customer by hand
   },
 
   // Team photos for slide 02, all three reused from the root deck's
@@ -736,7 +717,8 @@ const CONFIG = {
   PHOTOS: {
     ghazaleh: '../assets/team/ghazale-ebrahimi.jpg',
     mehdi:    '../assets/team/mehdi-mohammad-rezaei.jpg',
-    masih:    '../assets/team/masih-sadri.jpg'
+    masih:    '../assets/team/masih-sadri.jpg',
+    sana:     '../assets/team/sana-mohammadzadeh.jpg'
   }
 };
 /* ---------------------------------------------------------------- */
