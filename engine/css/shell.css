@@ -1,0 +1,21 @@
+/* The deck frame, slide visibility, and the enter animation. */
+/* ---------- deck shell ---------- */
+.deck{position:fixed;inset:0}
+
+.slide{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  padding:var(--pad-y) var(--pad-x) calc(var(--pad-y) + 24px);
+  opacity:0;visibility:hidden;
+  transition:opacity .40s var(--ease), visibility 0s .40s;
+}
+.slide.is-active{opacity:1;visibility:visible;transition:opacity .40s var(--ease)}
+.wrap{width:min(1440px,100%)}
+
+/* enter animation */
+[data-anim]{
+  opacity:0;transform:translateY(18px);
+  transition:opacity .55s var(--ease), transform .55s var(--ease);
+  transition-delay:calc(var(--d,0) * 65ms);
+}
+.is-active [data-anim]{opacity:1;transform:none}

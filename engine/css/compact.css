@@ -1,0 +1,19 @@
+/* ---------- a narrow frame, opt in ---------- */
+/* The shared primitives in layout.css and hud.css, restacked for a narrow
+   screen. A deck opts in by linking this sheet after those two.
+
+   Core does not link it. Adopting it would change how Core renders below
+   760px, which is a visible change and outside this refactor. */
+
+@media (max-aspect-ratio:1/1){
+  .arcrow{grid-template-columns:1fr;gap:.8rem;padding-top:1.2rem}
+  .pier:nth-child(1),.pier:nth-child(2),.pier:nth-child(3){transform:none}
+}
+
+/* on a phone the tick row crowded the counter off the edge */
+@media (max-width:760px){
+  .hud{gap:.7rem}
+  .ticks{flex:0 1 auto;min-width:0;overflow:hidden}
+  .ticks b{width:7px;flex:none}
+  .nav,.count{flex:none}
+}

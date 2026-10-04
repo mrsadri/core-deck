@@ -1,0 +1,32 @@
+/* ---------- type ---------- */
+.eyebrow{
+  font-family:var(--sans);
+  font-size:clamp(.7rem,.92vw,1rem);
+  font-weight:600;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--yellow-lo);
+  display:flex;align-items:center;gap:.85em;
+}
+.eyebrow::before{content:"";width:clamp(20px,2.6vw,42px);height:7px;background:var(--orange);border-radius:1px;flex:none}
+
+h1{
+  font-family:var(--serif);font-weight:400;
+  font-size:var(--h1);line-height:.86;letter-spacing:-.035em;
+}
+h2{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(2.4rem,5.7vw,6.1rem);line-height:1.0;letter-spacing:-.022em;
+  max-width:20ch;text-wrap:balance;
+}
+h2.tight{max-width:16ch}
+.lead{
+  font-size:clamp(1.05rem,1.95vw,2.05rem);line-height:1.42;
+  color:var(--ink-60);max-width:34ch;font-weight:400;text-wrap:pretty;
+}
+.support{
+  font-size:clamp(.9rem,1.3vw,1.32rem);line-height:1.5;
+  color:var(--brick);max-width:40ch;
+}
+.stack{display:flex;flex-direction:column;gap:clamp(1rem,2.2vh,1.9rem);align-items:flex-start}
+.stack.center{align-items:center;text-align:center}
+.stack.center .eyebrow{justify-content:center}
+.stack.center .lead{max-width:38ch}

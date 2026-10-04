@@ -1,0 +1,11 @@
+/* ---------- title ---------- */
+.title-grid{display:grid;gap:clamp(1.4rem,3.4vh,2.6rem);justify-items:center;text-align:center}
+.title-arch{width:min(560px,58vw)}
+.hint{
+  font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-38);
+  animation:fade 6s ease forwards;animation-delay:2.4s;
+}
+@keyframes fade{to{opacity:0}}
+/* ---------- closing ---------- */
+.closing .lead{max-width:30ch}
+.sign{display:flex;gap:.7rem;align-items:center;color:var(--brick);font-size:clamp(.8rem,1.05vw,1.08rem);letter-spacing:.2em;text-transform:uppercase;font-weight:600}

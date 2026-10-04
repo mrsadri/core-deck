@@ -15,6 +15,17 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../engine/css/tokens.css">
+<link rel="stylesheet" href="../engine/css/base.css">
+<link rel="stylesheet" href="../engine/css/shell.css">
+<link rel="stylesheet" href="../engine/css/type.css">
+<link rel="stylesheet" href="../engine/css/motif.css">
+<link rel="stylesheet" href="../engine/css/member.css">
+<link rel="stylesheet" href="../engine/css/layout.css">
+<link rel="stylesheet" href="../engine/css/title.css">
+<link rel="stylesheet" href="../engine/css/hud.css">
+<link rel="stylesheet" href="../engine/css/compact.css">
+<link rel="stylesheet" href="../engine/css/motion.css">
 <style>
 /* ============================================================
    MY CUSTOMERS / BimeBazar partner panel
@@ -22,156 +33,22 @@
    Here the bricks carry a second argument: loose bricks are orders,
    an arch is a customer record, and a lifted brick is a search hit.
    ============================================================ */
-
 :root{
-  --kraft:        #d8c3a2;
-  --kraft-hi:     #e7d8bd;
-  --kraft-lo:     #c3a77e;
-  --brick:        #7c3f2a;
-  --brick-deep:   #55271a;
-  --yellow:       #c1872a;
-  --yellow-lo:    #9c6c1d;
-  --orange:       #d97757;
-  --ink:          #2b1b12;
-  --ink-60:       rgba(43,27,18,.62);
-  --ink-38:       rgba(43,27,18,.38);
-  --ink-14:       rgba(43,27,18,.14);
-
-  --serif: "Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Times New Roman",serif;
-  --sans: -apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
-
-  --ease: cubic-bezier(.2,.72,.2,1);
-  --pad-y: 7vh;
-  --pad-x: 7vw;
+  --h1: clamp(3.2rem,10vw,11.5rem);
   --tile: min(204px, 24vh);
+  --m-name: clamp(.86rem,1.15vw,1.22rem);
+  --m-role: clamp(.74rem,.95vw,1rem);
 
   /* the panel screenshot frame. Change this one value if the real
      captures come back at a different size. */
   --shot-ratio: 1280 / 832;
 }
-
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-
-body{
-  background-color:var(--kraft);
-  background-image:
-    radial-gradient(120% 90% at 50% 0%, rgba(231,216,189,.55) 0%, rgba(231,216,189,0) 58%),
-    radial-gradient(100% 80% at 50% 108%, rgba(85,39,26,.16) 0%, rgba(85,39,26,0) 60%);
-  color:var(--ink);
-  font-family:var(--sans);
-  overflow:hidden;
-  cursor:default;
-  -webkit-font-smoothing:antialiased;
-}
-
-/* paper grain */
-body::after{
-  content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
-  opacity:.42;mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
-}
-
-/* ---------- deck shell ---------- */
-.deck{position:fixed;inset:0}
-
-.slide{
-  position:absolute;inset:0;
-  display:grid;place-items:center;
-  padding:var(--pad-y) var(--pad-x) calc(var(--pad-y) + 24px);
-  opacity:0;visibility:hidden;
-  transition:opacity .40s var(--ease), visibility 0s .40s;
-}
-.slide.is-active{opacity:1;visibility:visible;transition:opacity .40s var(--ease)}
-.wrap{width:min(1440px,100%)}
-
-/* enter animation */
-[data-anim]{
-  opacity:0;transform:translateY(18px);
-  transition:opacity .55s var(--ease), transform .55s var(--ease);
-  transition-delay:calc(var(--d,0) * 65ms);
-}
-.is-active [data-anim]{opacity:1;transform:none}
-
-/* ---------- type ---------- */
-.eyebrow{
-  font-family:var(--sans);
-  font-size:clamp(.7rem,.92vw,1rem);
-  font-weight:600;letter-spacing:.26em;text-transform:uppercase;
-  color:var(--yellow-lo);
-  display:flex;align-items:center;gap:.85em;
-}
-.eyebrow::before{content:"";width:clamp(20px,2.6vw,42px);height:7px;background:var(--orange);border-radius:1px;flex:none}
-
-h1{
-  font-family:var(--serif);font-weight:400;
-  font-size:clamp(3.2rem,10vw,11.5rem);line-height:.86;letter-spacing:-.035em;
-}
-h2{
-  font-family:var(--serif);font-weight:400;
-  font-size:clamp(2.4rem,5.7vw,6.1rem);line-height:1.0;letter-spacing:-.022em;
-  max-width:20ch;text-wrap:balance;
-}
-h2.tight{max-width:16ch}
 h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
-.lead{
-  font-size:clamp(1.05rem,1.95vw,2.05rem);line-height:1.42;
-  color:var(--ink-60);max-width:34ch;font-weight:400;text-wrap:pretty;
-}
 .lead.sm{font-size:clamp(.95rem,1.45vw,1.5rem);max-width:38ch}
-.support{
-  font-size:clamp(.9rem,1.3vw,1.32rem);line-height:1.5;
-  color:var(--brick);max-width:40ch;
-}
 .farsi{font-size:.42em;color:var(--brick);letter-spacing:0;display:block;margin-top:.5em;font-family:var(--sans)}
 /* a Persian run inside an English line, kept from dragging the punctuation with it */
 .fa{unicode-bidi:isolate;direction:rtl}
-.stack{display:flex;flex-direction:column;gap:clamp(1rem,2.2vh,1.9rem);align-items:flex-start}
-.stack.center{align-items:center;text-align:center}
-.stack.center .eyebrow{justify-content:center}
-.stack.center .lead{max-width:38ch}
 .stack.narrow{gap:clamp(.7rem,1.5vh,1.2rem)}
-
-/* ---------- arch (rowlock voussoirs) ---------- */
-.arch{position:relative;width:100%;margin-inline:auto}
-.vsr{position:absolute;left:50%;bottom:0;transform-origin:50% 100%;display:block}
-.vsr > i{
-  position:absolute;top:0;left:0;right:0;display:block;
-  background:linear-gradient(180deg,var(--brick) 0%,var(--brick-deep) 100%);
-  border-radius:1.5px;
-  box-shadow:inset 0 1px 0 rgba(231,216,189,.22);
-  opacity:0;transform:scale(.86);
-  transition:opacity .5s var(--ease), transform .5s var(--ease);
-  transition-delay:calc(var(--i) * 34ms + 160ms);
-}
-.is-active .vsr > i{opacity:1;transform:none}
-.vsr.is-ghost > i{
-  background:none;border:1.5px dashed rgba(43,27,18,.34);box-shadow:none;
-}
-.vsr.is-new > i{background:linear-gradient(180deg,var(--yellow) 0%,var(--yellow-lo) 100%)}
-.vsr.is-key > i{background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%)}
-/* the search hit: one stone pulled clear of the curve */
-.vsr.is-lift > i{
-  background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%);
-  box-shadow:0 10px 20px -10px rgba(85,39,26,.55), inset 0 1px 0 rgba(231,216,189,.3);
-}
-.vsr.is-lift{filter:drop-shadow(0 0 0 transparent)}
-.plinth{height:10px;background:var(--brick-deep);border-radius:2px;opacity:.9}
-.plinth.thin{height:6px}
-
-/* ---------- loose bricks: the order list before it has an owner ---------- */
-.loose{position:relative;width:100%}
-.lb{
-  position:absolute;display:block;border-radius:1.5px;
-  background:linear-gradient(180deg,var(--brick) 0%,var(--brick-deep) 100%);
-  box-shadow:inset 0 1px 0 rgba(231,216,189,.22);
-  opacity:0;transform:scale(.8);
-  transition:opacity .5s var(--ease), transform .55s var(--ease);
-  transition-delay:calc(var(--i) * 26ms + 140ms);
-}
-.is-active .lb{opacity:1;transform:none}
-.lb.pale{background:linear-gradient(180deg,var(--kraft-lo) 0%,#b1946a 100%)}
-
 /* ---------- the motif slot on a solution slide ---------- */
 .motif{width:min(300px,26vw);margin-top:.4rem}
 .motif-wide{width:min(560px,46vw)}
@@ -192,7 +69,6 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
   background:rgba(124,63,42,.38);border-radius:2px;
 }
 .pnote b{font-weight:600;letter-spacing:.16em;text-transform:uppercase;font-size:.78em;color:var(--yellow-lo);display:block;margin-bottom:.25em}
-
 /* ---------- screenshot frame ---------- */
 .shot{
   position:relative;width:100%;aspect-ratio:var(--shot-ratio);
@@ -223,7 +99,6 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
   font-size:clamp(.56rem,.72vw,.74rem);letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink-38);font-variant-numeric:tabular-nums;
 }
-
 /* ---------- beyond phase one badge ---------- */
 .beyond{
   display:inline-flex;align-items:center;gap:.5em;
@@ -231,48 +106,11 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
   color:var(--brick);border:1.5px dashed rgba(124,63,42,.5);border-radius:2px;padding:.4em .75em;
 }
 .beyond::before{content:"";width:9px;height:9px;border:1.5px dashed var(--brick);border-radius:1px;flex:none}
-
 /* ---------- team ---------- */
 .team3{
   display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
   gap:clamp(.8rem,2.6vw,3rem);justify-items:center;width:min(1160px,100%);margin-inline:auto;
 }
-.member{width:100%;text-align:center}
-.niche{
-  position:relative;aspect-ratio:3/4;width:100%;
-  max-width:var(--tile);margin:0 auto .9rem;padding:6px;
-  border-radius:50% 50% 7px 7px / 37% 37% 7px 7px;
-  background:linear-gradient(165deg,var(--brick) 0%,var(--brick-deep) 100%);
-  box-shadow:0 12px 26px -16px rgba(43,27,18,.72);
-}
-.niche::after{
-  content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%);
-  width:12px;height:12px;background:var(--orange);border-radius:2px;
-}
-.niche img{
-  width:100%;height:100%;object-fit:cover;display:block;
-  border-radius:50% 50% 4px 4px / 36% 36% 4px 4px;
-  background:#6b3423;
-  filter:saturate(.86) contrast(1.03);
-}
-/* a face we do not have yet, in the same pending voice as the screenshots */
-.niche.is-pending{background:none;border:2px dotted var(--orange);padding:4px}
-.niche.is-pending::after{background:var(--orange);opacity:.5}
-.niche.is-pending .inner{
-  width:100%;height:100%;border-radius:50% 50% 4px 4px / 36% 36% 4px 4px;
-  background:repeating-linear-gradient(135deg, rgba(217,119,87,.08) 0 10px, rgba(217,119,87,0) 10px 20px), rgba(231,216,189,.6);
-  display:grid;place-items:center;padding:8% 6%;
-}
-.niche.is-pending .tag{
-  font-size:clamp(.5rem,.66vw,.68rem);letter-spacing:.14em;text-transform:uppercase;
-  font-weight:600;color:var(--orange);line-height:1.3;
-}
-.m-name{
-  font-size:clamp(.86rem,1.15vw,1.22rem);font-weight:600;line-height:1.28;letter-spacing:-.012em;
-  min-height:2.56em;overflow-wrap:break-word;
-}
-.m-role{font-size:clamp(.74rem,.95vw,1rem);color:var(--brick);margin-top:.28rem;letter-spacing:.02em}
-
 /* project details under the team */
 .proj{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
@@ -283,37 +121,6 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
 .pj .k{font-size:clamp(.6rem,.8vw,.84rem);letter-spacing:.22em;text-transform:uppercase;color:var(--yellow-lo);font-weight:600}
 .pj .v{font-family:var(--serif);font-size:clamp(1rem,1.6vw,1.7rem);line-height:1.2;margin-top:.35rem;letter-spacing:-.01em}
 .pj .v small{display:block;font-family:var(--sans);font-size:.62em;color:var(--brick);letter-spacing:0;margin-top:.3em}
-
-/* ---------- split layout ---------- */
-.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,6vw,7rem);align-items:center}
-.split.tip{grid-template-columns:1fr 1fr}
-
-/* ---------- three cards on an arc ---------- */
-.arcrow{
-  position:relative;display:grid;grid-template-columns:repeat(3,1fr);
-  gap:clamp(1rem,3vw,3rem);align-items:stretch;
-  padding:clamp(1.4rem,4vh,3.2rem) 0 clamp(.6rem,2vh,1.6rem);
-}
-.pier{
-  position:relative;background:rgba(231,216,189,.55);
-  border:1px solid rgba(124,63,42,.26);
-  border-radius:46% 46% 6px 6px / 26% 26% 6px 6px;
-  padding:clamp(1.5rem,3.2vh,2.4rem) clamp(1rem,1.9vw,1.9rem) clamp(1.2rem,2.6vh,2rem);
-  text-align:center;
-  display:flex;flex-direction:column;justify-content:center;
-  transform-origin:50% 100%;
-  box-shadow:0 14px 30px -24px rgba(43,27,18,.6);
-}
-.pier:nth-child(1){transform:rotate(-3.4deg) translateY(clamp(8px,1.6vh,20px))}
-.pier:nth-child(2){transform:translateY(calc(-1 * clamp(12px,2.4vh,32px)))}
-.pier:nth-child(3){transform:rotate(3.4deg) translateY(clamp(8px,1.6vh,20px))}
-.pier .num{
-  font-family:var(--serif);font-size:clamp(1.5rem,2.4vw,2.4rem);color:var(--orange);line-height:1;
-  margin-bottom:.5rem;display:block;
-}
-.pier .pt{font-size:clamp(1rem,1.62vw,1.72rem);line-height:1.32;font-weight:500;letter-spacing:-.01em}
-.pier .ps{font-size:clamp(.78rem,1.02vw,1.04rem);color:var(--brick);margin-top:.55rem;line-height:1.4}
-
 /* ---------- the six problems ---------- */
 .plist{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
@@ -341,78 +148,22 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
 .sc.sup .b{background:none;border:1.5px dashed rgba(124,63,42,.5);height:6px}
 .sc.sup .f{color:var(--brick)}
 .sc.sup .t{color:var(--ink-60)}
-
-/* ---------- closing ---------- */
-.closing .lead{max-width:30ch}
-.sign{display:flex;gap:.7rem;align-items:center;color:var(--brick);font-size:clamp(.8rem,1.05vw,1.08rem);letter-spacing:.2em;text-transform:uppercase;font-weight:600}
-.title-grid{display:grid;gap:clamp(1.4rem,3.4vh,2.6rem);justify-items:center;text-align:center}
-.title-arch{width:min(560px,58vw)}
-.hint{
-  font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-38);
-  animation:fade 6s ease forwards;animation-delay:2.4s;
-}
-@keyframes fade{to{opacity:0}}
-
-/* ---------- HUD ---------- */
-.hud{
-  position:fixed;left:var(--pad-x);right:var(--pad-x);bottom:clamp(16px,3vh,30px);
-  z-index:50;display:flex;align-items:center;justify-content:space-between;gap:2rem;
-  pointer-events:none;
-}
-.ticks{display:flex;gap:4px;align-items:center}
-.ticks b{width:12px;height:4px;border-radius:2px;background:rgba(43,27,18,.16);transition:background .3s var(--ease)}
-.ticks b.on{background:rgba(124,63,42,.72)}
-.nav{display:flex;gap:8px;pointer-events:auto;opacity:.5;transition:opacity .25s var(--ease)}
-.nav:hover{opacity:1}
-.nav button{
-  width:34px;height:34px;padding:0 0 2px;
-  border:1px solid rgba(124,63,42,.32);
-  border-radius:50% 50% 4px 4px / 62% 62% 4px 4px;
-  background:rgba(231,216,189,.42);color:var(--brick);
-  font:inherit;font-size:1.05rem;line-height:1;cursor:pointer;
-  display:grid;place-items:center;
-  transition:background .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease);
-}
-.nav button:hover{background:rgba(231,216,189,.92);border-color:var(--brick)}
-.nav button:active{transform:translateY(1px)}
-.nav button:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
-.count{font-size:.82rem;letter-spacing:.14em;color:var(--ink-38);font-variant-numeric:tabular-nums;font-weight:600}
-.count b{color:var(--brick)}
-
 /* ---------- narrow and tall frames ---------- */
 @media (max-aspect-ratio:1/1){
-  .split{grid-template-columns:1fr;gap:clamp(1.6rem,4vh,3rem)}
   .sol{grid-template-columns:1fr;gap:clamp(1.2rem,3vh,2.2rem)}
   .sol .shot{order:-1}
   .motif{width:min(240px,42vw)}
   .motif-wide{width:min(420px,70vw)}
   .plist{grid-template-columns:repeat(2,minmax(0,1fr))}
   .scope{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .arcrow{grid-template-columns:1fr;gap:.8rem;padding-top:1.2rem}
-  .pier:nth-child(1),.pier:nth-child(2),.pier:nth-child(3){transform:none}
   .proj{grid-template-columns:1fr;gap:1rem;text-align:center}
 }
 @media (max-width:760px) and (max-aspect-ratio:1/1){
-  :root{--tile:84px}
+  :root{--tile:84px;--m-name:.78rem;--m-role:.7rem}
   .team3{gap:.8rem;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .niche{margin-bottom:.5rem;padding:4px}
-  .niche::after{width:8px;height:8px;top:-4px}
-  .m-name{font-size:.78rem}
-  .m-role{font-size:.7rem}
+  .niche{margin-bottom:.5rem}
   .plist{grid-template-columns:1fr;gap:.7rem}
   .scope{grid-template-columns:1fr;gap:.7rem}
-}
-
-/* on a phone the tick row crowded the counter off the edge */
-@media (max-width:760px){
-  .hud{gap:.7rem}
-  .ticks{flex:0 1 auto;min-width:0;overflow:hidden}
-  .ticks b{width:7px;flex:none}
-  .nav,.count{flex:none}
-}
-
-@media (prefers-reduced-motion:reduce){
-  *{transition-duration:.01ms !important;animation-duration:.01ms !important;transition-delay:0ms !important}
 }
 </style>
 </head>

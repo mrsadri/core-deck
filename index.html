@@ -15,145 +15,30 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="engine/css/tokens.css">
+<link rel="stylesheet" href="engine/css/base.css">
+<link rel="stylesheet" href="engine/css/shell.css">
+<link rel="stylesheet" href="engine/css/type.css">
+<link rel="stylesheet" href="engine/css/motif.css">
+<link rel="stylesheet" href="engine/css/member.css">
+<link rel="stylesheet" href="engine/css/layout.css">
+<link rel="stylesheet" href="engine/css/title.css">
+<link rel="stylesheet" href="engine/css/hud.css">
+<link rel="stylesheet" href="engine/css/motion.css">
 <style>
 /* ============================================================
    CORE / Shoraka internal deck
-   Motif: the rowlock arch. Bricks set on edge, radiating.
-   Palette: kraft paper, brick brown, brick yellow, Claude orange.
+   The shared system lives in engine/css. What is left here is only
+   what Core's own slides use.
    ============================================================ */
 
 :root{
-  --kraft:        #d8c3a2;
-  --kraft-hi:     #e7d8bd;
-  --kraft-lo:     #c3a77e;
-  --brick:        #7c3f2a;
-  --brick-deep:   #55271a;
-  --yellow:       #c1872a;
-  --yellow-lo:    #9c6c1d;
-  --orange:       #d97757;
-  --ink:          #2b1b12;
-  --ink-60:       rgba(43,27,18,.62);
-  --ink-38:       rgba(43,27,18,.38);
-  --ink-14:       rgba(43,27,18,.14);
-
-  --serif: "Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Times New Roman",serif;
-  --sans: -apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
-
-  --ease: cubic-bezier(.2,.72,.2,1);
-  --pad-y: 7vh;
-  --pad-x: 7vw;
+  --h1: clamp(4rem,13vw,15rem);
   /* one tile size for every member, in both tiers */
   --tile: min(158px, 18vh);
+  --m-name: clamp(.8rem,1.05vw,1.1rem);
+  --m-role: clamp(.7rem,.9vw,.94rem);
 }
-
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-
-body{
-  background-color:var(--kraft);
-  background-image:
-    radial-gradient(120% 90% at 50% 0%, rgba(231,216,189,.55) 0%, rgba(231,216,189,0) 58%),
-    radial-gradient(100% 80% at 50% 108%, rgba(85,39,26,.16) 0%, rgba(85,39,26,0) 60%);
-  color:var(--ink);
-  font-family:var(--sans);
-  overflow:hidden;
-  cursor:default;
-  -webkit-font-smoothing:antialiased;
-}
-
-/* paper grain */
-body::after{
-  content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
-  opacity:.42;mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
-}
-
-/* ---------- deck shell ---------- */
-.deck{position:fixed;inset:0}
-
-.slide{
-  position:absolute;inset:0;
-  display:grid;place-items:center;
-  padding:var(--pad-y) var(--pad-x) calc(var(--pad-y) + 24px);
-  opacity:0;visibility:hidden;
-  transition:opacity .40s var(--ease), visibility 0s .40s;
-}
-.slide.is-active{opacity:1;visibility:visible;transition:opacity .40s var(--ease)}
-.wrap{width:min(1440px,100%)}
-
-/* enter animation */
-[data-anim]{
-  opacity:0;transform:translateY(18px);
-  transition:opacity .55s var(--ease), transform .55s var(--ease);
-  transition-delay:calc(var(--d,0) * 65ms);
-}
-.is-active [data-anim]{opacity:1;transform:none}
-
-/* ---------- type ---------- */
-.eyebrow{
-  font-family:var(--sans);
-  font-size:clamp(.7rem,.92vw,1rem);
-  font-weight:600;letter-spacing:.26em;text-transform:uppercase;
-  color:var(--yellow-lo);
-  display:flex;align-items:center;gap:.85em;
-}
-.eyebrow::before{content:"";width:clamp(20px,2.6vw,42px);height:7px;background:var(--orange);border-radius:1px;flex:none}
-
-h1{
-  font-family:var(--serif);font-weight:400;
-  font-size:clamp(4rem,13vw,15rem);line-height:.86;letter-spacing:-.035em;
-}
-h2{
-  font-family:var(--serif);font-weight:400;
-  font-size:clamp(2.4rem,5.7vw,6.1rem);line-height:1.0;letter-spacing:-.022em;
-  max-width:20ch;text-wrap:balance;
-}
-h2.tight{max-width:16ch}
-.lead{
-  font-size:clamp(1.05rem,1.95vw,2.05rem);line-height:1.42;
-  color:var(--ink-60);max-width:34ch;font-weight:400;text-wrap:pretty;
-}
-.support{
-  font-size:clamp(.9rem,1.3vw,1.32rem);line-height:1.5;
-  color:var(--brick);max-width:40ch;
-}
-.stack{display:flex;flex-direction:column;gap:clamp(1rem,2.2vh,1.9rem);align-items:flex-start}
-.stack.center{align-items:center;text-align:center}
-.stack.center .eyebrow{justify-content:center}
-.stack.center .lead{max-width:38ch}
-
-/* ---------- arch (rowlock voussoirs) ---------- */
-.arch{position:relative;width:100%;margin-inline:auto}
-.vsr{position:absolute;left:50%;bottom:0;transform-origin:50% 100%;display:block}
-.vsr > i{
-  position:absolute;top:0;left:0;right:0;display:block;
-  background:linear-gradient(180deg,var(--brick) 0%,var(--brick-deep) 100%);
-  border-radius:1.5px;
-  box-shadow:inset 0 1px 0 rgba(231,216,189,.22);
-  opacity:0;transform:scale(.86);
-  transition:opacity .5s var(--ease), transform .5s var(--ease);
-  transition-delay:calc(var(--i) * 34ms + 160ms);
-}
-.is-active .vsr > i{opacity:1;transform:none}
-.vsr.is-ghost > i{
-  background:none;border:1.5px dashed rgba(43,27,18,.34);box-shadow:none;
-}
-.vsr.is-new > i{background:linear-gradient(180deg,var(--yellow) 0%,var(--yellow-lo) 100%)}
-.vsr.is-key > i{background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%)}
-.arch.flat .vsr > i{transition-delay:0ms}
-
-/* springing line under an arch */
-.plinth{height:10px;background:var(--brick-deep);border-radius:2px;opacity:.9}
-
-/* ---------- title ---------- */
-.title-grid{display:grid;gap:clamp(1.4rem,3.4vh,2.6rem);justify-items:center;text-align:center}
-.title-arch{width:min(560px,58vw)}
-.hint{
-  font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-38);
-  animation:fade 6s ease forwards;animation-delay:2.4s;
-}
-@keyframes fade{to{opacity:0}}
-
 /* ---------- team ---------- */
 /* both team tiers share one 7 column grid and one tile size, so every
    member is set at the same weight */
@@ -161,41 +46,7 @@ h2.tight{max-width:16ch}
   display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
   gap:clamp(.4rem,1.1vw,1.3rem);justify-items:center;width:100%;
 }
-.member,.wm{width:100%;text-align:center}
-.niche{
-  position:relative;aspect-ratio:3/4;width:100%;
-  max-width:var(--tile);margin:0 auto .9rem;padding:6px;
-  border-radius:50% 50% 7px 7px / 37% 37% 7px 7px;
-  background:linear-gradient(165deg,var(--brick) 0%,var(--brick-deep) 100%);
-  box-shadow:0 12px 26px -16px rgba(43,27,18,.72);
-}
-.niche::after{ /* keystone tick */
-  content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%);
-  width:12px;height:12px;background:var(--orange);border-radius:2px;
-}
-.niche img{
-  width:100%;height:100%;object-fit:cover;display:block;
-  border-radius:50% 50% 4px 4px / 36% 36% 4px 4px;
-  background:#6b3423;
-  filter:saturate(.86) contrast(1.03);
-}
-.niche.glyph{display:grid;place-items:center}
-.niche.glyph .inner{
-  width:100%;height:100%;border-radius:50% 50% 4px 4px / 36% 36% 4px 4px;
-  background:linear-gradient(168deg,#f0e4ce 0%,#dcc9a8 100%);
-  display:flex;align-items:center;justify-content:center;padding-bottom:6%;
-}
-/* official Claude mark, unmodified, in its own #D97757 */
-.niche.glyph .mark{
-  width:60%;height:auto;object-fit:contain;border-radius:0;background:none;filter:none;
-}
-.m-name{
-  font-size:clamp(.8rem,1.05vw,1.1rem);font-weight:600;line-height:1.28;letter-spacing:-.012em;
-  min-height:2.56em; /* keeps every role on the same baseline */
-  overflow-wrap:break-word;
-}
-.m-role{font-size:clamp(.7rem,.9vw,.94rem);color:var(--brick);margin-top:.28rem;letter-spacing:.02em}
-
+.wm{width:100%;text-align:center}
 /* second tier: the wider team, carried on a shared springing line */
 .wider{width:100%;display:flex;flex-direction:column;gap:clamp(.7rem,1.7vh,1.3rem)}
 .wider-label{
@@ -216,24 +67,14 @@ h2.tight{max-width:16ch}
   display:block;font-style:normal;font-size:clamp(.66rem,.84vw,.88rem);
   color:var(--brick);margin-top:.18rem;letter-spacing:.02em;
 }
-
 /* a narrow, tall frame: fewer columns and smaller tiles, both tiers alike */
 @media (max-width:760px) and (max-aspect-ratio:1/1){
-  :root{--tile:58px}
+  :root{--tile:58px;--m-name:.7rem;--m-role:.66rem}
   .team,.wider-row{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:1rem}
-  .niche{margin-bottom:.45rem;padding:4px}
-  .niche::after{width:8px;height:8px;top:-4px}
-  .m-name,.wm b{font-size:.7rem}
-  .m-role,.wm i{font-size:.66rem}
+  .niche{margin-bottom:.45rem}
+  .wm b{font-size:.7rem}
+  .wm i{font-size:.66rem}
 }
-
-/* ---------- split layout ---------- */
-.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,6vw,7rem);align-items:center}
-.split.tip{grid-template-columns:1fr 1fr}
-@media (max-aspect-ratio:1/1){
-  .split{grid-template-columns:1fr;gap:clamp(1.6rem,4vh,3rem)}
-}
-
 /* ---------- repeated builds ---------- */
 .repeat{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.9rem,2.4vw,2.4rem);width:100%}
 .rep-col{text-align:center}
@@ -249,34 +90,6 @@ h2.tight{max-width:16ch}
 .leg b.yellow{background:var(--yellow)}
 .leg b.dash{border:1.5px dashed rgba(43,27,18,.4)}
 .leg span{color:var(--ink);font-weight:600}
-
-/* ---------- three cards on an arc ---------- */
-.arcrow{
-  position:relative;display:grid;grid-template-columns:repeat(3,1fr);
-  gap:clamp(1rem,3vw,3rem);align-items:stretch;
-  padding:clamp(1.4rem,4vh,3.2rem) 0 clamp(.6rem,2vh,1.6rem);
-}
-.pier{
-  position:relative;background:rgba(231,216,189,.55);
-  border:1px solid rgba(124,63,42,.26);
-  border-radius:46% 46% 6px 6px / 26% 26% 6px 6px;
-  padding:clamp(1.5rem,3.2vh,2.4rem) clamp(1rem,1.9vw,1.9rem) clamp(1.2rem,2.6vh,2rem);
-  text-align:center;
-  display:flex;flex-direction:column;justify-content:center;
-  transform-origin:50% 100%;
-  box-shadow:0 14px 30px -24px rgba(43,27,18,.6);
-}
-/* the three piers radiate, like voussoirs around a curve */
-.pier:nth-child(1){transform:rotate(-3.4deg) translateY(clamp(8px,1.6vh,20px))}
-.pier:nth-child(2){transform:translateY(calc(-1 * clamp(12px,2.4vh,32px)))}
-.pier:nth-child(3){transform:rotate(3.4deg) translateY(clamp(8px,1.6vh,20px))}
-.pier .num{
-  font-family:var(--serif);font-size:clamp(1.5rem,2.4vw,2.4rem);color:var(--orange);line-height:1;
-  margin-bottom:.5rem;display:block;
-}
-.pier .pt{font-size:clamp(1rem,1.62vw,1.72rem);line-height:1.32;font-weight:500;letter-spacing:-.01em}
-.pier .ps{font-size:clamp(.78rem,1.02vw,1.04rem);color:var(--brick);margin-top:.55rem;line-height:1.4}
-
 /* ---------- big number ---------- */
 .punch{display:flex;align-items:baseline;gap:clamp(1rem,3vw,3rem);flex-wrap:wrap;justify-content:center}
 .was{
@@ -330,40 +143,6 @@ h2.tight{max-width:16ch}
 .stepdots{display:flex;gap:8px;align-items:center}
 .stepdots b{width:26px;height:9px;border-radius:2px;background:var(--ink-14)}
 .stepdots b.on{background:var(--orange)}
-
-/* ---------- closing ---------- */
-.closing .lead{max-width:30ch}
-.sign{display:flex;gap:.7rem;align-items:center;color:var(--brick);font-size:clamp(.8rem,1.05vw,1.08rem);letter-spacing:.2em;text-transform:uppercase;font-weight:600}
-
-/* ---------- HUD ---------- */
-.hud{
-  position:fixed;left:var(--pad-x);right:var(--pad-x);bottom:clamp(16px,3vh,30px);
-  z-index:50;display:flex;align-items:center;justify-content:space-between;gap:2rem;
-  pointer-events:none;
-}
-.ticks{display:flex;gap:4px;align-items:center}
-.ticks b{width:12px;height:4px;border-radius:2px;background:rgba(43,27,18,.16);transition:background .3s var(--ease)}
-.ticks b.on{background:rgba(124,63,42,.72)}
-.nav{display:flex;gap:8px;pointer-events:auto;opacity:.5;transition:opacity .25s var(--ease)}
-.nav:hover{opacity:1}
-.nav button{
-  width:34px;height:34px;padding:0 0 2px;
-  border:1px solid rgba(124,63,42,.32);
-  border-radius:50% 50% 4px 4px / 62% 62% 4px 4px;
-  background:rgba(231,216,189,.42);color:var(--brick);
-  font:inherit;font-size:1.05rem;line-height:1;cursor:pointer;
-  display:grid;place-items:center;
-  transition:background .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease);
-}
-.nav button:hover{background:rgba(231,216,189,.92);border-color:var(--brick)}
-.nav button:active{transform:translateY(1px)}
-.nav button:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
-.count{font-size:.82rem;letter-spacing:.14em;color:var(--ink-38);font-variant-numeric:tabular-nums;font-weight:600}
-.count b{color:var(--brick)}
-
-@media (prefers-reduced-motion:reduce){
-  *{transition-duration:.01ms !important;animation-duration:.01ms !important;transition-delay:0ms !important}
-}
 </style>
 </head>
 <body>

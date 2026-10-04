@@ -1,0 +1,40 @@
+/* ---------- arch (rowlock voussoirs) ---------- */
+.arch{position:relative;width:100%;margin-inline:auto}
+.vsr{position:absolute;left:50%;bottom:0;transform-origin:50% 100%;display:block}
+.vsr > i{
+  position:absolute;top:0;left:0;right:0;display:block;
+  background:linear-gradient(180deg,var(--brick) 0%,var(--brick-deep) 100%);
+  border-radius:1.5px;
+  box-shadow:inset 0 1px 0 rgba(231,216,189,.22);
+  opacity:0;transform:scale(.86);
+  transition:opacity .5s var(--ease), transform .5s var(--ease);
+  transition-delay:calc(var(--i) * 34ms + 160ms);
+}
+.is-active .vsr > i{opacity:1;transform:none}
+.vsr.is-ghost > i{
+  background:none;border:1.5px dashed rgba(43,27,18,.34);box-shadow:none;
+}
+.vsr.is-new > i{background:linear-gradient(180deg,var(--yellow) 0%,var(--yellow-lo) 100%)}
+.vsr.is-key > i{background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%)}
+.arch.flat .vsr > i{transition-delay:0ms}
+/* the search hit: one stone pulled clear of the curve */
+.vsr.is-lift > i{
+  background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%);
+  box-shadow:0 10px 20px -10px rgba(85,39,26,.55), inset 0 1px 0 rgba(231,216,189,.3);
+}
+.vsr.is-lift{filter:drop-shadow(0 0 0 transparent)}
+/* springing line under an arch */
+.plinth{height:10px;background:var(--brick-deep);border-radius:2px;opacity:.9}
+.plinth.thin{height:6px}
+/* ---------- loose bricks: the order list before it has an owner ---------- */
+.loose{position:relative;width:100%}
+.lb{
+  position:absolute;display:block;border-radius:1.5px;
+  background:linear-gradient(180deg,var(--brick) 0%,var(--brick-deep) 100%);
+  box-shadow:inset 0 1px 0 rgba(231,216,189,.22);
+  opacity:0;transform:scale(.8);
+  transition:opacity .5s var(--ease), transform .55s var(--ease);
+  transition-delay:calc(var(--i) * 26ms + 140ms);
+}
+.is-active .lb{opacity:1;transform:none}
+.lb.pale{background:linear-gradient(180deg,var(--kraft-lo) 0%,#b1946a 100%)}

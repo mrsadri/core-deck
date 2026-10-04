@@ -1,0 +1,55 @@
+/* ---------- the member tile ---------- */
+/* One niche, shared by every deck, sized by three deck tokens:
+   --tile, --m-name and --m-role. A niche holds a photo, the Claude
+   glyph, or a pending marker. */
+.member{width:100%;text-align:center}
+.niche{
+  position:relative;aspect-ratio:3/4;width:100%;
+  max-width:var(--tile);margin:0 auto .9rem;padding:6px;
+  border-radius:50% 50% 7px 7px / 37% 37% 7px 7px;
+  background:linear-gradient(165deg,var(--brick) 0%,var(--brick-deep) 100%);
+  box-shadow:0 12px 26px -16px rgba(43,27,18,.72);
+}
+.niche::after{ /* keystone tick */
+  content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%);
+  width:12px;height:12px;background:var(--orange);border-radius:2px;
+}
+.niche img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  border-radius:50% 50% 4px 4px / 36% 36% 4px 4px;
+  background:#6b3423;
+  filter:saturate(.86) contrast(1.03);
+}
+.niche.glyph{display:grid;place-items:center}
+.niche.glyph .inner{
+  width:100%;height:100%;border-radius:50% 50% 4px 4px / 36% 36% 4px 4px;
+  background:linear-gradient(168deg,#f0e4ce 0%,#dcc9a8 100%);
+  display:flex;align-items:center;justify-content:center;padding-bottom:6%;
+}
+/* official Claude mark, unmodified, in its own #D97757 */
+.niche.glyph .mark{
+  width:60%;height:auto;object-fit:contain;border-radius:0;background:none;filter:none;
+}
+/* a face we do not have yet, in the same pending voice as the screenshots */
+.niche.is-pending{background:none;border:2px dotted var(--orange);padding:4px}
+.niche.is-pending::after{background:var(--orange);opacity:.5}
+.niche.is-pending .inner{
+  width:100%;height:100%;border-radius:50% 50% 4px 4px / 36% 36% 4px 4px;
+  background:repeating-linear-gradient(135deg, rgba(217,119,87,.08) 0 10px, rgba(217,119,87,0) 10px 20px), rgba(231,216,189,.6);
+  display:grid;place-items:center;padding:8% 6%;
+}
+.niche.is-pending .tag{
+  font-size:clamp(.5rem,.66vw,.68rem);letter-spacing:.14em;text-transform:uppercase;
+  font-weight:600;color:var(--orange);line-height:1.3;
+}
+.m-name{
+  font-size:var(--m-name);font-weight:600;line-height:1.28;letter-spacing:-.012em;
+  min-height:2.56em; /* keeps every role on the same baseline */
+  overflow-wrap:break-word;
+}
+.m-role{font-size:var(--m-role);color:var(--brick);margin-top:.28rem;letter-spacing:.02em}
+/* a narrow, tall frame */
+@media (max-width:760px) and (max-aspect-ratio:1/1){
+  .niche{padding:4px}
+  .niche::after{width:8px;height:8px;top:-4px}
+}
