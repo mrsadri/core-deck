@@ -66,6 +66,29 @@ const RULES = [
       ? 'declares or fetches a web font'
       : null
   }
+  ,
+  {
+    name: 'no var',
+    applies: isDeckScript,
+    check: text => /\bvar\s/.test(text) ? 'declares a var' : null
+  },
+  {
+    name: 'nothing at column zero',
+    applies: file => file.startsWith('engine/js/'),
+    check: text => /^(var|let|const|function)\s/m.test(text)
+      ? 'declares something outside the wrapper'
+      : null
+  },
+  {
+    name: 'at most one top level const',
+    applies: file => isDeckScript(file) && !file.startsWith('engine/js/'),
+    check: text => {
+      const tops = text.match(/^(var|let|const|function)\s/gm) || [];
+      if (tops.length > 1) return `${tops.length} top level declarations, limit 1`;
+      if (tops.some(top => !top.startsWith('const'))) return 'a top level declaration is not a const';
+      return null;
+    }
+  }
   // Later stages append their rules here.
 ];
 
