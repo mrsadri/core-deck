@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Customers | BimeBazar partner panel</title>
+<meta name="description" content="A design review of Customer Management, a new section of the BimeBazar partner panel.">
+<meta name="author" content="Shoraka">
+<meta name="theme-color" content="#D8C3A2">
+<meta property="og:type" content="website">
+<meta property="og:title" content="My Customers | BimeBazar partner panel">
+<meta property="og:description" content="A design review of Customer Management, a new section of the BimeBazar partner panel.">
+<meta property="og:image" content="https://mrsadri.github.io/core-deck/assets/og.jpg">
+<meta property="og:url" content="https://mrsadri.github.io/core-deck/customers/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<style>
+/* ============================================================
+   MY CUSTOMERS / BimeBazar partner panel
+   A sibling of Core. Same rowlock arch, same palette, same type.
+   Here the bricks carry a second argument: loose bricks are orders,
+   an arch is a customer record, and a lifted brick is a search hit.
+   ============================================================ */
+
+:root{
+  --kraft:        #d8c3a2;
+  --kraft-hi:     #e7d8bd;
+  --kraft-lo:     #c3a77e;
+  --brick:        #7c3f2a;
+  --brick-deep:   #55271a;
+  --yellow:       #c1872a;
+  --yellow-lo:    #9c6c1d;
+  --orange:       #d97757;
+  --ink:          #2b1b12;
+  --ink-60:       rgba(43,27,18,.62);
+  --ink-38:       rgba(43,27,18,.38);
+  --ink-14:       rgba(43,27,18,.14);
+
+  --serif: "Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Times New Roman",serif;
+  --sans: -apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+
+  --ease: cubic-bezier(.2,.72,.2,1);
+  --pad-y: 7vh;
+  --pad-x: 7vw;
+  --tile: min(204px, 24vh);
+
+  /* the panel screenshot frame. Change this one value if the real
+     captures come back at a different size. */
+  --shot-ratio: 1280 / 832;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+
+body{
+  background-color:var(--kraft);
+  background-image:
+    radial-gradient(120% 90% at 50% 0%, rgba(231,216,189,.55) 0%, rgba(231,216,189,0) 58%),
+    radial-gradient(100% 80% at 50% 108%, rgba(85,39,26,.16) 0%, rgba(85,39,26,0) 60%);
+  color:var(--ink);
+  font-family:var(--sans);
+  overflow:hidden;
+  cursor:default;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* paper grain */
+body::after{
+  content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
+  opacity:.42;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+/* ---------- deck shell ---------- */
+.deck{position:fixed;inset:0}
+
+.slide{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  padding:var(--pad-y) var(--pad-x) calc(var(--pad-y) + 24px);
+  opacity:0;visibility:hidden;
+  transition:opacity .40s var(--ease), visibility 0s .40s;
+}
+.slide.is-active{opacity:1;visibility:visible;transition:opacity .40s var(--ease)}
+.wrap{width:min(1440px,100%)}
+
+/* enter animation */
+[data-anim]{
+  opacity:0;transform:translateY(18px);
+  transition:opacity .55s var(--ease), transform .55s var(--ease);
+  transition-delay:calc(var(--d,0) * 65ms);
+}
+.is-active [data-anim]{opacity:1;transform:none}
+
+/* ---------- type ---------- */
+.eyebrow{
+  font-family:var(--sans);
+  font-size:clamp(.7rem,.92vw,1rem);
+  font-weight:600;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--yellow-lo);
+  display:flex;align-items:center;gap:.85em;
+}
+.eyebrow::before{content:"";width:clamp(20px,2.6vw,42px);height:7px;background:var(--orange);border-radius:1px;flex:none}
+
+h1{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(3.2rem,10vw,11.5rem);line-height:.86;letter-spacing:-.035em;
+}
+h2{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(2.4rem,5.7vw,6.1rem);line-height:1.0;letter-spacing:-.022em;
+  max-width:20ch;text-wrap:balance;
+}
+h2.tight{max-width:16ch}
+h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
+.lead{
+  font-size:clamp(1.05rem,1.95vw,2.05rem);line-height:1.42;
+  color:var(--ink-60);max-width:34ch;font-weight:400;text-wrap:pretty;
+}
+.lead.sm{font-size:clamp(.95rem,1.45vw,1.5rem);max-width:38ch}
+.support{
+  font-size:clamp(.9rem,1.3vw,1.32rem);line-height:1.5;
+  color:var(--brick);max-width:40ch;
+}
+.farsi{font-size:.42em;color:var(--brick);letter-spacing:0;display:block;margin-top:.5em;font-family:var(--sans)}
+/* a Persian run inside an English line, kept from dragging the punctuation with it */
+.fa{unicode-bidi:isolate;direction:rtl}
+.stack{display:flex;flex-direction:column;gap:clamp(1rem,2.2vh,1.9rem);align-items:flex-start}
+.stack.center{align-items:center;text-align:center}
+.stack.center .eyebrow{justify-content:center}
+.stack.center .lead{max-width:38ch}
+.stack.narrow{gap:clamp(.7rem,1.5vh,1.2rem)}
+
+/* ---------- arch (rowlock voussoirs) ---------- */
+.arch{position:relative;width:100%;margin-inline:auto}
+.vsr{position:absolute;left:50%;bottom:0;transform-origin:50% 100%;display:block}
+.vsr > i{
+  position:absolute;top:0;left:0;right:0;display:block;
+  background:linear-gradient(180deg,var(--brick) 0%,var(--brick-deep) 100%);
+  border-radius:1.5px;
+  box-shadow:inset 0 1px 0 rgba(231,216,189,.22);
+  opacity:0;transform:scale(.86);
+  transition:opacity .5s var(--ease), transform .5s var(--ease);
+  transition-delay:calc(var(--i) * 34ms + 160ms);
+}
+.is-active .vsr > i{opacity:1;transform:none}
+.vsr.is-ghost > i{
+  background:none;border:1.5px dashed rgba(43,27,18,.34);box-shadow:none;
+}
+.vsr.is-new > i{background:linear-gradient(180deg,var(--yellow) 0%,var(--yellow-lo) 100%)}
+.vsr.is-key > i{background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%)}
+/* the search hit: one stone pulled clear of the curve */
+.vsr.is-lift > i{
+  background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%);
+  box-shadow:0 10px 20px -10px rgba(85,39,26,.55), inset 0 1px 0 rgba(231,216,189,.3);
+}
+.vsr.is-lift{filter:drop-shadow(0 0 0 transparent)}
+.plinth{height:10px;background:var(--brick-deep);border-radius:2px;opacity:.9}
+.plinth.thin{height:6px}
+
+/* ---------- loose bricks: the order list before it has an owner ---------- */
+.loose{position:relative;width:100%}
+.lb{
+  position:absolute;display:block;border-radius:1.5px;
+  background:linear-gradient(180deg,var(--brick) 0%,var(--brick-deep) 100%);
+  box-shadow:inset 0 1px 0 rgba(231,216,189,.22);
+  opacity:0;transform:scale(.8);
+  transition:opacity .5s var(--ease), transform .55s var(--ease);
+  transition-delay:calc(var(--i) * 26ms + 140ms);
+}
+.is-active .lb{opacity:1;transform:none}
+.lb.pale{background:linear-gradient(180deg,var(--kraft-lo) 0%,#b1946a 100%)}
+
+/* ---------- the motif slot on a solution slide ---------- */
+.motif{width:min(300px,26vw);margin-top:.4rem}
+.motif-wide{width:min(560px,46vw)}
+.motif-cap{
+  font-size:clamp(.68rem,.86vw,.92rem);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-38);font-weight:600;margin-top:.7rem;
+}
+
+/* ---------- problem to solution layout ---------- */
+.sol{display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(1.6rem,4.5vw,5rem);align-items:center}
+.pnote{
+  display:flex;gap:.8rem;align-items:flex-start;
+  font-size:clamp(.88rem,1.22vw,1.26rem);line-height:1.42;
+  color:var(--brick);max-width:34ch;
+}
+.pnote::before{
+  content:"";flex:none;width:4px;align-self:stretch;min-height:1.4em;
+  background:rgba(124,63,42,.38);border-radius:2px;
+}
+.pnote b{font-weight:600;letter-spacing:.16em;text-transform:uppercase;font-size:.78em;color:var(--yellow-lo);display:block;margin-bottom:.25em}
+
+/* ---------- screenshot frame ---------- */
+.shot{
+  position:relative;width:100%;aspect-ratio:var(--shot-ratio);
+  border-radius:8px;overflow:hidden;
+  background:rgba(231,216,189,.5);
+  border:1px solid rgba(124,63,42,.3);
+  box-shadow:0 22px 44px -30px rgba(43,27,18,.7);
+}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:50% 0;display:block}
+/* pending state: dotted accent, in the same voice as Core's TO CONFIRM */
+.shot.is-pending{
+  border:2px dotted var(--orange);
+  background:
+    repeating-linear-gradient(135deg, rgba(217,119,87,.07) 0 12px, rgba(217,119,87,0) 12px 24px),
+    rgba(231,216,189,.55);
+  display:grid;place-items:center;
+}
+.shot-pending{display:flex;flex-direction:column;align-items:center;gap:.7rem;text-align:center;padding:1.2rem}
+.shot-pending .tag{
+  font-size:clamp(.62rem,.82vw,.86rem);letter-spacing:.2em;text-transform:uppercase;
+  font-weight:600;color:var(--orange);
+  border:1px solid var(--orange);border-radius:2px;padding:.35em .7em;
+}
+.shot-pending .what{font-size:clamp(.8rem,1.08vw,1.1rem);color:var(--brick);max-width:26ch;line-height:1.4}
+.shot-pending .key{font-family:var(--serif);font-size:clamp(1.1rem,1.9vw,2rem);color:var(--ink-38);letter-spacing:.02em}
+.shot-ratio-note{
+  position:absolute;bottom:.55rem;right:.7rem;
+  font-size:clamp(.56rem,.72vw,.74rem);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-38);font-variant-numeric:tabular-nums;
+}
+
+/* ---------- beyond phase one badge ---------- */
+.beyond{
+  display:inline-flex;align-items:center;gap:.5em;
+  font-size:clamp(.62rem,.82vw,.86rem);letter-spacing:.2em;text-transform:uppercase;font-weight:600;
+  color:var(--brick);border:1.5px dashed rgba(124,63,42,.5);border-radius:2px;padding:.4em .75em;
+}
+.beyond::before{content:"";width:9px;height:9px;border:1.5px dashed var(--brick);border-radius:1px;flex:none}
+
+/* ---------- team ---------- */
+.team3{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(1rem,3vw,3.4rem);justify-items:center;width:min(760px,100%);margin-inline:auto;
+}
+.member{width:100%;text-align:center}
+.niche{
+  position:relative;aspect-ratio:3/4;width:100%;
+  max-width:var(--tile);margin:0 auto .9rem;padding:6px;
+  border-radius:50% 50% 7px 7px / 37% 37% 7px 7px;
+  background:linear-gradient(165deg,var(--brick) 0%,var(--brick-deep) 100%);
+  box-shadow:0 12px 26px -16px rgba(43,27,18,.72);
+}
+.niche::after{
+  content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%);
+  width:12px;height:12px;background:var(--orange);border-radius:2px;
+}
+.niche img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  border-radius:50% 50% 4px 4px / 36% 36% 4px 4px;
+  background:#6b3423;
+  filter:saturate(.86) contrast(1.03);
+}
+/* a face we do not have yet, in the same pending voice as the screenshots */
+.niche.is-pending{background:none;border:2px dotted var(--orange);padding:4px}
+.niche.is-pending::after{background:var(--orange);opacity:.5}
+.niche.is-pending .inner{
+  width:100%;height:100%;border-radius:50% 50% 4px 4px / 36% 36% 4px 4px;
+  background:repeating-linear-gradient(135deg, rgba(217,119,87,.08) 0 10px, rgba(217,119,87,0) 10px 20px), rgba(231,216,189,.6);
+  display:grid;place-items:center;padding:8% 6%;
+}
+.niche.is-pending .tag{
+  font-size:clamp(.5rem,.66vw,.68rem);letter-spacing:.14em;text-transform:uppercase;
+  font-weight:600;color:var(--orange);line-height:1.3;
+}
+.m-name{
+  font-size:clamp(.86rem,1.15vw,1.22rem);font-weight:600;line-height:1.28;letter-spacing:-.012em;
+  min-height:2.56em;overflow-wrap:break-word;
+}
+.m-role{font-size:clamp(.74rem,.95vw,1rem);color:var(--brick);margin-top:.28rem;letter-spacing:.02em}
+
+/* project details under the team */
+.proj{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.9rem,2.4vw,2.6rem);width:100%;margin-top:.3rem;
+  border-top:1px solid rgba(124,63,42,.24);padding-top:clamp(.9rem,2.2vh,1.6rem);
+}
+.pj{text-align:center}
+.pj .k{font-size:clamp(.6rem,.8vw,.84rem);letter-spacing:.22em;text-transform:uppercase;color:var(--yellow-lo);font-weight:600}
+.pj .v{font-family:var(--serif);font-size:clamp(1rem,1.6vw,1.7rem);line-height:1.2;margin-top:.35rem;letter-spacing:-.01em}
+.pj .v small{display:block;font-family:var(--sans);font-size:.62em;color:var(--brick);letter-spacing:0;margin-top:.3em}
+
+/* ---------- split layout ---------- */
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,6vw,7rem);align-items:center}
+.split.tip{grid-template-columns:1fr 1fr}
+
+/* ---------- three cards on an arc ---------- */
+.arcrow{
+  position:relative;display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(1rem,3vw,3rem);align-items:stretch;
+  padding:clamp(1.4rem,4vh,3.2rem) 0 clamp(.6rem,2vh,1.6rem);
+}
+.pier{
+  position:relative;background:rgba(231,216,189,.55);
+  border:1px solid rgba(124,63,42,.26);
+  border-radius:46% 46% 6px 6px / 26% 26% 6px 6px;
+  padding:clamp(1.5rem,3.2vh,2.4rem) clamp(1rem,1.9vw,1.9rem) clamp(1.2rem,2.6vh,2rem);
+  text-align:center;
+  display:flex;flex-direction:column;justify-content:center;
+  transform-origin:50% 100%;
+  box-shadow:0 14px 30px -24px rgba(43,27,18,.6);
+}
+.pier:nth-child(1){transform:rotate(-3.4deg) translateY(clamp(8px,1.6vh,20px))}
+.pier:nth-child(2){transform:translateY(calc(-1 * clamp(12px,2.4vh,32px)))}
+.pier:nth-child(3){transform:rotate(3.4deg) translateY(clamp(8px,1.6vh,20px))}
+.pier .num{
+  font-family:var(--serif);font-size:clamp(1.5rem,2.4vw,2.4rem);color:var(--orange);line-height:1;
+  margin-bottom:.5rem;display:block;
+}
+.pier .pt{font-size:clamp(1rem,1.62vw,1.72rem);line-height:1.32;font-weight:500;letter-spacing:-.01em}
+.pier .ps{font-size:clamp(.78rem,1.02vw,1.04rem);color:var(--brick);margin-top:.55rem;line-height:1.4}
+
+/* ---------- the six problems ---------- */
+.plist{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.8rem,2.2vw,2.2rem) clamp(1rem,2.6vw,2.8rem);width:100%;text-align:left;
+}
+.pitem{display:flex;gap:.75rem;align-items:flex-start}
+.pitem .n{
+  font-family:var(--serif);font-size:clamp(.92rem,1.3vw,1.4rem);color:var(--orange);
+  line-height:1.2;flex:none;padding-top:.05em;
+}
+.pitem .t{font-size:clamp(.88rem,1.22vw,1.28rem);line-height:1.36;letter-spacing:-.008em}
+
+/* ---------- returning vs new ---------- */
+.twoarch{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,3vw,2.6rem);align-items:end;width:100%}
+.ta{text-align:center}
+.ta .lbl{font-size:clamp(.66rem,.86vw,.9rem);letter-spacing:.2em;text-transform:uppercase;color:var(--brick);font-weight:600;margin-top:.7rem}
+.ta.is-new .lbl{color:var(--yellow-lo)}
+
+/* ---------- phase one scope ---------- */
+.scope{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.9rem,2.4vw,2.4rem) clamp(1rem,2.8vw,3rem);width:100%;text-align:left}
+.sc{display:flex;flex-direction:column;gap:.3rem}
+.sc .f{font-size:clamp(.62rem,.82vw,.86rem);letter-spacing:.2em;text-transform:uppercase;color:var(--yellow-lo);font-weight:600}
+.sc .t{font-size:clamp(.9rem,1.24vw,1.3rem);line-height:1.34;letter-spacing:-.008em}
+.sc .b{width:30px;height:6px;border-radius:2px;background:var(--brick);margin-bottom:.2rem}
+.sc.sup .b{background:none;border:1.5px dashed rgba(124,63,42,.5);height:6px}
+.sc.sup .f{color:var(--brick)}
+.sc.sup .t{color:var(--ink-60)}
+
+/* ---------- closing ---------- */
+.closing .lead{max-width:30ch}
+.sign{display:flex;gap:.7rem;align-items:center;color:var(--brick);font-size:clamp(.8rem,1.05vw,1.08rem);letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+.title-grid{display:grid;gap:clamp(1.4rem,3.4vh,2.6rem);justify-items:center;text-align:center}
+.title-arch{width:min(560px,58vw)}
+.hint{
+  font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-38);
+  animation:fade 6s ease forwards;animation-delay:2.4s;
+}
+@keyframes fade{to{opacity:0}}
+
+/* ---------- HUD ---------- */
+.hud{
+  position:fixed;left:var(--pad-x);right:var(--pad-x);bottom:clamp(16px,3vh,30px);
+  z-index:50;display:flex;align-items:center;justify-content:space-between;gap:2rem;
+  pointer-events:none;
+}
+.ticks{display:flex;gap:4px;align-items:center}
+.ticks b{width:12px;height:4px;border-radius:2px;background:rgba(43,27,18,.16);transition:background .3s var(--ease)}
+.ticks b.on{background:rgba(124,63,42,.72)}
+.nav{display:flex;gap:8px;pointer-events:auto;opacity:.5;transition:opacity .25s var(--ease)}
+.nav:hover{opacity:1}
+.nav button{
+  width:34px;height:34px;padding:0 0 2px;
+  border:1px solid rgba(124,63,42,.32);
+  border-radius:50% 50% 4px 4px / 62% 62% 4px 4px;
+  background:rgba(231,216,189,.42);color:var(--brick);
+  font:inherit;font-size:1.05rem;line-height:1;cursor:pointer;
+  display:grid;place-items:center;
+  transition:background .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease);
+}
+.nav button:hover{background:rgba(231,216,189,.92);border-color:var(--brick)}
+.nav button:active{transform:translateY(1px)}
+.nav button:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+.count{font-size:.82rem;letter-spacing:.14em;color:var(--ink-38);font-variant-numeric:tabular-nums;font-weight:600}
+.count b{color:var(--brick)}
+
+/* ---------- narrow and tall frames ---------- */
+@media (max-aspect-ratio:1/1){
+  .split{grid-template-columns:1fr;gap:clamp(1.6rem,4vh,3rem)}
+  .sol{grid-template-columns:1fr;gap:clamp(1.2rem,3vh,2.2rem)}
+  .sol .shot{order:-1}
+  .motif{width:min(240px,42vw)}
+  .motif-wide{width:min(420px,70vw)}
+  .plist{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .scope{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .arcrow{grid-template-columns:1fr;gap:.8rem;padding-top:1.2rem}
+  .pier:nth-child(1),.pier:nth-child(2),.pier:nth-child(3){transform:none}
+  .proj{grid-template-columns:1fr;gap:1rem;text-align:center}
+}
+@media (max-width:760px) and (max-aspect-ratio:1/1){
+  :root{--tile:84px}
+  .team3{gap:.8rem}
+  .niche{margin-bottom:.5rem;padding:4px}
+  .niche::after{width:8px;height:8px;top:-4px}
+  .m-name{font-size:.78rem}
+  .m-role{font-size:.7rem}
+  .plist{grid-template-columns:1fr;gap:.7rem}
+  .scope{grid-template-columns:1fr;gap:.7rem}
+}
+
+/* on a phone the tick row crowded the counter off the edge */
+@media (max-width:760px){
+  .hud{gap:.7rem}
+  .ticks{flex:0 1 auto;min-width:0;overflow:hidden}
+  .ticks b{width:7px;flex:none}
+  .nav,.count{flex:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:.01ms !important;animation-duration:.01ms !important;transition-delay:0ms !important}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- 01 TITLE -->
+  <section class="slide">
+    <div class="wrap title-grid">
+      <div class="eyebrow" data-anim>BimeBazar &nbsp;/&nbsp; Partner panel &nbsp;/&nbsp; Design review</div>
+      <h1 data-anim>My Customers<span class="farsi fa">مشتریان من</span></h1>
+      <div class="title-arch" data-anim><div class="arch" data-bricks="15" data-depth=".2" data-key="1"></div><div class="plinth"></div></div>
+      <p class="lead" data-anim style="max-width:40ch">The panel stops listing orders and starts knowing people.</p>
+      <p class="hint" data-anim>A walk through the design, then your feedback</p>
+    </div>
+  </section>
+
+  <!-- 02 TEAM AND PROJECT -->
+  <section class="slide">
+    <div class="wrap stack center">
+      <div class="eyebrow" data-anim>The team and the project</div>
+      <div class="team3" data-anim>
+        <div class="member">
+          <div class="niche" data-photo="ghazaleh" data-alt="Ghazaleh Ebrahimi"></div>
+          <div class="m-name">Ghazaleh<br>Ebrahimi</div><div class="m-role">Product Designer</div>
+        </div>
+        <div class="member">
+          <div class="niche" data-photo="mehdi" data-alt="Mehdi Mohammad Rezaei" data-pos="58% 38%"></div>
+          <div class="m-name">Mehdi<br>Mohammad Rezaei</div><div class="m-role">Tech Lead</div>
+        </div>
+        <div class="member">
+          <div class="niche" data-photo="masih" data-alt="Masih Sadri" data-pos="48% 26%"></div>
+          <div class="m-name">Masih<br>Sadri</div><div class="m-role">Product Manager</div>
+        </div>
+      </div>
+      <div class="proj" data-anim>
+        <div class="pj"><div class="k">The project</div><div class="v">Customer Management<small>A new section, <span class="fa">مشتریان من</span></small></div></div>
+        <div class="pj"><div class="k">Where it lives</div><div class="v">Partner panel<small><span class="fa">پنل شرکا</span></small></div></div>
+        <div class="pj"><div class="k">Who uses it</div><div class="v">Partners<small>Independent sellers who register orders and earn commission</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 PURPOSE AND AGENDA -->
+  <section class="slide">
+    <div class="wrap stack center">
+      <div class="eyebrow" data-anim>Why we are here</div>
+      <h2 class="tight" data-anim>Review the design before we build it.</h2>
+      <div class="arcrow" data-anim style="--d:2;width:100%">
+        <div class="pier"><span class="num">01</span><div class="pt">The problems we heard</div><div class="ps">A short review of what partners told us</div></div>
+        <div class="pier"><span class="num">02</span><div class="pt">The design</div><div class="ps">Customer Management, screen by screen</div></div>
+        <div class="pier"><span class="num">03</span><div class="pt">Your feedback</div><div class="ps">Whether this fits the way you work</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 THE PROBLEMS -->
+  <section class="slide">
+    <div class="wrap stack center">
+      <div class="eyebrow" data-anim>What we found</div>
+      <h2 class="tight" data-anim>Six problems, one missing piece.</h2>
+      <div class="motif-wide" data-anim style="--d:2;width:min(620px,60vw);margin-top:.5rem">
+        <div class="loose" data-loose="20" data-rows="3"></div>
+        <div class="plinth thin"></div>
+        <div class="motif-cap">Orders, and no one to attach them to</div>
+      </div>
+      <div class="plist" data-anim style="--d:3">
+        <div class="pitem"><span class="n">01</span><span class="t">Work revolves around the order list, not the customer.</span></div>
+        <div class="pitem"><span class="n">02</span><span class="t">Finding one customer takes too long.</span></div>
+        <div class="pitem"><span class="n">03</span><span class="t">A customer's information is out of reach.</span></div>
+        <div class="pitem"><span class="n">04</span><span class="t">After an order, returning or new is unclear.</span></div>
+        <div class="pitem"><span class="n">05</span><span class="t">Installments and purchase history are hard to read.</span></div>
+        <div class="pitem"><span class="n">06</span><span class="t">Calls and notes still live in a paper diary.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 P1 to F1 -->
+  <section class="slide">
+    <div class="wrap sol">
+      <div class="stack narrow">
+        <div class="eyebrow" data-anim>Problem 01 &nbsp;/&nbsp; F1</div>
+        <div class="pnote" data-anim style="--d:1"><span><b>Today</b>Work revolves around the order list, not the customer.</span></div>
+        <h2 class="sm" data-anim style="--d:2">Every order belongs to a customer.</h2>
+        <p class="lead sm" data-anim style="--d:3">Each order is linked to one customer record, so the panel has someone to organise around.</p>
+        <div class="motif-wide" data-anim style="--d:4;width:min(400px,36vw)">
+          <div class="twoarch">
+            <div class="ta">
+              <div class="loose" data-loose="9" data-rows="3"></div>
+              <div class="plinth thin"></div>
+              <div class="lbl">Loose orders</div>
+            </div>
+            <div class="ta">
+              <div class="arch" data-bricks="9" data-depth=".26" data-key="1"></div>
+              <div class="plinth thin"></div>
+              <div class="lbl">One record</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-anim style="--d:2"><div class="shot" data-shot="p1_f1" data-what="An order showing the customer record it is linked to"></div></div>
+    </div>
+  </section>
+
+  <!-- 06 P2 to F2 -->
+  <section class="slide">
+    <div class="wrap sol">
+      <div class="stack narrow">
+        <div class="eyebrow" data-anim>Problem 02 &nbsp;/&nbsp; F2</div>
+        <div class="pnote" data-anim style="--d:1"><span><b>Today</b>Finding a specific customer takes too long.</span></div>
+        <h2 class="sm" data-anim style="--d:2">Find anyone in one search.</h2>
+        <p class="lead sm" data-anim style="--d:3">The customer list searches by name, national ID, phone number and licence plate.</p>
+        <div class="motif" data-anim style="--d:4">
+          <div class="arch" data-bricks="13" data-depth=".22" data-lift="6"></div>
+          <div class="plinth thin"></div>
+          <div class="motif-cap">One stone, pulled clear</div>
+        </div>
+      </div>
+      <div data-anim style="--d:2"><div class="shot" data-shot="p2_f2" data-what="The customer list with a search in progress"></div></div>
+    </div>
+  </section>
+
+  <!-- 07 P3 to F3 -->
+  <section class="slide">
+    <div class="wrap sol">
+      <div class="stack narrow">
+        <div class="eyebrow" data-anim>Problem 03 &nbsp;/&nbsp; F3</div>
+        <div class="pnote" data-anim style="--d:1"><span><b>Today</b>Policies, documents, installments and contact details are not easily accessible.</span></div>
+        <h2 class="sm" data-anim style="--d:2">One page holds the whole customer.</h2>
+        <p class="lead sm" data-anim style="--d:3">A comprehensive profile, with everything the partner knows about that person in one place.</p>
+        <div class="motif" data-anim style="--d:4">
+          <div class="arch" data-bricks="13" data-depth=".22" data-key="1"></div>
+          <div class="plinth thin"></div>
+          <div class="motif-cap">Scattered bricks, gathered into one span</div>
+        </div>
+      </div>
+      <div data-anim style="--d:2"><div class="shot" data-shot="p3_f3" data-what="The customer profile page"></div></div>
+    </div>
+  </section>
+
+  <!-- 08 P3 to F5 -->
+  <section class="slide">
+    <div class="wrap sol">
+      <div class="stack narrow">
+        <div class="eyebrow" data-anim>Problem 03 &nbsp;/&nbsp; F5</div>
+        <div class="pnote" data-anim style="--d:1"><span><b>Today</b>A customer's policies and documents are spread across separate orders.</span></div>
+        <h2 class="sm" data-anim style="--d:2">Every policy in one place.</h2>
+        <p class="lead sm" data-anim style="--d:3">All of a customer's policies on the profile, each with its status and a file to download.</p>
+        <div class="motif" data-anim style="--d:4">
+          <div class="arch" data-bricks="13" data-depth=".22" data-new="5"></div>
+          <div class="plinth thin"></div>
+          <div class="motif-cap">The policies, shelved together</div>
+        </div>
+      </div>
+      <div data-anim style="--d:2"><div class="shot" data-shot="p3_f5" data-what="The policies list on the customer profile, with status and download"></div></div>
+    </div>
+  </section>
+
+  <!-- 09 P4 to F4 -->
+  <section class="slide">
+    <div class="wrap sol">
+      <div class="stack narrow">
+        <div class="eyebrow" data-anim>Problem 04 &nbsp;/&nbsp; F4</div>
+        <div class="pnote" data-anim style="--d:1"><span><b>Today</b>After an order is placed, it is unclear whether the customer is returning or new.</span></div>
+        <h2 class="sm" data-anim style="--d:2">Returning or new, answered at once.</h2>
+        <p class="lead sm" data-anim style="--d:3">The panel tells the partner which one it is the moment the order is registered.</p>
+        <div class="motif-wide" data-anim style="--d:4;width:min(400px,36vw)">
+          <div class="twoarch">
+            <div class="ta">
+              <div class="arch" data-bricks="9" data-depth=".26"></div>
+              <div class="plinth thin"></div>
+              <div class="lbl">Returning</div>
+            </div>
+            <div class="ta is-new">
+              <div class="arch" data-bricks="9" data-depth=".26" data-fill="2"></div>
+              <div class="plinth thin"></div>
+              <div class="lbl">New</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-anim style="--d:2"><div class="shot" data-shot="p4_f4" data-what="The returning or new signal shown after an order is registered"></div></div>
+    </div>
+  </section>
+
+  <!-- 10 P5 to F6 -->
+  <section class="slide">
+    <div class="wrap sol">
+      <div class="stack narrow">
+        <div class="eyebrow" data-anim>Problem 05 &nbsp;/&nbsp; F6</div>
+        <div class="pnote" data-anim style="--d:1"><span><b>Today</b>A customer's installment and purchase history is not easy to see.</span></div>
+        <h2 class="sm" data-anim style="--d:2">The money, at a glance.</h2>
+        <p class="lead sm" data-anim style="--d:3">A view of the customer's financial status, so what is settled and what is outstanding is readable in a moment.</p>
+        <div class="motif" data-anim style="--d:4">
+          <div class="arch" data-bricks="12" data-depth=".24" data-fill="7"></div>
+          <div class="plinth thin"></div>
+          <div class="motif-cap">Laid, and still to come</div>
+        </div>
+      </div>
+      <div data-anim style="--d:2"><div class="shot" data-shot="p5_f6" data-what="The financial status view on the customer profile"></div></div>
+    </div>
+  </section>
+
+  <!-- 11 P6 to F7, beyond phase 1 -->
+  <section class="slide">
+    <div class="wrap sol">
+      <div class="stack narrow">
+        <div class="eyebrow" data-anim>Problem 06 &nbsp;/&nbsp; F7</div>
+        <div class="beyond" data-anim style="--d:1">Beyond phase 1</div>
+        <div class="pnote" data-anim style="--d:2"><span><b>Today</b>Partners log calls and notes per customer in a physical paper diary.</span></div>
+        <h2 class="sm" data-anim style="--d:3">The paper diary moves in.</h2>
+        <p class="lead sm" data-anim style="--d:4">Calls and notes logged in the customer profile, next to everything else about that person.</p>
+        <div class="motif" data-anim style="--d:5">
+          <div class="arch" data-bricks="11" data-depth=".24" data-ghostat="4,5,6"></div>
+          <div class="plinth thin"></div>
+          <div class="motif-cap">The stones still outside the record</div>
+        </div>
+      </div>
+      <div data-anim style="--d:2"><div class="shot" data-shot="f7" data-what="Calls and notes logged on the customer profile"></div></div>
+    </div>
+  </section>
+
+  <!-- 12 F8, beyond phase 1 -->
+  <section class="slide">
+    <div class="wrap sol">
+      <div class="stack narrow">
+        <div class="eyebrow" data-anim>F8</div>
+        <div class="beyond" data-anim style="--d:1">Beyond phase 1</div>
+        <div class="pnote" data-anim style="--d:2"><span><b>Today</b>A customer only exists in the panel once an order has been registered.</span></div>
+        <h2 class="sm" data-anim style="--d:3">Add a customer before the first order.</h2>
+        <p class="lead sm" data-anim style="--d:4">Partners add prospective customers to the list by hand, and work them from there.</p>
+        <div class="motif" data-anim style="--d:5">
+          <div class="arch" data-bricks="9" data-depth=".26" data-fill="0" data-place="4"></div>
+          <div class="plinth thin"></div>
+          <div class="motif-cap">One stone set before the span exists</div>
+        </div>
+      </div>
+      <div data-anim style="--d:2"><div class="shot" data-shot="f8" data-what="Adding a prospective customer to the list by hand"></div></div>
+    </div>
+  </section>
+
+  <!-- 13 PHASE 1 SCOPE -->
+  <section class="slide">
+    <div class="wrap stack center narrow">
+      <div class="eyebrow" data-anim>Phase 1</div>
+      <h2 class="tight" data-anim style="font-size:clamp(2rem,4.2vw,4.4rem)">Six capabilities, one section.</h2>
+      <div class="motif-wide" data-anim style="--d:2;width:min(300px,26vw)">
+        <div class="arch" data-bricks="6" data-depth=".26"></div>
+        <div class="plinth"></div>
+      </div>
+      <div class="scope" data-anim style="--d:3">
+        <div class="sc"><span class="b"></span><span class="f">F1</span><span class="t">Every order linked to a customer record</span></div>
+        <div class="sc"><span class="b"></span><span class="f">F2</span><span class="t">Customer list with search by name, national ID, phone and licence plate</span></div>
+        <div class="sc"><span class="b"></span><span class="f">F3</span><span class="t">A comprehensive profile page per customer</span></div>
+        <div class="sc"><span class="b"></span><span class="f">F4</span><span class="t">Returning against new detection after an order</span></div>
+        <div class="sc"><span class="b"></span><span class="f">F5</span><span class="t">All policies in one place, with status and file</span></div>
+        <div class="sc"><span class="b"></span><span class="f">F6</span><span class="t">A view of the customer's financial status</span></div>
+        <div class="sc sup"><span class="b"></span><span class="f">F7 &nbsp;Beyond phase 1</span><span class="t">Calls and notes in the profile</span></div>
+        <div class="sc sup"><span class="b"></span><span class="f">F8 &nbsp;Beyond phase 1</span><span class="t">Prospective customers added by hand</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 DISCUSSION -->
+  <section class="slide">
+    <div class="wrap stack closing">
+      <div class="eyebrow" data-anim>Over to you</div>
+      <h2 data-anim style="--d:1">Does this fit the way you work?</h2>
+      <p class="lead" data-anim style="--d:2">Tell us where it helps, where it gets in the way, and what is missing before we build it.</p>
+      <p class="support" data-anim style="--d:3">Nothing here is settled. This is the moment it is cheapest to change.</p>
+    </div>
+  </section>
+
+  <!-- 15 CLOSING -->
+  <section class="slide">
+    <div class="wrap title-grid">
+      <div class="title-arch" data-anim><div class="arch" data-bricks="15" data-depth=".2" data-key="1"></div><div class="plinth"></div></div>
+      <h1 data-anim style="--d:1;font-size:clamp(2.6rem,7.6vw,8.2rem)">One record each.</h1>
+      <div class="sign" data-anim style="--d:2">My Customers &nbsp;/&nbsp; Phase 1</div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="hud">
+  <div class="ticks" id="ticks"></div>
+  <div class="nav">
+    <button id="prevBtn" type="button" aria-label="Previous slide">&lsaquo;</button>
+    <button id="nextBtn" type="button" aria-label="Next slide">&rsaquo;</button>
+  </div>
+  <div class="count"><b id="cNow">01</b> <span id="cAll">/ 15</span></div>
+</footer>
+
+<script>
+/* ------------------------------------------------------------------
+   EDIT HERE before presenting
+   ------------------------------------------------------------------
+
+   SCREENSHOTS maps a slide key to an image under assets/screens/.
+   Leave a value as null, or point it at a file that is not there,
+   and the slide renders a dotted frame tagged SCREENSHOT PENDING so
+   the deck cannot be presented half dressed by accident.
+
+   Captures are laid out for 1280 x 832. If the real ones come back
+   at another size, change --shot-ratio once in the stylesheet.
+   ------------------------------------------------------------------ */
+const CONFIG = {
+  SCREENSHOTS: {
+    p1_f1: null,   // slide 05  an order showing the customer it belongs to
+    p2_f2: null,   // slide 06  the customer list, mid search
+    p3_f3: null,   // slide 07  the customer profile page
+    p3_f5: null,   // slide 08  the policies list, with status and file
+    p4_f4: null,   // slide 09  the returning or new signal after an order
+    p5_f6: null,   // slide 10  the financial status view
+    f7:    null,   // slide 11  calls and notes in the profile
+    f8:    null    // slide 12  adding a prospective customer by hand
+  },
+
+  // Team photos for slide 02. Two are reused from the root deck.
+  // Ghazaleh's is unset, so her niche renders a PHOTO PENDING tag.
+  PHOTOS: {
+    ghazaleh: null,
+    mehdi:    '../assets/team/mehdi-mohammad-rezaei.jpg',
+    masih:    '../assets/team/masih-sadri.jpg'
+  }
+};
+/* ---------------------------------------------------------------- */
+
+/* ---------- pending markers, in the voice of Core's TO CONFIRM ---------- */
+function pendingShot(box, tag, what, key){
+  box.classList.add('is-pending');
+  box.innerHTML = '';
+  var b = document.createElement('div');
+  b.className = 'shot-pending';
+  var t = document.createElement('span'); t.className = 'tag'; t.textContent = tag;
+  var k = document.createElement('div');  k.className = 'key'; k.textContent = key;
+  var w = document.createElement('div');  w.className = 'what'; w.textContent = what;
+  b.appendChild(t); b.appendChild(k); b.appendChild(w);
+  box.appendChild(b);
+  var r = document.createElement('span');
+  r.className = 'shot-ratio-note';
+  r.textContent = '1280 × 832';
+  box.appendChild(r);
+}
+
+document.querySelectorAll('[data-shot]').forEach(function(box){
+  var key  = box.dataset.shot;
+  var what = box.dataset.what || '';
+  var src  = CONFIG.SCREENSHOTS[key];
+  if (!src){
+    pendingShot(box, 'screenshot pending', what, key);
+    return;
+  }
+  var img = document.createElement('img');
+  img.alt = what;
+  img.addEventListener('error', function(){ pendingShot(box, 'screenshot pending', what, key); });
+  img.src = src;
+  box.appendChild(img);
+});
+
+document.querySelectorAll('[data-photo]').forEach(function(niche){
+  var who = niche.dataset.photo;
+  var alt = niche.dataset.alt || '';
+  var src = CONFIG.PHOTOS[who];
+  function pendingPhoto(){
+    niche.classList.add('is-pending');
+    niche.innerHTML = '<div class="inner"><span class="tag">photo<br>pending</span></div>';
+  }
+  if (!src){ pendingPhoto(); return; }
+  var img = document.createElement('img');
+  img.alt = alt;
+  if (niche.dataset.pos) img.style.objectPosition = niche.dataset.pos;
+  img.addEventListener('error', pendingPhoto);
+  img.src = src;
+  niche.appendChild(img);
+});
+
+/* ---------- arch builder: rowlock voussoirs radiating on a curve ----------
+   Carried over from Core, with three additions this deck needs:
+     data-lift="i"       one stone pulled clear of the curve, a search hit
+     data-place="i,j"    stones set in an otherwise unbuilt span
+     data-ghostat="i,j"  stones missing from an otherwise built span
+   ------------------------------------------------------------------------ */
+function idxList(v){
+  if (v === undefined) return [];
+  return v.split(',').map(function(s){ return parseInt(s, 10); });
+}
+
+function buildArch(el){
+  var w = el.clientWidth;
+  if (!w) return;
+  var n      = parseInt(el.dataset.bricks || '13', 10);
+  var depthR = parseFloat(el.dataset.depth || '0.22');
+  var fill   = el.dataset.fill  !== undefined ? parseInt(el.dataset.fill, 10)  : n;
+  var newTop = el.dataset.new   !== undefined ? parseInt(el.dataset.new, 10)   : 0;
+  var key    = el.dataset.key   !== undefined;
+  var lift   = el.dataset.lift  !== undefined ? parseInt(el.dataset.lift, 10)  : -1;
+  var placed = idxList(el.dataset.place);
+  var gone   = idxList(el.dataset.ghostat);
+
+  var R = w / 2;
+  var D = R * depthR;
+  var Rmid = R - D / 2;
+  var slot = Math.PI * Rmid / n;
+  var bw = Math.max(3, slot * 0.84);          // mortar gap
+
+  el.style.height = R + 'px';
+  // a lifted stone stands clear above the curve, so leave it room
+  el.style.marginTop = lift >= 0 ? (D * 1.15) + 'px' : '';
+  el.textContent = '';
+
+  var newStart = Math.floor((n - newTop) / 2);
+  var mid = (n - 1) / 2;
+
+  for (var i = 0; i < n; i++){
+    var ang = -90 + ((i + 0.5) / n) * 180;
+
+    var b = document.createElement('span');
+    b.className = 'vsr';
+    b.style.height = R + 'px';
+    b.style.width = bw + 'px';
+    b.style.marginLeft = (-bw / 2) + 'px';
+    b.style.transform = 'rotate(' + ang.toFixed(3) + 'deg)';
+
+    // bricks reveal outward from the springing line
+    b.style.setProperty('--i', Math.round(Math.abs(i - mid)));
+
+    if (gone.indexOf(i) > -1) b.classList.add('is-ghost');
+    else if (placed.indexOf(i) > -1) b.classList.add('is-new');
+    else if (i === lift) b.classList.add('is-lift');
+    else if (i >= fill) b.classList.add('is-ghost');
+    else if (newTop && i >= newStart && i < newStart + newTop) b.classList.add('is-new');
+    else if (key && Math.abs(i - mid) < 0.5) b.classList.add('is-key');
+
+    var face = document.createElement('i');
+    face.style.height = D + 'px';
+    // the lifted stone sits outside the span, clear of its neighbours
+    if (i === lift) face.style.top = (-D * 0.95) + 'px';
+    b.appendChild(face);
+    el.appendChild(b);
+  }
+}
+
+/* ---------- loose bricks: the order list, before anyone owns it ----------
+   Deterministic jitter, so the pile looks the same on every machine
+   and in every reload.
+   ---------------------------------------------------------------------- */
+function jitter(i, salt){
+  var x = Math.sin((i + 1) * 12.9898 + salt * 78.233) * 43758.5453;
+  return x - Math.floor(x);            // 0 to 1
+}
+
+function buildLoose(el){
+  var w = el.clientWidth;
+  if (!w) return;
+  var n    = parseInt(el.dataset.loose || '12', 10);
+  var rows = parseInt(el.dataset.rows  || '3', 10);
+  var per  = Math.ceil(n / rows);
+
+  var bw = w / (per * 1.34);
+  var bh = Math.max(5, bw * 0.3);
+  var step = bh * 2.3;
+
+  el.style.height = (rows * step) + 'px';
+  el.textContent = '';
+
+  for (var i = 0; i < n; i++){
+    var row = Math.floor(i / per);
+    var col = i % per;
+    var slotW = w / per;
+
+    var brick = document.createElement('span');
+    brick.className = 'lb' + (jitter(i, 3) > 0.68 ? ' pale' : '');
+    brick.style.width = bw + 'px';
+    brick.style.height = bh + 'px';
+    brick.style.left = Math.max(0, Math.min(w - bw, col * slotW + (slotW - bw) * jitter(i, 1))) + 'px';
+    brick.style.top = (row * step + step * 0.18 * jitter(i, 2)) + 'px';
+    brick.style.transform = 'rotate(' + ((jitter(i, 4) - 0.5) * 17).toFixed(2) + 'deg)';
+    brick.style.setProperty('--i', i);
+    el.appendChild(brick);
+  }
+}
+
+var arches = Array.prototype.slice.call(document.querySelectorAll('.arch'));
+var piles  = Array.prototype.slice.call(document.querySelectorAll('.loose'));
+function buildAll(){ arches.forEach(buildArch); piles.forEach(buildLoose); }
+buildAll();
+window.addEventListener('resize', function(){
+  clearTimeout(window.__rt);
+  window.__rt = setTimeout(buildAll, 120);
+});
+window.addEventListener('load', buildAll);
+
+/* ---------- stagger order ---------- */
+document.querySelectorAll('.slide').forEach(function(s){
+  var items = s.querySelectorAll('[data-anim]');
+  items.forEach(function(el, i){
+    if (!el.style.getPropertyValue('--d')) el.style.setProperty('--d', i);
+  });
+});
+
+/* ---------- navigation ---------- */
+var slides = document.querySelectorAll('.slide');
+var total = slides.length;
+var idx = 0;
+
+var ticks = document.getElementById('ticks');
+for (var t = 0; t < total; t++) ticks.appendChild(document.createElement('b'));
+var tickEls = ticks.children;
+document.getElementById('cAll').textContent = '/ ' + String(total).padStart(2, '0');
+
+function show(n){
+  idx = Math.max(0, Math.min(total - 1, n));
+  slides.forEach(function(s, i){ s.classList.toggle('is-active', i === idx); });
+  for (var i = 0; i < total; i++) tickEls[i].classList.toggle('on', i <= idx);
+  document.getElementById('cNow').textContent = String(idx + 1).padStart(2, '0');
+  if (location.hash !== '#' + (idx + 1)) history.replaceState(null, '', '#' + (idx + 1));
+}
+function next(){ show(idx + 1); }
+function prev(){ show(idx - 1); }
+
+document.addEventListener('keydown', function(e){
+  switch (e.key){
+    case 'ArrowRight': case 'ArrowDown': case 'PageDown': case ' ': case 'Enter':
+      e.preventDefault(); next(); break;
+    case 'ArrowLeft': case 'ArrowUp': case 'PageUp': case 'Backspace':
+      e.preventDefault(); prev(); break;
+    case 'Home': e.preventDefault(); show(0); break;
+    case 'End':  e.preventDefault(); show(total - 1); break;
+    case 'f': case 'F':
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen();
+      break;
+  }
+});
+
+/* click: right side forward, far left back */
+document.addEventListener('click', function(e){
+  if (e.clientX < window.innerWidth * 0.14) prev(); else next();
+});
+
+document.getElementById('prevBtn').addEventListener('click', function(e){ e.stopPropagation(); prev(); });
+document.getElementById('nextBtn').addEventListener('click', function(e){ e.stopPropagation(); next(); });
+
+/* touch */
+var tx = null;
+document.addEventListener('touchstart', function(e){ tx = e.changedTouches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', function(e){
+  if (tx === null) return;
+  var dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 45){ dx < 0 ? next() : prev(); }
+  tx = null;
+}, {passive:true});
+
+var start = parseInt((location.hash || '').replace('#',''), 10);
+show(isNaN(start) ? 0 : start - 1);
+</script>
+</body>
+</html>
