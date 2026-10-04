@@ -234,8 +234,8 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
 
 /* ---------- team ---------- */
 .team3{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:clamp(1rem,3vw,3.4rem);justify-items:center;width:min(980px,100%);margin-inline:auto;
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:clamp(.8rem,2.6vw,3rem);justify-items:center;width:min(1160px,100%);margin-inline:auto;
 }
 .member{width:100%;text-align:center}
 .niche{
@@ -436,16 +436,20 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
       <div class="eyebrow" data-anim>The team and the project</div>
       <div class="team3" data-anim>
         <div class="member">
-          <div class="niche" data-photo="ghazaleh" data-alt="Ghazaleh Ebrahimi" data-pos="47% 50%"></div>
-          <div class="m-name">Ghazaleh<br>Ebrahimi</div><div class="m-role">Product Designer</div>
+          <div class="niche" data-photo="ali" data-alt="Ali Marateb"></div>
+          <div class="m-name">Ali<br>Marateb</div><div class="m-role">Product Lead</div>
+        </div>
+        <div class="member">
+          <div class="niche" data-photo="masih" data-alt="Masih Sadri" data-pos="48% 26%"></div>
+          <div class="m-name">Masih<br>Sadri</div><div class="m-role">Product Manager</div>
         </div>
         <div class="member">
           <div class="niche" data-photo="mehdi" data-alt="Mehdi Mohammad Rezaei" data-pos="58% 38%"></div>
           <div class="m-name">Mehdi<br>Mohammad Rezaei</div><div class="m-role">Tech Lead</div>
         </div>
         <div class="member">
-          <div class="niche" data-photo="masih" data-alt="Masih Sadri" data-pos="48% 26%"></div>
-          <div class="m-name">Masih<br>Sadri</div><div class="m-role">Product Manager</div>
+          <div class="niche" data-photo="ghazaleh" data-alt="Ghazaleh Ebrahimi" data-pos="47% 50%"></div>
+          <div class="m-name">Ghazaleh<br>Ebrahimi</div><div class="m-role">Product Designer</div>
         </div>
         <div class="member">
           <div class="niche" data-photo="sana" data-alt="Sana Mohammadzadeh"></div>
@@ -715,6 +719,7 @@ const CONFIG = {
   // Team photos for slide 02, all three reused from the root deck's
   // assets. Set one to null and that niche renders a PHOTO PENDING tag.
   PHOTOS: {
+    ali:      '../assets/team/ali-marateb.jpg',
     ghazaleh: '../assets/team/ghazale-ebrahimi.jpg',
     mehdi:    '../assets/team/mehdi-mohammad-rezaei.jpg',
     masih:    '../assets/team/masih-sadri.jpg',
