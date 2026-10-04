@@ -1,0 +1,30 @@
+/* ---------- screenshot frame ---------- */
+.shot{
+  position:relative;width:100%;aspect-ratio:var(--shot-ratio);
+  border-radius:8px;overflow:hidden;
+  background:rgba(231,216,189,.5);
+  border:1px solid rgba(124,63,42,.3);
+  box-shadow:0 22px 44px -30px rgba(43,27,18,.7);
+}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:50% 0;display:block}
+/* pending state: dotted accent, in the same voice as Core's TO CONFIRM */
+.shot.is-pending{
+  border:2px dotted var(--orange);
+  background:
+    repeating-linear-gradient(135deg, rgba(217,119,87,.07) 0 12px, rgba(217,119,87,0) 12px 24px),
+    rgba(231,216,189,.55);
+  display:grid;place-items:center;
+}
+.shot-pending{display:flex;flex-direction:column;align-items:center;gap:.7rem;text-align:center;padding:1.2rem}
+.shot-pending .tag{
+  font-size:clamp(.62rem,.82vw,.86rem);letter-spacing:.2em;text-transform:uppercase;
+  font-weight:600;color:var(--orange);
+  border:1px solid var(--orange);border-radius:2px;padding:.35em .7em;
+}
+.shot-pending .what{font-size:clamp(.8rem,1.08vw,1.1rem);color:var(--brick);max-width:26ch;line-height:1.4}
+.shot-pending .key{font-family:var(--serif);font-size:clamp(1.1rem,1.9vw,2rem);color:var(--ink-38);letter-spacing:.02em}
+.shot-ratio-note{
+  position:absolute;bottom:.55rem;right:.7rem;
+  font-size:clamp(.56rem,.72vw,.74rem);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-38);font-variant-numeric:tabular-nums;
+}

@@ -1,0 +1,73 @@
+h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
+.lead.sm{font-size:clamp(.95rem,1.45vw,1.5rem);max-width:38ch}
+.farsi{font-size:.42em;color:var(--brick);letter-spacing:0;display:block;margin-top:.5em;font-family:var(--sans)}
+/* a Persian run inside an English line, kept from dragging the punctuation with it */
+.fa{unicode-bidi:isolate;direction:rtl}
+.stack.narrow{gap:clamp(.7rem,1.5vh,1.2rem)}
+/* ---------- the motif slot on a solution slide ---------- */
+.motif{width:min(300px,26vw);margin-top:.4rem}
+.motif-wide{width:min(560px,46vw)}
+.motif-cap{
+  font-size:clamp(.68rem,.86vw,.92rem);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-38);font-weight:600;margin-top:.7rem;
+}
+/* ---------- problem to solution layout ---------- */
+.sol{display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(1.6rem,4.5vw,5rem);align-items:center}
+.pnote{
+  display:flex;gap:.8rem;align-items:flex-start;
+  font-size:clamp(.88rem,1.22vw,1.26rem);line-height:1.42;
+  color:var(--brick);max-width:34ch;
+}
+.pnote::before{
+  content:"";flex:none;width:4px;align-self:stretch;min-height:1.4em;
+  background:rgba(124,63,42,.38);border-radius:2px;
+}
+.pnote b{font-weight:600;letter-spacing:.16em;text-transform:uppercase;font-size:.78em;color:var(--yellow-lo);display:block;margin-bottom:.25em}
+/* ---------- beyond phase one badge ---------- */
+.beyond{
+  display:inline-flex;align-items:center;gap:.5em;
+  font-size:clamp(.62rem,.82vw,.86rem);letter-spacing:.2em;text-transform:uppercase;font-weight:600;
+  color:var(--brick);border:1.5px dashed rgba(124,63,42,.5);border-radius:2px;padding:.4em .75em;
+}
+.beyond::before{content:"";width:9px;height:9px;border:1.5px dashed var(--brick);border-radius:1px;flex:none}
+/* ---------- the six problems ---------- */
+.plist{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.8rem,2.2vw,2.2rem) clamp(1rem,2.6vw,2.8rem);width:100%;text-align:left;
+}
+.pitem{display:flex;gap:.75rem;align-items:flex-start}
+.pitem .n{
+  font-family:var(--serif);font-size:clamp(.92rem,1.3vw,1.4rem);color:var(--orange);
+  line-height:1.2;flex:none;padding-top:.05em;
+}
+.pitem .t{font-size:clamp(.88rem,1.22vw,1.28rem);line-height:1.36;letter-spacing:-.008em}
+
+/* ---------- returning vs new ---------- */
+.twoarch{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,3vw,2.6rem);align-items:end;width:100%}
+.ta{text-align:center}
+.ta .lbl{font-size:clamp(.66rem,.86vw,.9rem);letter-spacing:.2em;text-transform:uppercase;color:var(--brick);font-weight:600;margin-top:.7rem}
+.ta.is-new .lbl{color:var(--yellow-lo)}
+
+/* ---------- phase one scope ---------- */
+.scope{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.9rem,2.4vw,2.4rem) clamp(1rem,2.8vw,3rem);width:100%;text-align:left}
+.sc{display:flex;flex-direction:column;gap:.3rem}
+.sc .f{font-size:clamp(.62rem,.82vw,.86rem);letter-spacing:.2em;text-transform:uppercase;color:var(--yellow-lo);font-weight:600}
+.sc .t{font-size:clamp(.9rem,1.24vw,1.3rem);line-height:1.34;letter-spacing:-.008em}
+.sc .b{width:30px;height:6px;border-radius:2px;background:var(--brick);margin-bottom:.2rem}
+.sc.sup .b{background:none;border:1.5px dashed rgba(124,63,42,.5);height:6px}
+.sc.sup .f{color:var(--brick)}
+.sc.sup .t{color:var(--ink-60)}
+/* ---------- narrow and tall frames ---------- */
+@media (max-aspect-ratio:1/1){
+  .sol{grid-template-columns:1fr;gap:clamp(1.2rem,3vh,2.2rem)}
+  .sol .shot{order:-1}
+  .motif{width:min(240px,42vw)}
+  .motif-wide{width:min(420px,70vw)}
+  .plist{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .scope{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media (max-width:760px) and (max-aspect-ratio:1/1){
+  .plist{grid-template-columns:1fr;gap:.7rem}
+  .scope{grid-template-columns:1fr;gap:.7rem}
+}

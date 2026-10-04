@@ -1,0 +1,13 @@
+/* ============================================================
+   CORE / Shoraka internal deck
+   The shared system lives in engine/css. What is left here is only
+   what Core's own slides use.
+   ============================================================ */
+
+:root{
+  --h1: clamp(4rem,13vw,15rem);
+  /* one tile size for every member, in both tiers */
+  --tile: min(158px, 18vh);
+  --m-name: clamp(.8rem,1.05vw,1.1rem);
+  --m-role: clamp(.7rem,.9vw,.94rem);
+}

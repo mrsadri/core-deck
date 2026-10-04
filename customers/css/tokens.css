@@ -1,0 +1,16 @@
+/* ============================================================
+   MY CUSTOMERS / BimeBazar partner panel
+   A sibling of Core. Same rowlock arch, same palette, same type.
+   Here the bricks carry a second argument: loose bricks are orders,
+   an arch is a customer record, and a lifted brick is a search hit.
+   ============================================================ */
+:root{
+  --h1: clamp(3.2rem,10vw,11.5rem);
+  --tile: min(204px, 24vh);
+  --m-name: clamp(.86rem,1.15vw,1.22rem);
+  --m-role: clamp(.74rem,.95vw,1rem);
+
+  /* the panel screenshot frame. Change this one value if the real
+     captures come back at a different size. */
+  --shot-ratio: 1280 / 832;
+}

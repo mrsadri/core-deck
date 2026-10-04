@@ -1,0 +1,24 @@
+/* ---------- team ---------- */
+.team3{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:clamp(.8rem,2.6vw,3rem);justify-items:center;width:min(1160px,100%);margin-inline:auto;
+}
+/* project details under the team */
+.proj{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.9rem,2.4vw,2.6rem);width:100%;margin-top:.3rem;
+  border-top:1px solid rgba(124,63,42,.24);padding-top:clamp(.9rem,2.2vh,1.6rem);
+}
+.pj{text-align:center}
+.pj .k{font-size:clamp(.6rem,.8vw,.84rem);letter-spacing:.22em;text-transform:uppercase;color:var(--yellow-lo);font-weight:600}
+.pj .v{font-family:var(--serif);font-size:clamp(1rem,1.6vw,1.7rem);line-height:1.2;margin-top:.35rem;letter-spacing:-.01em}
+.pj .v small{display:block;font-family:var(--sans);font-size:.62em;color:var(--brick);letter-spacing:0;margin-top:.3em}
+@media (max-aspect-ratio:1/1){
+  .proj{grid-template-columns:1fr;gap:1rem;text-align:center}
+}
+
+@media (max-width:760px) and (max-aspect-ratio:1/1){
+  :root{--tile:84px;--m-name:.78rem;--m-role:.7rem}
+  .team3{gap:.8rem;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .niche{margin-bottom:.5rem}
+}

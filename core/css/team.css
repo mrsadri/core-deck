@@ -1,0 +1,36 @@
+/* ---------- team ---------- */
+/* both team tiers share one 7 column grid and one tile size, so every
+   member is set at the same weight */
+.team,.wider-row{
+  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:clamp(.4rem,1.1vw,1.3rem);justify-items:center;width:100%;
+}
+.wm{width:100%;text-align:center}
+/* second tier: the wider team, carried on a shared springing line */
+.wider{width:100%;display:flex;flex-direction:column;gap:clamp(.7rem,1.7vh,1.3rem)}
+.wider-label{
+  display:flex;align-items:center;gap:clamp(.7rem,1.5vw,1.5rem);
+  font-size:clamp(.64rem,.84vw,.9rem);font-weight:600;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--yellow-lo);white-space:nowrap;
+}
+.wider-label::before,.wider-label::after{
+  content:"";height:2px;flex:1;background:rgba(124,63,42,.26);border-radius:1px;
+}
+.wm{display:flex;flex-direction:column;align-items:center}
+.wm b{
+  display:block;font-size:clamp(.72rem,.97vw,1.02rem);font-weight:600;
+  line-height:1.28;letter-spacing:-.012em;min-height:2.56em;
+  overflow-wrap:break-word;
+}
+.wm i{
+  display:block;font-style:normal;font-size:clamp(.66rem,.84vw,.88rem);
+  color:var(--brick);margin-top:.18rem;letter-spacing:.02em;
+}
+/* a narrow, tall frame: fewer columns and smaller tiles, both tiers alike */
+@media (max-width:760px) and (max-aspect-ratio:1/1){
+  :root{--tile:58px;--m-name:.7rem;--m-role:.66rem}
+  .team,.wider-row{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:1rem}
+  .niche{margin-bottom:.45rem}
+  .wm b{font-size:.7rem}
+  .wm i{font-size:.66rem}
+}
