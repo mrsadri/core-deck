@@ -23,6 +23,7 @@
    */
   function start(options) {
     const deck = document.getElementById(IDS.deck);
+    if (options.slides) DECK.renderSlides(deck, options.slides);
     (options.decorators || []).forEach(function (decorate) { decorate(deck); });
     DECK.buildMotifs(deck);
     DECK.applyStagger(deck);
