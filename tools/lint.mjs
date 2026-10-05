@@ -17,8 +17,8 @@ const SITE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 /** Extensions worth reading. Everything else in assets is binary. */
 const TEXT = new Set(['.html', '.css', '.js', '.mjs', '.md']);
 
-/** Shells join the browser file rules in the last stage of the refactor. */
-const SHELLS = [];
+/** The two deck shells. Held to the same limits as everything else. */
+const SHELLS = ['index.html', 'customers/index.html'];
 
 const MAX_LINES = 200;
 
@@ -101,7 +101,17 @@ const RULES = [
     applies: isContentFile,
     check: text => text.includes('style=') ? 'carries an inline style attribute' : null
   }
-  // Later stages append their rules here.
+  ,
+  {
+    name: 'a shell carries no styles',
+    applies: file => SHELLS.includes(file),
+    check: text => {
+      if (text.includes('<style')) return 'carries a style element';
+      if (text.includes('style=')) return 'carries an inline style attribute';
+      if (text.includes('<section')) return 'carries slide markup';
+      return null;
+    }
+  }
 ];
 
 async function walk(dir) {
