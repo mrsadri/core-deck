@@ -1,11 +1,12 @@
 # Screens
 
-Panel screenshots for the My Customers deck go here.
+Panel screenshots for the My Customers deck. They live in the shared `assets/`
+tree with every other image; only the deck's code lives in `customers/`.
 
 Capture at **1280 x 832** so the frames in the deck match without cropping.
 
 Save a file, then point the matching key at it in `CUSTOMERS_CONFIG.SCREENSHOTS`
-in `../../config.js`:
+in `../../customers/config.js`:
 
 | Key | Slide | What it shows |
 | --- | --- | --- |

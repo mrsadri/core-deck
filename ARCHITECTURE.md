@@ -10,11 +10,15 @@ site/
   .nojekyll                    unchanged, keeps Pages from running Jekyll
   README.md                    what the decks are, how to run them, where to edit
   ARCHITECTURE.md              the map: every file, its job, and how to add a deck
-  PRESENTING.md               the pre presentation checklist
-  REFACTOR_PLAN.md             this file
+  PRESENTING.md                the pre presentation checklist
+  REFACTOR_PLAN.md             the plan this history followed, stage by stage
   index.html                   Core: shell only
-  assets/                      shared assets, unchanged
-    favicon.svg  apple-touch-icon.png  og.jpg  team/*.jpg  team/claude-mark.svg
+  assets/                      every image, in one tree. See assets/README.md
+    README.md                  the tree, and how to add a portrait
+    brand/                     favicon.svg, apple-touch-icon.png
+    social/                    one Open Graph card per deck: core.jpg, customers.png
+    team/                      one portrait per person, plus claude-mark.svg
+    screens/                   My Customers panel screenshots, and their README
   engine/
     css/
       tokens.css               shared custom properties, and the names of the deck tokens
@@ -53,7 +57,6 @@ site/
     main.js                    calls DECK.start
   customers/
     index.html                 My Customers: shell only
-    assets/screens/            unchanged, plus its README repointed
     css/
       tokens.css               Customers' values for the engine's deck tokens
       team.css                 the team grid and the project row

@@ -90,8 +90,8 @@ Navigation, hash routing and fullscreen behave exactly as in Core. See the table
 
 Everything that needs filling lives in `customers/config.js`. [PRESENTING.md](PRESENTING.md) is the full checklist.
 
-- **Screenshots.** All eight entries in `CONFIG.SCREENSHOTS` are `null`. Each one renders a dotted frame tagged SCREENSHOT PENDING, so the deck cannot be presented half dressed by accident. Capture at 1280 x 832, drop the files in `customers/assets/screens/`, then point each key at its file. The keys and the shot each one needs are listed in `customers/assets/screens/README.md`.
-- **Photos.** Done. `CUSTOMERS_CONFIG.PHOTOS` in `customers/config.js` carries all five portraits from `assets/team/`. Setting any one back to `null` renders a PHOTO PENDING niche in its place.
+- **Screenshots.** Done. All six entries in `CUSTOMERS_CONFIG.SCREENSHOTS` point at a real capture in `assets/screens/`. Set any one back to `null`, or point it at a file that is not there, and that slide renders a dotted frame tagged SCREENSHOT PENDING instead, so the deck cannot be presented half dressed by accident. Captures are laid out for 1280 x 832. The keys and the shot each one needs are listed in `assets/screens/README.md`.
+- **Photos.** Done. `CUSTOMERS_CONFIG.PHOTOS` in `customers/config.js` carries all five portraits from the shared `assets/team/`. Setting any one back to `null` renders a PHOTO PENDING niche in its place.
 - **The tech lead's name.** The deck follows the spelling used in the Core deck, "Mehdi Mohammad Rezaei". Confirm it before presenting.
 
 If the real captures come back at a size other than 1280 x 832, change `--shot-ratio` once in `customers/css/tokens.css` and every frame follows.

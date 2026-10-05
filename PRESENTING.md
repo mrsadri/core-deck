@@ -24,7 +24,7 @@ a size other than 1280 x 832, change `--shot-ratio` once in
 
 - [ ] **The tech lead's name.** `customers/content/team.js`. The deck follows
   the spelling used in the Core deck, "Mehdi Mohammad Rezaei". Confirm it.
-- [ ] **The social card.** `customers/assets/og.png` is a render of the deck's
+- [ ] **The social card.** `assets/social/customers.png` is a render of the deck's
   own title slide, made with headless Chrome. It is a placeholder for a
   designed card, not a design. Replace it if the deck is shared widely.
 
