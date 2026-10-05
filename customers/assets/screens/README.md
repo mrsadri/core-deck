@@ -4,8 +4,8 @@ Panel screenshots for the My Customers deck go here.
 
 Capture at **1280 x 832** so the frames in the deck match without cropping.
 
-Save a file, then point the matching key at it in the `CONFIG.SCREENSHOTS`
-object at the top of the `<script>` block in `../../index.html`:
+Save a file, then point the matching key at it in `CUSTOMERS_CONFIG.SCREENSHOTS`
+in `../../config.js`:
 
 | Key | Slide | What it shows |
 | --- | --- | --- |
