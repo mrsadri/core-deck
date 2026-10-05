@@ -1,6 +1,5 @@
 h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
 .lead.sm{font-size:clamp(.95rem,1.45vw,1.5rem);max-width:38ch}
-.farsi{font-size:.42em;color:var(--brick);letter-spacing:0;display:block;margin-top:.5em;font-family:var(--sans)}
 /* a Persian run inside an English line, kept from dragging the punctuation with it */
 .fa{unicode-bidi:isolate;direction:rtl}
 .stack.narrow{gap:clamp(.7rem,1.5vh,1.2rem)}

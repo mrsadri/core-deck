@@ -16,7 +16,6 @@
 }
 .vsr.is-new > i{background:linear-gradient(180deg,var(--yellow) 0%,var(--yellow-lo) 100%)}
 .vsr.is-key > i{background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%)}
-.arch.flat .vsr > i{transition-delay:0ms}
 /* the search hit: one stone pulled clear of the curve */
 .vsr.is-lift > i{
   background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%);

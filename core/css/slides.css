@@ -11,7 +11,6 @@
 .leg b{width:16px;height:16px;border-radius:2px;flex:none}
 .leg b.brown{background:var(--brick)}
 .leg b.yellow{background:var(--yellow)}
-.leg b.dash{border:1.5px dashed rgba(43,27,18,.4)}
 .leg span{color:var(--ink);font-weight:600}
 /* ---------- big number ---------- */
 .punch{display:flex;align-items:baseline;gap:clamp(1rem,3vw,3rem);flex-wrap:wrap;justify-content:center}
