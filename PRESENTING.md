@@ -30,6 +30,8 @@ a size other than 1280 x 832, change `--shot-ratio` once in
 
 ## Both decks
 
+- [ ] Open the homepage and click through to each deck, so you are not hunting
+  for a URL in front of the room. Core now lives at `core/`, not at the root.
 - [ ] Open each deck at every viewport you will present at, and walk it end to
   end. `node tools/parity.mjs check` proves nothing moved since the last
   baseline, but it cannot tell you whether a screenshot is legible from the

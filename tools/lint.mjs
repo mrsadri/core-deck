@@ -17,17 +17,22 @@ const SITE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 /** Extensions worth reading. Everything else in assets is binary. */
 const TEXT = new Set(['.html', '.css', '.js', '.mjs', '.md']);
 
-/** The two deck shells. Held to the same limits as everything else. */
-const SHELLS = ['index.html', 'customers/index.html'];
+/** The deck shells. Each one is content free: the engine renders the slides. */
+const SHELLS = ['core/index.html', 'customers/index.html'];
+
+/** Every page the browser loads. The homepage carries its own markup,
+    because there is no engine rendering it, but obeys every other rule. */
+const PAGES = SHELLS.concat(['index.html']);
 
 const MAX_LINES = 200;
 
 /** A file the browser loads, so the length and style rules apply to it. */
 function isBrowserFile(file) {
-  if (SHELLS.includes(file)) return true;
+  if (PAGES.includes(file)) return true;
   const ext = extname(file);
   if (ext !== '.css' && ext !== '.js') return false;
-  return file.startsWith('engine/') || file.startsWith('core/') || file.startsWith('customers/');
+  return file.startsWith('engine/') || file.startsWith('core/') ||
+    file.startsWith('customers/') || file.startsWith('home/');
 }
 
 /** A deck file that declares slide content. */
@@ -38,7 +43,8 @@ function isContentFile(file) {
 /** A script written for this engine: engine or deck, never tools. */
 function isDeckScript(file) {
   if (extname(file) !== '.js') return false;
-  return file.startsWith('engine/js/') || file.startsWith('core/') || file.startsWith('customers/');
+  return file.startsWith('engine/js/') || file.startsWith('core/') ||
+    file.startsWith('customers/') || file.startsWith('home/');
 }
 
 function lineCount(text) {
@@ -103,14 +109,19 @@ const RULES = [
   }
   ,
   {
-    name: 'a shell carries no styles',
-    applies: file => SHELLS.includes(file),
+    name: 'a page carries no styles',
+    applies: file => PAGES.includes(file),
     check: text => {
       if (text.includes('<style')) return 'carries a style element';
       if (text.includes('style=')) return 'carries an inline style attribute';
-      if (text.includes('<section')) return 'carries slide markup';
       return null;
     }
+  }
+  ,
+  {
+    name: 'a deck shell carries no slide markup',
+    applies: file => SHELLS.includes(file),
+    check: text => text.includes('<section') ? 'carries slide markup' : null
   }
 ];
 

@@ -81,7 +81,7 @@ const DETERMINISM_FLAGS = [
 
 /** The decks under test, and how many slides each one has. */
 const DECKS = [
-  { name: 'core', page: 'index.html', slides: 19 },
+  { name: 'core', page: 'core/index.html', slides: 19 },
   { name: 'customers', page: 'customers/index.html', slides: 14 }
 ];
 
@@ -470,7 +470,7 @@ async function frames() {
           `--window-size=${viewport.width},${viewport.height}`,
           `--virtual-time-budget=${budget}`,
           `--screenshot=${file}`,
-          slideUrl('index.html', 1)
+          slideUrl('core/index.html', 1)
         ], { stdio: 'ignore' });
         child.on('error', () => {});
         await waitForStableFile(file).catch(() => {});

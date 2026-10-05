@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Core | Shoraka</title>
-<meta name="description" content="Why launching a new insurance line used to take months at Shoraka, and what the core platform changes about that.">
+<title>Shoraka decks</title>
+<meta name="description" content="Two presentations: Core, the insurance platform, and My Customers, a design review of the BimeBazar partner panel.">
 <meta name="author" content="Shoraka">
 <meta name="theme-color" content="#D8C3A2">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Core | Shoraka">
-<meta property="og:description" content="Why launching a new insurance line used to take months, and what the core platform changes about that.">
+<meta property="og:title" content="Shoraka decks">
+<meta property="og:description" content="Two presentations: Core, the insurance platform, and My Customers, a design review of the BimeBazar partner panel.">
 <meta property="og:image" content="https://mrsadri.github.io/core-deck/assets/social/core.jpg">
 <meta property="og:url" content="https://mrsadri.github.io/core-deck/">
 <meta name="twitter:card" content="summary_large_image">
@@ -17,45 +17,40 @@
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <link rel="stylesheet" href="engine/css/tokens.css">
 <link rel="stylesheet" href="engine/css/base.css">
-<link rel="stylesheet" href="engine/css/shell.css">
 <link rel="stylesheet" href="engine/css/type.css">
 <link rel="stylesheet" href="engine/css/motif.css">
-<link rel="stylesheet" href="engine/css/member.css">
-<link rel="stylesheet" href="engine/css/layout.css">
-<link rel="stylesheet" href="engine/css/title.css">
-<link rel="stylesheet" href="engine/css/hud.css">
 <link rel="stylesheet" href="engine/css/motion.css">
-<link rel="stylesheet" href="core/css/team.css">
-<link rel="stylesheet" href="core/css/slides.css">
+<link rel="stylesheet" href="home/css/home.css">
 </head>
 <body>
 
-<div class="deck" id="deck"></div>
+<main class="home is-active" id="home">
+  <div class="home-grid">
+    <div class="eyebrow">Shoraka</div>
+    <h1 class="ask">Which deck?</h1>
 
-<footer class="hud">
-  <div class="ticks" id="ticks"></div>
-  <div class="nav">
-    <button id="prevBtn" type="button" aria-label="Previous slide">&lsaquo;</button>
-    <button id="nextBtn" type="button" aria-label="Next slide">&rsaquo;</button>
+    <div class="choices">
+      <a class="choice" href="core/index.html">
+        <div class="choice-arch"><div class="arch" data-bricks="11" data-depth=".2" data-key="1"></div><div class="plinth"></div></div>
+        <div class="choice-name">Core</div>
+        <p class="choice-sub">Why a new insurance line used to start from zero, and what the core platform changes about that.</p>
+        <div class="choice-meta">19 slides</div>
+      </a>
+
+      <a class="choice" href="customers/index.html">
+        <div class="choice-arch"><div class="arch" data-bricks="11" data-depth=".2" data-new="3"></div><div class="plinth"></div></div>
+        <div class="choice-name">My Customers</div>
+        <p class="choice-fa" dir="rtl" lang="fa">مشتریان من</p>
+        <p class="choice-sub">A design review of Customer Management, a new section of the BimeBazar partner panel.</p>
+        <div class="choice-meta">14 slides</div>
+      </a>
+    </div>
+
+    <p class="home-foot">Both decks run the same engine and the same rowlock arch. Arrow keys, space or a click moves through either one, and F goes fullscreen.</p>
   </div>
-  <div class="count"><b id="cNow">01</b> <span id="cAll">/ 19</span></div>
-</footer>
+</main>
 
 <script src="engine/js/motif.js"></script>
-<script src="engine/js/stagger.js"></script>
-<script src="engine/js/niche.js"></script>
-<script src="engine/js/render.js"></script>
-<script src="engine/js/presentation.js"></script>
-<script src="engine/js/input.js"></script>
-<script src="engine/js/start.js"></script>
-<script src="core/config.js"></script>
-<script src="core/copy.js"></script>
-<script src="core/content/team.js"></script>
-<script src="core/content/slides-opening.js"></script>
-<script src="core/content/slides-problem.js"></script>
-<script src="core/content/slides-platform.js"></script>
-<script src="core/content/slides-vocabulary.js"></script>
-<script src="core/content/slides-closing.js"></script>
-<script src="core/main.js"></script>
+<script src="home/main.js"></script>
 </body>
 </html>

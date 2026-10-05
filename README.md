@@ -2,9 +2,11 @@
 
 An internal presentation introducing Shoraka's core insurance platform to senior managers and business stakeholders. It runs immediately before a live product demo.
 
-**Live:** https://mrsadri.github.io/core-deck/
+**Live:** https://mrsadri.github.io/core-deck/core/
 
-This repository also hosts a second deck, [My Customers](#my-customers), which reuses the same engine and motif.
+This repository hosts two decks. https://mrsadri.github.io/core-deck/ is a homepage that asks which one you want and links to both: Core, below, and [My Customers](#my-customers), which reuses the same engine and motif.
+
+Core used to live at the root. It moved down to `core/` so the homepage could take its place, so an old link now lands on the chooser rather than on the deck.
 
 ## The deck
 
@@ -32,7 +34,7 @@ This repository also hosts a second deck, [My Customers](#my-customers), which r
 
 ## Running it
 
-Open `index.html`. No build step and no dependencies.
+Open `index.html` and pick a deck, or open `core/index.html` directly. No build step and no dependencies, and it works from the file system as well as over HTTP.
 
 To change a slide, find it in the table in
 [ARCHITECTURE.md](ARCHITECTURE.md#where-to-edit-a-slide).

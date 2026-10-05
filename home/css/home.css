@@ -1,0 +1,96 @@
+/* ---------- the chooser ---------- */
+/* The homepage is not a deck: no slides, no HUD, no navigation. It borrows
+   the ground from base.css, the type scale from tokens.css and the arch from
+   motif.css, so it cannot drift away from the two decks it introduces.
+
+   .home carries .is-active because that is the engine's word for revealed,
+   and the homepage is revealed for as long as it is open. It is what makes
+   the bricks of each card's arch opaque. The entrance itself is a plain
+   keyframe on the same 65ms beat and the same --ease as a slide, so the
+   timing matches without the homepage joining the deck lifecycle, and every
+   element ends at its resting state, so the cards stay readable even if the
+   animation never runs. */
+
+/* one screen, but never clip the cards on a short frame */
+body{overflow:auto}
+
+.home{
+  min-height:100%;display:grid;place-items:center;
+  padding:var(--pad-y) var(--pad-x);
+}
+.home-grid{
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:clamp(1.6rem,4.2vh,3rem);width:min(1100px,100%);
+}
+.home-grid .eyebrow{justify-content:center}
+.ask{font-size:var(--h2);line-height:1;letter-spacing:-.022em;max-width:20ch}
+.home-foot{font-size:var(--support);color:var(--ink-38);max-width:48ch;line-height:1.5}
+
+/* ---------- the two cards ---------- */
+.choices{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(1rem,2.6vw,2.4rem);width:100%;
+}
+.choice{
+  display:flex;flex-direction:column;align-items:center;gap:.75rem;
+  padding:clamp(1.3rem,3vh,2.2rem) clamp(1rem,2.2vw,2rem);
+  border:1px solid rgba(124,63,42,.26);
+  border-radius:50% 50% 10px 10px / 13% 13% 10px 10px;
+  background:rgba(231,216,189,.34);
+  color:inherit;text-decoration:none;
+  transition:background .25s var(--ease),border-color .25s var(--ease),transform .25s var(--ease);
+}
+.choice:hover,.choice:focus-visible{
+  background:rgba(231,216,189,.74);border-color:rgba(124,63,42,.54);
+  transform:translateY(-3px);
+}
+.choice:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+
+/* a small arch over each card, built by the primitive the decks use */
+.choice-arch{width:min(190px,44%)}
+
+.choice-name{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.7rem,3.1vw,2.9rem);line-height:1;letter-spacing:-.022em;
+  margin-top:.2rem;
+}
+.choice-fa{font-size:var(--support);color:var(--yellow-lo);line-height:1.3}
+.choice-sub{font-size:var(--support);color:var(--brick);max-width:32ch;line-height:1.45}
+/* pinned to the foot of the card, so the two counts sit on one line
+   however much the copy above them differs in length */
+.choice-meta{
+  font-size:clamp(.6rem,.78vw,.78rem);letter-spacing:.2em;text-transform:uppercase;
+  font-weight:600;color:var(--yellow-lo);margin-top:auto;padding-top:.3rem;
+}
+
+/* ---------- the entrance ---------- */
+.home-grid > *,.choice{animation:rise .55s var(--ease) both;animation-delay:calc(var(--d,0) * 65ms)}
+/* the card row carries its cards, which animate on their own beats */
+.choices{animation:none}
+.home-grid > *:nth-child(1){--d:0}
+.home-grid > *:nth-child(2){--d:1}
+.home-grid > *:nth-child(4){--d:5}
+.choice:nth-child(1){--d:2}
+.choice:nth-child(2){--d:3}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+
+/* ---------- a narrow, tall frame ----------
+   The cards stack, so the page gets taller exactly when it has less room.
+   Both cards have to stay above the fold: a chooser whose second choice is
+   below it is only asking half a question. */
+@media (max-aspect-ratio:1/1){
+  .home{padding-block:clamp(1.2rem,3.4vh,2.2rem)}
+  .home-grid{gap:clamp(1rem,2.6vh,1.8rem)}
+  .choices{grid-template-columns:1fr}
+  .choice-arch{width:min(150px,34%)}
+}
+@media (max-width:760px) and (max-aspect-ratio:1/1){
+  .home-grid{gap:clamp(.9rem,2.4vh,1.4rem)}
+  .choice{gap:.45rem;padding:1rem .9rem}
+}
+
+/* motion.css zeroes every duration, but an animation delay would still hold
+   a card back, so the homepage clears its own */
+@media (prefers-reduced-motion:reduce){
+  .home-grid > *,.choice{animation-delay:0ms}
+}

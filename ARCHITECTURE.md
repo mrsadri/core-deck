@@ -12,7 +12,7 @@ site/
   ARCHITECTURE.md              the map: every file, its job, and how to add a deck
   PRESENTING.md                the pre presentation checklist
   REFACTOR_PLAN.md             the plan this history followed, stage by stage
-  index.html                   Core: shell only
+  index.html                   the homepage: asks which deck, links to both
   assets/                      every image, in one tree. See assets/README.md
     README.md                  the tree, and how to add a portrait
     brand/                     favicon.svg, apple-touch-icon.png
@@ -40,7 +40,11 @@ site/
       presentation.js          which slide is showing: show, next, prev, ticks, counter, hash
       input.js                 keyboard, click, buttons, touch
       start.js                 wires the above in one fixed order, then freezes DECK
+  home/
+    css/home.css               the chooser's own styles, and nothing else
+    main.js                    draws each card's arch with the engine primitive
   core/
+    index.html                 Core: shell only
     css/
       team.css                 the two tier team grid
       slides.css               the components only Core's slides use
@@ -71,7 +75,7 @@ site/
     main.js                    calls DECK.start
   tools/
     parity.mjs                 the per slide parity harness
-    lint.mjs                   the rules in section 5, as code
+    lint.mjs                   the rules below, as code
     baseline/                  recorded fingerprints, git ignored
 ```
 
@@ -80,9 +84,26 @@ site/
 Throughout: "may read" means may reference at runtime. Nothing imports anything,
 because there are no modules; the boundary is what a file is allowed to name.
 
-#### The shells
+#### The homepage
 
-**`index.html`, `customers/index.html`**
+**`index.html`**
+Asks which deck and links to both. It is not a deck and never starts one: it
+links `tokens.css`, `base.css`, `type.css`, `motif.css` and `motion.css`, then
+loads `engine/js/motif.js` and calls `DECK.buildMotifs` through `home/main.js`
+to draw the small arch on each card. `DECK` is never frozen here, because
+`start.js` is never loaded.
+Unlike a deck shell it carries its own markup, because nothing renders it for
+it. It obeys every other rule: no `<style>` block, no `style` attribute, at
+most 200 lines, no web fonts.
+It carries `.is-active` on `.home`, which is the engine's word for revealed,
+and is what makes each arch's bricks opaque. Its entrance is a keyframe on the
+same 65ms beat as a slide, so both cards stay readable if the script never
+runs. Both links point at a file, not a directory, so the page works over
+`file://` as well as over HTTP.
+
+#### The deck shells
+
+**`core/index.html`, `customers/index.html`**
 One responsibility: declare the document, link the stylesheets, provide the six
 element ids the engine needs, and load the scripts in order.
 May contain: `<meta>`, `<title>`, `<link>`, the `#deck` element, the HUD footer,
@@ -296,4 +317,11 @@ primitives to restack on a narrow screen. Pass a decorator to `DECK.start`
 if the deck has assets to fill in, such as screenshots or portraits.
 
 Then add the deck to `DECKS` in `tools/parity.mjs`, with its page path and
-its slide count, and record a baseline for it.
+its slide count, and record a baseline for it. Add its shell to `SHELLS` in
+`tools/lint.mjs`, so the length and no markup rules reach it.
+
+Finally give it a card on the homepage: copy one `.choice` block in
+`index.html`, point its `href` at the deck's `index.html` rather than its
+directory, and give its arch a `data-` attribute that says something true
+about the deck. Three cards will want `grid-template-columns:repeat(3,...)`
+in `home/css/home.css`.
