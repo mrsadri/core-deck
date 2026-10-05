@@ -1,71 +1,49 @@
 /**
  * Core, slide 02: the team, in two tiers.
+ *
+ * Both tiers share one tile size, so every member is set at the same weight.
+ * The niches are filled by the engine's niche decorator from
+ * CORE_CONFIG.PHOTOS.
  */
-const CORE_TEAM_HTML = `
-    <div class="wrap stack center">
-      <div class="eyebrow" data-anim>The team</div>
-      <div class="team" data-anim>
-        <div class="member">
-          <div class="niche"><img src="assets/team/mehdi-mohammad-rezaei.jpg" alt="Mehdi Mohammad Rezaei" style="object-position:58% 38%"></div>
-          <div class="m-name">Mehdi<br>Mohammad Rezaei</div><div class="m-role">Tech Lead</div>
-        </div>
-        <div class="member">
-          <div class="niche"><img src="assets/team/mohammadreza-hosseinzadeh.jpg" alt="MohammadReza HosseinZadeh" style="object-position:34% 26%"></div>
-          <div class="m-name">MohammadReza<br>HosseinZadeh</div><div class="m-role">Backend</div>
-        </div>
-        <div class="member">
-          <div class="niche"><img src="assets/team/amirhossein-khanzadeh.jpg" alt="AmirHossein KhanZadeh" style="object-position:46% 42%;transform:scale(1.06)"></div>
-          <div class="m-name">AmirHossein<br>KhanZadeh</div><div class="m-role">Backend</div>
-        </div>
-        <div class="member">
-          <div class="niche"><img src="assets/team/shabnam-nouri.jpg" alt="Shabnam Nouri" style="object-position:50% 22%"></div>
-          <div class="m-name">Shabnam<br>Nouri</div><div class="m-role">Frontend</div>
-        </div>
-        <div class="member">
-          <div class="niche"><img src="assets/team/masih-sadri.jpg" alt="Masih Sadri" style="object-position:48% 26%"></div>
-          <div class="m-name">Masih<br>Sadri</div><div class="m-role">Designer</div>
-        </div>
-        <div class="member">
-          <div class="niche"><img src="assets/team/vida-golzadeh.jpg" alt="Vida GolZadeh"></div>
-          <div class="m-name">Vida<br>GolZadeh</div><div class="m-role">QA</div>
-        </div>
-        <div class="member">
-          <div class="niche glyph"><div class="inner"><img class="mark" src="assets/team/claude-mark.svg" alt="Claude" width="248" height="248" loading="eager"></div></div>
-          <div class="m-name">Claude<br>by Anthropic</div><div class="m-role">AI assistant</div>
-        </div>
-      </div>
-      <div class="wider" data-anim>
-        <div class="wider-label"><span>And the wider team</span></div>
-        <div class="wider-row">
-          <div class="wm">
-            <div class="niche"><img src="assets/team/javid-izadfar.jpg" alt="Javid IzadFar"></div>
-            <b>Javid IzadFar</b><i>Frontend</i>
-          </div>
-          <div class="wm">
-            <div class="niche"><img src="assets/team/sana-mohammadzadeh.jpg" alt="Sana MohammadZadeh"></div>
-            <b>Sana MohammadZadeh</b><i>PM</i>
-          </div>
-          <div class="wm">
-            <div class="niche"><img src="assets/team/amirreza-mahouti.jpg" alt="AmirReza Mahouti"></div>
-            <b>AmirReza Mahouti</b><i>APM</i>
-          </div>
-          <div class="wm">
-            <div class="niche"><img src="assets/team/hamid-bahrampour.jpg" alt="Hamid BahramPour"></div>
-            <b>Hamid BahramPour</b><i>Backend</i>
-          </div>
-          <div class="wm">
-            <div class="niche"><img src="assets/team/reza-kashani.jpg" alt="Reza Kashani"></div>
-            <b>Reza Kashani</b><i>Backend</i>
-          </div>
-          <div class="wm">
-            <div class="niche"><img src="assets/team/mohammadmahdi-khakdaman.jpg" alt="MohammadMahdi Khakdaman"></div>
-            <b>MohammadMahdi Khakdaman</b><i>CRM Engineer</i>
-          </div>
-          <div class="wm">
-            <div class="niche"><img src="assets/team/ali-bayat.jpg" alt="Ali Bayat"></div>
-            <b>Ali Bayat</b><i>CRM Engineer</i>
-          </div>
-        </div>
-      </div>
-    </div>
-`;
+const CORE_TEAM_HTML = (function () {
+  'use strict';
+
+  const LEADS = [
+    { photo: 'mehdi', alt: 'Mehdi Mohammad Rezaei', name: 'Mehdi<br>Mohammad Rezaei', role: 'Tech Lead', pos: '58% 38%' },
+    { photo: 'mohammadreza', alt: 'MohammadReza HosseinZadeh', name: 'MohammadReza<br>HosseinZadeh', role: 'Backend', pos: '34% 26%' },
+    { photo: 'amirhossein', alt: 'AmirHossein KhanZadeh', name: 'AmirHossein<br>KhanZadeh', role: 'Backend', pos: '46% 42%', scale: '1.06' },
+    { photo: 'shabnam', alt: 'Shabnam Nouri', name: 'Shabnam<br>Nouri', role: 'Frontend', pos: '50% 22%' },
+    { photo: 'masih', alt: 'Masih Sadri', name: 'Masih<br>Sadri', role: 'Designer', pos: '48% 26%' },
+    { photo: 'vida', alt: 'Vida GolZadeh', name: 'Vida<br>GolZadeh', role: 'QA' },
+    { photo: 'claude', alt: 'Claude', name: 'Claude<br>by Anthropic', role: 'AI assistant', glyph: true }
+  ];
+
+  const WIDER = [
+    { photo: 'javid', name: 'Javid IzadFar', role: 'Frontend' },
+    { photo: 'sana', name: 'Sana MohammadZadeh', role: 'PM' },
+    { photo: 'amirreza', name: 'AmirReza Mahouti', role: 'APM' },
+    { photo: 'hamid', name: 'Hamid BahramPour', role: 'Backend' },
+    { photo: 'reza', name: 'Reza Kashani', role: 'Backend' },
+    { photo: 'mohammadmahdi', name: 'MohammadMahdi Khakdaman', role: 'CRM Engineer' },
+    { photo: 'ali', name: 'Ali Bayat', role: 'CRM Engineer' }
+  ];
+
+  function lead(member) {
+    return '<div class="member">' + DECK.nicheHtml(member) +
+      '<div class="m-name">' + member.name + '</div>' +
+      '<div class="m-role">' + member.role + '</div></div>';
+  }
+
+  function wider(member) {
+    return '<div class="wm">' + DECK.nicheHtml(member) +
+      '<b>' + member.name + '</b><i>' + member.role + '</i></div>';
+  }
+
+  return '<div class="wrap stack center">' +
+    '<div class="eyebrow" data-anim>The team</div>' +
+    '<div class="team" data-anim>' + LEADS.map(lead).join('') + '</div>' +
+    '<div class="wider" data-anim>' +
+    '<div class="wider-label"><span>And the wider team</span></div>' +
+    '<div class="wider-row">' + WIDER.map(wider).join('') + '</div>' +
+    '</div></div>';
+})();

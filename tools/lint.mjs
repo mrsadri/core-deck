@@ -95,6 +95,12 @@ const RULES = [
     applies: isContentFile,
     check: text => text.includes('--d:') ? 'declares --d inline' : null
   }
+  ,
+  {
+    name: 'no inline style in content',
+    applies: isContentFile,
+    check: text => text.includes('style=') ? 'carries an inline style attribute' : null
+  }
   // Later stages append their rules here.
 ];
 

@@ -8,5 +8,5 @@ DECK.start({
     .concat(CORE_SLIDES_PLATFORM)
     .concat(CORE_SLIDES_VOCABULARY)
     .concat(CORE_SLIDES_CLOSING),
-  decorators: [CORE_COPY]
+  decorators: [CORE_COPY, DECK.createNicheDecorator(CORE_CONFIG.PHOTOS)]
 });
