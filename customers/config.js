@@ -8,7 +8,7 @@
  * the deck cannot be presented half dressed by accident.
  *
  * Captures are laid out for 1280 x 832. If the real ones come back
- * at another size, change --shot-ratio once in css/tokens.css.
+ * at another size, change --shot-ratio once in engine/css/tokens.css.
  */
 const CUSTOMERS_CONFIG = Object.freeze({
   SCREENSHOTS: Object.freeze({

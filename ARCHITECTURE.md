@@ -21,7 +21,7 @@ site/
     screens/                   My Customers panel screenshots, and their README
   engine/
     css/
-      tokens.css               shared custom properties, and the names of the deck tokens
+      tokens.css               every token, for both decks and the homepage
       base.css                 reset, the kraft ground, the paper grain
       shell.css                .deck, .slide, .wrap, the enter animation
       type.css                 .eyebrow, h1, h2, .lead, .support, .stack
@@ -42,7 +42,6 @@ site/
       start.js                 wires the above in one fixed order, then freezes DECK
   core/
     css/
-      tokens.css               Core's values for the engine's deck tokens
       team.css                 the two tier team grid
       slides.css               the components only Core's slides use
     content/
@@ -58,7 +57,6 @@ site/
   customers/
     index.html                 My Customers: shell only
     css/
-      tokens.css               Customers' values for the engine's deck tokens
       team.css                 the team grid and the project row
       screens.css              the panel screenshot frame and its pending state
       slides.css               the components only Customers' slides use
@@ -97,12 +95,13 @@ The six ids it must provide, which are the engine's contract: `deck`, `ticks`,
 #### `engine/css/*`
 
 Each file owns one band of the design system and may use only the custom
-properties declared in `engine/css/tokens.css` plus the four deck tokens that
-file names. None of them may name a deck specific class.
+properties declared in `engine/css/tokens.css`. None of them may name a deck
+specific class.
 
-- **`tokens.css`** declares every shared custom property, and documents the four
-  tokens each deck must declare for itself: `--h1`, `--tile`, `--m-name`,
-  `--m-role`.
+- **`tokens.css`** declares every token, once, for both decks and the homepage.
+  A deck declares none of its own. The single exception is `--tile`, which a
+  deck may narrow in its own `css/team.css` because the cap follows the grid:
+  see the comment at the top of that file for the measured reason.
 - **`base.css`** the reset, the page ground, the grain overlay. Nothing else may
   style `html` or `body`.
 - **`shell.css`** the deck frame, slide visibility and the enter animation.
@@ -159,11 +158,10 @@ deck's config, or a deck specific class.
 
 #### `core/*` and `customers/*`
 
-- **`css/tokens.css`** declares the deck's values for the four engine tokens,
-  and nothing else.
 - **`css/team.css`** the team slide's grid and tier labels for that deck. May
-  override `.niche` properties the engine leaves open, and may redeclare the
-  deck tokens inside a media query.
+  override `.niche` properties the engine leaves open, and may narrow `--tile`,
+  `--m-name` and `--m-role` where its own column count demands it. Every such
+  override states the measurement that forced it.
 - **`css/slides.css`** the components only that deck's slides use. May not
   redefine an engine primitive.
 - **`css/screens.css`** (Customers only) the panel screenshot frame and its
@@ -227,19 +225,18 @@ Find the slide in the table, open that file, edit the html string. Nothing else 
 
 ## The rules
 
-These hold for every stage. `tools/lint.mjs` enforces the checkable ones, and
-each stage runs it.
+These hold for every change, not just the refactor that introduced them.
+`tools/lint.mjs` enforces the checkable ones.
 
 1. **File length.** No file the browser loads may exceed **200 physical lines**,
    counting blanks and comments, ignoring one trailing newline. That is every
-   `.css` and `.js` file under `engine/`, `core/` and `customers/`, and from
-   stage 11 the two shells as well. `tools/` is exempt: it is not loaded by the
-   browser.
-2. **Move, do not rewrite.** When an item gives a source line range, copy those
-   lines verbatim. Change only what the item tells you to change. Do not
-   reformat, do not reorder declarations, do not modernise, do not fix a typo in
-   a comment, do not "improve" a selector. Declarations inside a moved function
-   change from `var` to `const` or `let` only where an item says so.
+   `.css` and `.js` file under `engine/`, `core/` and `customers/`, and the
+   shells. `tools/` is exempt: it is not loaded by the browser.
+2. **Move, do not rewrite.** When code changes place, it travels verbatim.
+   Change only what the task calls for. Do not reformat, do not reorder
+   declarations, do not modernise, do not fix a typo in a comment, do not
+   "improve" a selector on the way past. A diff that mixes a move with an edit
+   hides the edit.
 3. **No globals.** `window.DECK` is the only global the engine creates, it holds
    only functions, and `start.js` freezes it. Every engine and deck script keeps
    everything else inside a wrapper: no `var`, `let`, `const` or `function` at
@@ -248,14 +245,17 @@ each stage runs it.
    `window.__rt` must not survive.
 4. **No `var`.** Nowhere under `engine/` or in a deck's `.js` files. Use `const`,
    or `let` where the binding is reassigned.
-5. **No em dashes.** Not in this plan, not in any file it tells you to write,
-   not in code, comments, commit messages or documentation. Use a comma, a
+5. **No em dashes.** Not in any file here, not in code, comments, commit
+   messages or documentation. Use a comma, a
    colon, a full stop or a pair of parentheses. The multiplication sign in
    `'1280 × 832'` is not an em dash: it is rendered slide text and must survive
    byte for byte.
-6. **No behaviour change.** Slide text and slide order are fixed. Rendered
-   output, colours, typography, enter animation timing, arch geometry and brick
-   reveal order are fixed. The deferred items in section 1 are fixed.
+6. **Rendering changes only on purpose.** Slide text and slide order are fixed.
+   Colours, typography, enter animation timing, arch geometry and brick reveal
+   order change only when a change is the point of the work. Then it is stated
+   plainly, its blast radius is read off `node tools/parity.mjs check` before
+   anything is re-recorded, and the reason is written where the value lives.
+   A rendering change nobody asked for is a bug, whatever it looks like.
 7. **Naming.** Files are lowercase with hyphens. CSS classes follow the idiom
    already in the repo: short, lowercase, one word where possible, modifiers as
    a second class (`tight`, `sm`, `narrow`, `pale`, `thin`). Engine functions are
@@ -264,18 +264,19 @@ each stage runs it.
    (`CORE_`, `CUSTOMERS_`).
 8. **Comments explain why.** Carry every existing explanatory comment with the
    code it explains. Do not add a comment that restates the code.
-9. **Every stage ends working.** Both decks must open and present correctly at
-   the end of every stage, before the commit. A stage is finished only when
-   parity and lint both pass.
+9. **Every commit ends working.** Both decks must open and present correctly
+   before a commit, and the homepage must reach both. A change is finished only
+   when parity and lint both pass.
 10. **No web fonts.** No `@font-face`, no `fonts.googleapis.com`, no
     `fonts.gstatic.com`, no font file in `assets/`. Lint enforces this.
-11. **Stop, do not improvise.** If an acceptance check fails, stop and report:
-    the stage, the item, the command you ran, and the output. Do not guess at a
-    fix, do not skip the item, do not re-record the parity baseline, do not
-    continue to the next stage. A failing check means the plan was wrong, and
-    that is information worth more than a workaround.
+11. **Stop, do not improvise.** If a check fails unexpectedly, stop and report
+    the command and its output. Do not guess at a fix, do not skip the step and
+    do not re-record the baseline to make the red go away. An unexpected failure
+    means the plan was wrong, and that is worth more than a workaround.
+    Re-recording is legitimate only for a change rule 6 already accounted for,
+    after the check has been read and the differing pairs are the expected ones.
 
-tools/lint.mjs enforces the checkable ones. Run it before every commit.
+Run `node tools/lint.mjs` before every commit.
 
 ## Adding a third deck
 
@@ -283,8 +284,6 @@ Nothing under `engine/` changes. Create:
 
 - `<deck>/index.html`, a shell: copy `customers/index.html` and change the
   meta, the deck's own stylesheet links and its own script tags.
-- `<deck>/css/tokens.css`, declaring the four tokens the engine names:
-  `--h1`, `--tile`, `--m-name`, `--m-role`.
 - `<deck>/css/slides.css`, for anything only this deck's slides use.
 - `<deck>/content/*.js`, one file per act, each declaring one const holding
   an array of `{id, name, html}`.

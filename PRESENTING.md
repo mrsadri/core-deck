@@ -20,7 +20,7 @@ half dressed by accident.
 All six panel screenshots and all five team photos are in place: nothing in
 `customers/config.js` is still `null`. If the real captures ever come back at
 a size other than 1280 x 832, change `--shot-ratio` once in
-`customers/css/tokens.css` and every frame follows.
+`engine/css/tokens.css` and every frame follows.
 
 - [ ] **The tech lead's name.** `customers/content/team.js`. The deck follows
   the spelling used in the Core deck, "Mehdi Mohammad Rezaei". Confirm it.

@@ -1,14 +1,20 @@
 /* ============================================================
-   Shared tokens: every value both decks agree on.
+   Every token, for both decks and the homepage.
 
-   Four more tokens are named here and declared by each deck in its
-   own css/tokens.css, because their values differ per deck:
-     --h1       the display size of an h1
-     --tile     the width of a member portrait
-     --m-name   the size of a member's name
-     --m-role   the size of a member's role
+   One value, defined once. A deck does not declare tokens of its own: a
+   size only one deck needs belongs in that deck's own stylesheet, next to
+   the rule that needs it. So a number here moves both decks together, and
+   a number that moves one deck is visibly local.
+
+   --tile is the one token a deck still narrows, and only because the cap
+   follows the grid rather than the brand. Core packs 14 members into two
+   tiers, so the shared cap below leaves it 1.3px short of its frame at
+   1280x800; it sets its own in core/css/team.css. My Customers sets 5 in
+   one tier and uses the shared value. Both decks narrow it again on a
+   narrow, tall frame, where Core drops to 4 columns and Customers to 2.
    ============================================================ */
 :root{
+  /* ---------- palette: kraft paper, brick, and one accent ---------- */
   --kraft:        #d8c3a2;
   --kraft-hi:     #e7d8bd;
   --kraft-lo:     #c3a77e;
@@ -22,9 +28,35 @@
   --ink-38:       rgba(43,27,18,.38);
   --ink-14:       rgba(43,27,18,.14);
 
+  /* ---------- families: installed faces only, so a deck renders offline ---------- */
   --serif: "Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Times New Roman",serif;
   --sans: -apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
 
+  /* ---------- the type scale, largest first ----------
+     --h1-hero sets a single display word, such as Core on its title
+     slide. --h1 sets a display sentence, which is what every other h1 in
+     either deck is. --h2 down are the same sizes both decks always used. */
+  --h1-hero: clamp(4rem,13vw,15rem);
+  --h1:      clamp(2.7rem,8vw,8.6rem);
+  --h2:      clamp(2.4rem,5.7vw,6.1rem);
+  --lead:    clamp(1.05rem,1.95vw,2.05rem);
+  --support: clamp(.9rem,1.3vw,1.32rem);
+  --eyebrow: clamp(.7rem,.92vw,1rem);
+
+  /* ---------- the member tile ----------
+     --tile is a cap, not a width: a niche fills its grid cell up to this.
+     The cap stops a sparse grid ballooning; a dense grid is governed by
+     its cell long before the cap is reached. */
+  --tile:   min(204px, 24vh);
+  --m-name: clamp(.83rem,1.1vw,1.16rem);
+  --m-role: clamp(.72rem,.92vw,.97rem);
+
+  /* ---------- the panel screenshot frame ----------
+     My Customers frames every capture to this. Change it once if the real
+     captures come back at a size other than 1280 x 832. */
+  --shot-ratio: 1280 / 832;
+
+  /* ---------- motion and the frame ---------- */
   --ease: cubic-bezier(.2,.72,.2,1);
   --pad-y: 7vh;
   --pad-x: 7vw;

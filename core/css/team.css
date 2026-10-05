@@ -1,6 +1,13 @@
 /* ---------- team ---------- */
-/* both team tiers share one 7 column grid and one tile size, so every
-   member is set at the same weight */
+/* Both tiers share one 7 column grid, one tile size and one pair of label
+   sizes, so every member is set at the same weight.
+
+   Core is the one deck that narrows --tile. Two tiers of 7 are taller than
+   one tier of 5, and the cap is reached from the vh side well before the
+   px side: at the shared min(204px, 24vh) this slide stands 1.3px taller
+   than its frame at 1280x800, and 18vh clears it by 43.7px. */
+:root{--tile: min(158px, 18vh)}
+
 .team,.wider-row{
   display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
   gap:clamp(.4rem,1.1vw,1.3rem);justify-items:center;width:100%;
@@ -18,19 +25,20 @@
 }
 .wm{display:flex;flex-direction:column;align-items:center}
 .wm b{
-  display:block;font-size:clamp(.72rem,.97vw,1.02rem);font-weight:600;
+  display:block;font-size:var(--m-name);font-weight:600;
   line-height:1.28;letter-spacing:-.012em;min-height:2.56em;
   overflow-wrap:break-word;
 }
 .wm i{
-  display:block;font-style:normal;font-size:clamp(.66rem,.84vw,.88rem);
+  display:block;font-style:normal;font-size:var(--m-role);
   color:var(--brick);margin-top:.18rem;letter-spacing:.02em;
 }
-/* a narrow, tall frame: fewer columns and smaller tiles, both tiers alike */
+/* A narrow, tall frame: fewer columns and smaller tiles, both tiers alike.
+   14 members in 4 columns is 4 rows, which leaves this slide 8.4px inside
+   its frame at 390x844. At the Customers cap of 84px it runs 163.3px over
+   and clips, which is why the cap is set per deck rather than shared. */
 @media (max-width:760px) and (max-aspect-ratio:1/1){
   :root{--tile:58px;--m-name:.7rem;--m-role:.66rem}
   .team,.wider-row{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:1rem}
   .niche{margin-bottom:.45rem}
-  .wm b{font-size:.7rem}
-  .wm i{font-size:.66rem}
 }

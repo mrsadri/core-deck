@@ -94,7 +94,7 @@ Everything that needs filling lives in `customers/config.js`. [PRESENTING.md](PR
 - **Photos.** Done. `CUSTOMERS_CONFIG.PHOTOS` in `customers/config.js` carries all five portraits from the shared `assets/team/`. Setting any one back to `null` renders a PHOTO PENDING niche in its place.
 - **The tech lead's name.** The deck follows the spelling used in the Core deck, "Mehdi Mohammad Rezaei". Confirm it before presenting.
 
-If the real captures come back at a size other than 1280 x 832, change `--shot-ratio` once in `customers/css/tokens.css` and every frame follows.
+If the real captures come back at a size other than 1280 x 832, change `--shot-ratio` once in `engine/css/tokens.css` and every frame follows.
 
 ## Design
 

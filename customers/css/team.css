@@ -17,6 +17,9 @@
   .proj{grid-template-columns:1fr;gap:1rem;text-align:center}
 }
 
+/* A narrow, tall frame: 5 members in 2 columns. The cap is set here, not
+   shared, because it follows the column count. Core drops to 4 columns on
+   the same frame and needs a smaller one. */
 @media (max-width:760px) and (max-aspect-ratio:1/1){
   :root{--tile:84px;--m-name:.78rem;--m-role:.7rem}
   .team3{gap:.8rem;grid-template-columns:repeat(2,minmax(0,1fr))}
