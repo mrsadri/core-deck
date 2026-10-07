@@ -7,7 +7,7 @@
  *   pixels  SHA-256 of the settled screenshot   layout, colour, type, geometry
  *   text    the slide's rendered innerText      slide copy and slide order
  *   anims   --d and transition-delay per item   the enter animation
- *   motifs  per-brick geometry and reveal index arch builds and brick order
+ *   motifs  per-brick geometry and reveal index arch, bond and pile order
  *
  * The last three are read after scripting settles and are time independent,
  * so they are exact rather than sampled. Pixels are captured over the same
@@ -187,7 +187,7 @@ const PROBE_EXPRESSION = `(() => {
              (document.getElementById('cAll') || {}).textContent,
     ticksOn: document.querySelectorAll('#ticks b.on').length,
     anims: [...active.querySelectorAll('[data-anim]')].map(describe),
-    motifs: [...active.querySelectorAll('.vsr, .lb')].map(brick),
+    motifs: [...active.querySelectorAll('.vsr, .bk, .lb')].map(brick),
     photos: [...active.querySelectorAll('.niche img')].map(el => {
       const computed = getComputedStyle(el);
       return {
@@ -331,13 +331,32 @@ class Browser {
  * Recording
  * ------------------------------------------------------------------ */
 
+/**
+ * The probe reports {error} when the page has not finished starting. That is
+ * a fact about the capture, not about the slide: recording it would bake a
+ * non fingerprint into the baseline, and comparing it reports every
+ * fingerprint as changed at once, which reads like a broken slide. So it is
+ * reopened and retried, and a probe that never settles stops the run loudly
+ * rather than being counted as a difference.
+ */
+async function probeSettled(browser, deck, viewport, slide) {
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const probed = await browser.probe();
+    if (!probed.error) return probed;
+    await browser.open(slideUrl(deck.page, slide));
+  }
+  throw new Error(
+    `${deck.name} slide ${slide} at ${viewport.name}: probe never found an active slide`
+  );
+}
+
 async function recordDeckAtViewport(deck, viewport) {
   const browser = await Browser.launch(viewport);
   const slides = [];
   try {
     for (let slide = 1; slide <= deck.slides; slide++) {
       await browser.open(slideUrl(deck.page, slide));
-      const probed = await browser.probe();
+      const probed = await probeSettled(browser, deck, viewport, slide);
       const pixels = sha256(await browser.screenshot(slide));
       slides.push({ slide, pixels, ...probed });
       process.stdout.write('.');
@@ -396,15 +415,17 @@ async function check() {
       process.stdout.write(`checking ${deck.name} at ${viewport.name} `);
       const current = await recordDeckAtViewport(deck, viewport);
 
+      let differed = 0;
       for (const after of current) {
         pairs++;
         const before = baseline.slides.find(s => s.slide === after.slide);
         const changed = compareSlide(before, after);
         if (changed.length) {
+          differed++;
           failures.push({ deck: deck.name, viewport: viewport.name, slide: after.slide, changed, before, after });
         }
       }
-      process.stdout.write(failures.length ? ' DIFF\n' : ' ok\n');
+      process.stdout.write(differed ? ` DIFF (${differed})\n` : ' ok\n');
     }
   }
 
@@ -433,6 +454,12 @@ function report(pairs, failures) {
       if (!failure.changed.includes(key)) continue;
       const before = failure.before[key];
       const after = failure.after[key];
+      // one side can be absent when a record is malformed, and a reporter
+      // that throws here would hide every failure after this one
+      if (!Array.isArray(before) || !Array.isArray(after)) {
+        console.log(`  ${key}: ${Array.isArray(before) ? after === undefined ? 'missing after' : 'malformed after' : 'malformed before'}`);
+        continue;
+      }
       if (before.length !== after.length) {
         console.log(`  ${key}: ${before.length} before, ${after.length} after`);
         continue;

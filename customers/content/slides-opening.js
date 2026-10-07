@@ -8,7 +8,7 @@ const CUSTOMERS_SLIDES_OPENING = [
     html: `
     <div class="wrap title-grid">
       <div class="eyebrow" data-anim>BimeBazar &nbsp;/&nbsp; Partner panel &nbsp;/&nbsp; Design review</div>
-      <div class="title-arch" data-anim><div class="arch" data-bricks="15" data-depth=".2" data-key="1"></div><div class="plinth"></div></div>
+      <div class="title-bond" data-anim><div class="bond" data-bricks="15" data-courses="3" data-tags="Documents|Policies|Person" data-key="1"></div><div class="plinth"></div></div>
       <p class="lead" data-anim>The panel stops listing orders and starts knowing people.</p>
       <p class="hint" data-anim>A walk through the design, then your feedback</p>
     </div>
@@ -36,23 +36,21 @@ const CUSTOMERS_SLIDES_OPENING = [
   },
   {
     id: 'problems',
-    name: 'Six problems, one missing piece',
+    name: 'Four problems, one missing piece',
     html: `
     <div class="wrap stack center">
       <div class="eyebrow" data-anim>What we found</div>
-      <h2 class="tight" data-anim>Six problems, one missing piece.</h2>
+      <h2 class="tight" data-anim>Four problems, one missing piece.</h2>
       <div class="motif-pile" data-anim data-d="2">
         <div class="loose" data-loose="20" data-rows="3"></div>
         <div class="plinth thin"></div>
-        <div class="motif-cap">Orders, and no one to attach them to</div>
+        <div class="motif-cap">Orders in a heap, and no one to file them under</div>
       </div>
       <div class="plist" data-anim data-d="3">
         <div class="pitem"><span class="n">01</span><span class="t">Work revolves around the order list, not the customer.</span></div>
-        <div class="pitem"><span class="n">02</span><span class="t">Finding one customer takes too long.</span></div>
-        <div class="pitem"><span class="n">03</span><span class="t">A customer's information is out of reach.</span></div>
-        <div class="pitem"><span class="n">04</span><span class="t">A customer's documents aren't filed under their record.</span></div>
-        <div class="pitem"><span class="n">05</span><span class="t">Installments and purchase history are hard to read.</span></div>
-        <div class="pitem"><span class="n">06</span><span class="t">Notes still live in a paper diary.</span></div>
+        <div class="pitem"><span class="n">02</span><span class="t">Finding one particular customer takes too long.</span></div>
+        <div class="pitem"><span class="n">03</span><span class="t">A customer's policies, documents, installments, purchase history, and contact details aren't within easy reach.</span></div>
+        <div class="pitem"><span class="n">04</span><span class="t">Partners still keep their customer notes in a paper diary.</span></div>
       </div>
     </div>
 `

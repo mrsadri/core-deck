@@ -10,7 +10,7 @@ const CUSTOMERS_SLIDES_CLOSING = [
       <div class="eyebrow" data-anim>Phase 1</div>
       <h2 class="tight scope-title" data-anim>Six capabilities, one section.</h2>
       <div class="motif-span" data-anim data-d="2">
-        <div class="arch" data-bricks="6" data-depth=".26"></div>
+        <div class="bond" data-bricks="6" data-courses="1" data-tags="One section"></div>
         <div class="plinth"></div>
       </div>
       <div class="scope" data-anim data-d="3">
@@ -43,7 +43,7 @@ const CUSTOMERS_SLIDES_CLOSING = [
     name: 'One record each',
     html: `
     <div class="wrap title-grid">
-      <div class="title-arch" data-anim><div class="arch" data-bricks="15" data-depth=".2" data-key="1"></div><div class="plinth"></div></div>
+      <div class="title-bond" data-anim><div class="bond" data-bricks="15" data-courses="3" data-tags="Documents|Policies|Person" data-key="1"></div><div class="plinth"></div></div>
       <h1 data-anim data-d="1">One record each.</h1>
       <div class="sign" data-anim data-d="2">My Customers &nbsp;/&nbsp; Phase 1</div>
     </div>

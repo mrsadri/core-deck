@@ -16,15 +16,44 @@
 }
 .vsr.is-new > i{background:linear-gradient(180deg,var(--yellow) 0%,var(--yellow-lo) 100%)}
 .vsr.is-key > i{background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%)}
-/* the search hit: one stone pulled clear of the curve */
-.vsr.is-lift > i{
-  background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%);
-  box-shadow:0 10px 20px -10px rgba(85,39,26,.55), inset 0 1px 0 rgba(231,216,189,.3);
-}
-.vsr.is-lift{filter:drop-shadow(0 0 0 transparent)}
 /* springing line under an arch */
 .plinth{height:10px;background:var(--brick-deep);border-radius:2px;opacity:.9}
 .plinth.thin{height:6px}
+/* ---------- bond: the same bricks, sorted into courses and labelled ----------
+   The arch's counterpart. A course is a grid of equal columns, so a wall of
+   any width divides evenly and needs no pixel arithmetic; the label sits above
+   its own course, which is what makes a shelf a shelf.
+   ------------------------------------------------------------------------- */
+.bond{display:flex;flex-direction:column;gap:clamp(.3rem,.7vh,.5rem);width:100%}
+.crs{display:flex;flex-direction:column;gap:.3em}
+.crs-row{display:grid;grid-template-columns:repeat(var(--per),1fr);gap:4px}
+.crs-tag{
+  font-size:clamp(.56rem,.72vw,.76rem);letter-spacing:.18em;text-transform:uppercase;
+  font-weight:600;color:var(--brick);line-height:1;
+}
+.crs.is-new .crs-tag{color:var(--yellow-lo)}
+.crs.is-pending .crs-tag{color:var(--ink-38)}
+.bk{
+  display:block;aspect-ratio:3.1 / 1;border-radius:1.5px;
+  background:linear-gradient(180deg,var(--brick) 0%,var(--brick-deep) 100%);
+  box-shadow:inset 0 1px 0 rgba(231,216,189,.22);
+  opacity:0;transform:scale(.88);
+  transition:opacity .5s var(--ease), transform .5s var(--ease);
+  transition-delay:calc(var(--i) * 30ms + 160ms);
+}
+.is-active .bk{opacity:1;transform:none}
+.bk.is-ghost{
+  background:none;border:1.5px dashed rgba(43,27,18,.34);box-shadow:none;
+}
+.bk.is-new{background:linear-gradient(180deg,var(--yellow) 0%,var(--yellow-lo) 100%)}
+.bk.is-key{background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%)}
+/* the search hit: one brick pulled clear of the course it was filed in.
+   translate rather than transform, so the pull survives the reveal. */
+.bk.is-lift{
+  background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%);
+  translate:0 -142%;
+  box-shadow:0 10px 20px -10px rgba(85,39,26,.55), inset 0 1px 0 rgba(231,216,189,.3);
+}
 /* ---------- loose bricks: the order list before it has an owner ---------- */
 .loose{position:relative;width:100%}
 .lb{

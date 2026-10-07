@@ -1,28 +1,20 @@
 (function (DECK) {
   'use strict';
 
-  /* ---------- arch builder: rowlock voussoirs radiating on a curve ----------
-     Carried over from Core, with three additions this deck needs:
-       data-lift="i"       one stone pulled clear of the curve, a search hit
-       data-place="i,j"    stones set in an otherwise unbuilt span
-       data-ghostat="i,j"  stones missing from an otherwise built span
-     ------------------------------------------------------------------------ */
   function indexList(v){
     if (v === undefined) return [];
     return v.split(',').map(function(s){ return parseInt(s, 10); });
   }
 
+  /* ---------- arch builder: rowlock voussoirs radiating on a curve ---------- */
   function buildArch(el){
     const w = el.clientWidth;
     if (!w) return;
     const n      = parseInt(el.dataset.bricks || '13', 10);
     const depthR = parseFloat(el.dataset.depth || '0.22');
-    const fill   = el.dataset.fill  !== undefined ? parseInt(el.dataset.fill, 10)  : n;
-    const newTop = el.dataset.new   !== undefined ? parseInt(el.dataset.new, 10)   : 0;
-    const key    = el.dataset.key   !== undefined;
-    const lift   = el.dataset.lift  !== undefined ? parseInt(el.dataset.lift, 10)  : -1;
-    const placed = indexList(el.dataset.place);
-    const gone   = indexList(el.dataset.ghostat);
+    const fill   = el.dataset.fill !== undefined ? parseInt(el.dataset.fill, 10) : n;
+    const newTop = el.dataset.new  !== undefined ? parseInt(el.dataset.new, 10)  : 0;
+    const key    = el.dataset.key  !== undefined;
 
     const R = w / 2;
     const D = R * depthR;
@@ -31,8 +23,6 @@
     const bw = Math.max(3, slot * 0.84);          // mortar gap
 
     el.style.height = R + 'px';
-    // a lifted stone stands clear above the curve, so leave it room
-    el.style.marginTop = lift >= 0 ? (D * 1.15) + 'px' : '';
     el.textContent = '';
 
     const newStart = Math.floor((n - newTop) / 2);
@@ -51,26 +41,97 @@
       // bricks reveal outward from the springing line
       b.style.setProperty('--i', Math.round(Math.abs(i - mid)));
 
-      if (gone.indexOf(i) > -1) b.classList.add('is-ghost');
-      else if (placed.indexOf(i) > -1) b.classList.add('is-new');
-      else if (i === lift) b.classList.add('is-lift');
-      else if (i >= fill) b.classList.add('is-ghost');
+      if (i >= fill) b.classList.add('is-ghost');
       else if (newTop && i >= newStart && i < newStart + newTop) b.classList.add('is-new');
       else if (key && Math.abs(i - mid) < 0.5) b.classList.add('is-key');
 
       const face = document.createElement('i');
       face.style.height = D + 'px';
-      // the lifted stone sits outside the span, clear of its neighbours
-      if (i === lift) face.style.top = (-D * 0.95) + 'px';
       b.appendChild(face);
       el.appendChild(b);
     }
   }
 
+  /* ---------- bond builder: the same bricks, sorted into labelled courses ----
+     Where the arch spans, the bond files. Bricks sit in level courses, laid
+     from the ground up, and every course may carry a label. The bond reads
+     the arch's whole vocabulary, so one grammar covers both geometries:
+       data-bricks="n"     bricks in the wall
+       data-courses="r"    courses to divide them into, the top one laid last
+       data-tags="a|b|c"   one label per course, written top down, blank to skip
+       data-fill="k"       only the first k bricks are laid
+       data-new="k"        the last k laid bricks are the ones just added
+       data-key            the footing brick, at the centre of the ground course
+       data-lift="i"       one brick pulled clear of its course, a search hit
+       data-place="i,j"    bricks laid in an otherwise empty wall
+       data-ghostat="i,j"  bricks missing from an otherwise laid wall
+     Geometry is the stylesheet's: a course is a grid of equal columns, so the
+     wall needs no pixel arithmetic of its own.
+     --------------------------------------------------------------------- */
+  function buildBond(el){
+    const n     = parseInt(el.dataset.bricks  || '12', 10);
+    const rows  = parseInt(el.dataset.courses || '3', 10);
+    const per   = Math.ceil(n / rows);
+    const fill  = el.dataset.fill !== undefined ? parseInt(el.dataset.fill, 10) : n;
+    const fresh = el.dataset.new  !== undefined ? parseInt(el.dataset.new, 10)  : 0;
+    const lift  = el.dataset.lift !== undefined ? parseInt(el.dataset.lift, 10) : -1;
+    const key   = el.dataset.key !== undefined ? Math.floor((per - 1) / 2) : -1;
+    const placed = indexList(el.dataset.place);
+    const gone   = indexList(el.dataset.ghostat);
+    const tags   = (el.dataset.tags || '').split('|');
+
+    // a lifted brick stands clear above its course, so leave the wall room
+    el.style.paddingTop = lift >= 0 ? '1.7rem' : '';
+    el.textContent = '';
+
+    for (let r = 0; r < rows; r++){
+      const tier = rows - 1 - r;            // the top course is the last laid
+      const course = document.createElement('div');
+      course.className = 'crs';
+
+      const row = document.createElement('div');
+      row.className = 'crs-row';
+      row.style.setProperty('--per', per);
+      let ghosts = 0;
+      let news = 0;
+      let count = 0;
+      for (let c = 0; c < per; c++){
+        const i = tier * per + c;
+        if (i >= n) break;
+        count++;
+
+        const b = document.createElement('span');
+        b.className = 'bk';
+        b.style.setProperty('--i', i);
+
+        if (gone.indexOf(i) > -1) { b.classList.add('is-ghost'); ghosts++; }
+        else if (placed.indexOf(i) > -1) { b.classList.add('is-new'); news++; }
+        else if (i === lift) b.classList.add('is-lift');
+        else if (i >= fill) { b.classList.add('is-ghost'); ghosts++; }
+        else if (fresh && i >= fill - fresh) { b.classList.add('is-new'); news++; }
+        else if (i === key) b.classList.add('is-key');
+        row.appendChild(b);
+      }
+
+      // the label carries the state of its own shelf
+      if (ghosts === count) course.classList.add('is-pending');
+      else if (news === count) course.classList.add('is-new');
+
+      if (tags[r]) {
+        const tag = document.createElement('span');
+        tag.className = 'crs-tag';
+        tag.textContent = tags[r];
+        course.appendChild(tag);
+      }
+      course.appendChild(row);
+      el.appendChild(course);
+    }
+  }
+
   /* ---------- loose bricks: the order list, before anyone owns it ----------
-     Deterministic jitter, so the pile looks the same on every machine
-     and in every reload.
-     ---------------------------------------------------------------------- */
+     Deterministic jitter, so the pile looks the same on every machine and in
+     every reload.
+     --------------------------------------------------------------------- */
   function jitter(i, salt){
     const x = Math.sin((i + 1) * 12.9898 + salt * 78.233) * 43758.5453;
     return x - Math.floor(x);            // 0 to 1
@@ -110,17 +171,19 @@
   /**
    * Builds every motif in the tree, and rebuilds them on resize and on load.
    *
-   * The rebuild is deliberately total: it destroys and recreates every
-   * brick, which restarts the reveal transition. The second build on load is
-   * part of how the deck looks, so it stays.
+   * The rebuild is deliberately total: it destroys and recreates every brick,
+   * which restarts the reveal transition. The second build on load is part of
+   * how the deck looks, so it stays.
    */
   function buildMotifs(root) {
     const arches = Array.prototype.slice.call(root.querySelectorAll('.arch'));
+    const bonds = Array.prototype.slice.call(root.querySelectorAll('.bond'));
     const piles = Array.prototype.slice.call(root.querySelectorAll('.loose'));
     let resizeTimer = null;
 
     function buildAll() {
       arches.forEach(buildArch);
+      bonds.forEach(buildBond);
       piles.forEach(buildLoose);
     }
 
