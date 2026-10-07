@@ -1,12 +1,11 @@
 /* ---------- the chooser ---------- */
 /* The homepage is not a deck: no slides, no HUD, no navigation. It borrows
-   the ground from base.css, the type scale from tokens.css and both brick
-   geometries from motif.css, so it cannot drift away from the decks it
-   introduces: each card carries the motif of the deck under it.
+   the ground from base.css, the type scale from tokens.css and the arch from
+   motif.css, so it cannot drift away from the two decks it introduces.
 
    .home carries .is-active because that is the engine's word for revealed,
    and the homepage is revealed for as long as it is open. It is what makes
-   the bricks of each card's motif opaque. The entrance itself is a plain
+   the bricks of each card's arch opaque. The entrance itself is a plain
    keyframe on the same 65ms beat and the same --ease as a slide, so the
    timing matches without the homepage joining the deck lifecycle, and every
    element ends at its resting state, so the cards stay readable even if the
@@ -47,9 +46,8 @@ body{overflow:auto}
 }
 .choice:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
 
-/* a small motif over each card, built by the primitive the decks use:
-   an arch for Core, a bond for My Customers */
-.choice-motif{width:min(190px,44%)}
+/* a small arch over each card, built by the primitive the decks use */
+.choice-arch{width:min(190px,44%)}
 
 .choice-name{
   font-family:var(--serif);font-weight:400;
@@ -84,7 +82,7 @@ body{overflow:auto}
   .home{padding-block:clamp(1.2rem,3.4vh,2.2rem)}
   .home-grid{gap:clamp(1rem,2.6vh,1.8rem)}
   .choices{grid-template-columns:1fr}
-  .choice-motif{width:min(150px,34%)}
+  .choice-arch{width:min(150px,34%)}
 }
 @media (max-width:760px) and (max-aspect-ratio:1/1){
   .home-grid{gap:clamp(.9rem,2.4vh,1.4rem)}

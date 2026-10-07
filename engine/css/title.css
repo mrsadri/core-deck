@@ -1,8 +1,6 @@
 /* ---------- title ---------- */
 .title-grid{display:grid;gap:clamp(1.4rem,3.4vh,2.6rem);justify-items:center;text-align:center}
 .title-arch{width:min(560px,58vw)}
-/* the bond carries its courses and labels, so it needs less width than a span */
-.title-bond{width:min(440px,46vw)}
 .hint{
   font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-38);
   animation:fade 6s ease forwards;animation-delay:2.4s;
@@ -12,5 +10,5 @@
 .closing .lead{max-width:30ch}
 .sign{display:flex;gap:.7rem;align-items:center;color:var(--brick);font-size:clamp(.8rem,1.05vw,1.08rem);letter-spacing:.2em;text-transform:uppercase;font-weight:600}
 
-/* the subtitle under a title motif sets its own measure */
+/* the subtitle under a title arch sets its own measure */
 .title-grid .lead{max-width:40ch}

@@ -25,15 +25,15 @@ site/
       base.css                 reset, the kraft ground, the paper grain
       shell.css                .deck, .slide, .wrap, the enter animation
       type.css                 .eyebrow, h1, h2, .lead, .support, .stack
-      motif.css                the arch, the bond, their brick states, the plinth, loose bricks
+      motif.css                the arch, the voussoirs and their states, the plinth, loose bricks
       member.css               the member tile: .member, .niche and its states, .m-name, .m-role
       layout.css               .split, .arcrow, .pier
-      title.css                .title-grid, .title-arch, .title-bond, .hint, .closing, .sign
+      title.css                .title-grid, .title-arch, .hint, .closing, .sign
       hud.css                  .hud, .ticks, .nav, .count
       compact.css              opt in: shared primitives restacked for a narrow frame
       motion.css               prefers-reduced-motion
     js/
-      motif.js                 builds the arches, the bonds and the piles, and rebuilds on resize
+      motif.js                 builds the arches and the piles, and rebuilds them on resize
       stagger.js               gives every [data-anim] element its --d
       niche.js                 fills every [data-photo] niche: photo, glyph, or pending
       render.js                turns a slides array into .slide sections
@@ -42,7 +42,7 @@ site/
       start.js                 wires the above in one fixed order, then freezes DECK
   home/
     css/home.css               the chooser's own styles, and nothing else
-    main.js                    draws each card's motif with the engine primitive
+    main.js                    draws each card's arch with the engine primitive
   core/
     index.html                 Core: shell only
     css/
@@ -90,14 +90,13 @@ because there are no modules; the boundary is what a file is allowed to name.
 Asks which deck and links to both. It is not a deck and never starts one: it
 links `tokens.css`, `base.css`, `type.css`, `motif.css` and `motion.css`, then
 loads `engine/js/motif.js` and calls `DECK.buildMotifs` through `home/main.js`
-to draw the small motif on each card, an arch for Core and a bond for My
-Customers, so a card carries the geometry of the deck under it. `DECK` is never frozen here, because
+to draw the small arch on each card. `DECK` is never frozen here, because
 `start.js` is never loaded.
 Unlike a deck shell it carries its own markup, because nothing renders it for
 it. It obeys every other rule: no `<style>` block, no `style` attribute, at
 most 200 lines, no web fonts.
 It carries `.is-active` on `.home`, which is the engine's word for revealed,
-and is what makes each card's bricks opaque. Its entrance is a keyframe on the
+and is what makes each arch's bricks opaque. Its entrance is a keyframe on the
 same 65ms beat as a slide, so both cards stay readable if the script never
 runs. Both links point at a file, not a directory, so the page works over
 `file://` as well as over HTTP.
@@ -130,13 +129,10 @@ specific class.
   Owner of `[data-anim]` and of the `--d` to delay arithmetic.
 - **`type.css`** the type scale. Owner of `h1`, `h2`, `.lead`, `.support`,
   `.eyebrow`, `.stack`.
-- **`motif.css`** the whole brick vocabulary in both its geometries: the arch
-  that spans (`.vsr`), the bond that files (`.bk`, `.crs`, `.crs-tag`), and the
-  heap that owns nothing yet (`.loose`, `.lb`). The brick states `is-ghost`,
-  `is-new`, `is-key` and `is-lift` read the same in either geometry, and each is
-  inert without its matching data attribute, which is how a deck specific motif
-  feature plugs in without forking the engine. Core uses the arch, My Customers
-  the bond; neither sheet forks.
+- **`motif.css`** the whole brick vocabulary, including the states only one deck
+  uses today: `is-ghost`, `is-new`, `is-key`, `is-lift`, `.loose`, `.lb`. These
+  are inert without the matching data attributes, which is how a deck specific
+  motif feature plugs in without forking the engine.
 - **`member.css`** the member tile primitive, sized by `--tile`, `--m-name` and
   `--m-role`. Owner of `.niche` and all three of its contents: a photo, the
   `glyph` variant, the `is-pending` variant.
@@ -157,14 +153,9 @@ Every file is one IIFE taking the namespace. No file may declare anything at
 column zero except that wrapper and its comments. No file may name a deck, a
 deck's config, or a deck specific class.
 
-- **`motif.js`** builds `.arch`, `.bond` and `.loose` elements from their data
-  attributes, and rebuilds on resize and on load. Exposes
-  `DECK.buildMotifs(root)`. Owner of the brick geometry and of the resize
-  debounce. The arch and the pile are placed in pixels, because both follow a
-  curve or a scatter the stylesheet cannot express; the bond leaves its geometry
-  to `motif.css`, because a course is just a grid of equal columns. All three
-  read the same attribute vocabulary, documented above each builder. May read
-  only the DOM.
+- **`motif.js`** builds `.arch` and `.loose` elements from their data attributes,
+  and rebuilds on resize and on load. Exposes `DECK.buildMotifs(root)`. Owner of
+  the brick geometry and of the resize debounce. May read only the DOM.
 - **`stagger.js`** gives every `[data-anim]` element its `--d`, from `data-d` if
   it declares one and from document order otherwise. Exposes
   `DECK.applyStagger(root)`.
@@ -331,6 +322,6 @@ its slide count, and record a baseline for it. Add its shell to `SHELLS` in
 
 Finally give it a card on the homepage: copy one `.choice` block in
 `index.html`, point its `href` at the deck's `index.html` rather than its
-directory, and give its motif the geometry and `data-` attributes that
-say something true about the deck. Three cards will want `grid-template-columns:repeat(3,...)`
+directory, and give its arch a `data-` attribute that says something true
+about the deck. Three cards will want `grid-template-columns:repeat(3,...)`
 in `home/css/home.css`.

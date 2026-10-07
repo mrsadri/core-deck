@@ -102,7 +102,7 @@ If the real captures come back at a size other than 1280 x 832, change `--shot-r
 
 The structural motif is the rowlock arch: bricks set on edge, radiating around a curve. It is generated in code rather than drawn, so the same primitive carries the argument across the deck. A partly built arch is the problem, an arch whose crown bricks are the only new work is core, and the keystone is the rules engine.
 
-My Customers keeps the bricks and changes what is done with them, because its argument is not a span but a filing system. The motif is a heap against a bond: loose bricks are orders before anyone owns them, and a bond is the same bricks sorted into level courses, each course labelled with what it holds. A brick pulled clear of its course is a search result, a course of yellow bricks is work just filed, a labelled course of dashed bricks is a shelf that exists and is still empty, and a single brick in an empty wall is a customer added before the first order.
+My Customers extends the same primitive to a second argument. Loose bricks are the order list before anyone owns it, an arch is one customer record, a stone pulled clear of the curve is a search result, a band of yellow stones is the policies, and a dashed stone is anything beyond phase 1.
 
 Palette is kraft paper, brick brown, brick yellow, and a single accent in `#D97757`.
 

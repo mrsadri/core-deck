@@ -40,11 +40,10 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
 }
 .pitem .t{font-size:clamp(.88rem,1.22vw,1.28rem);line-height:1.36;letter-spacing:-.008em}
 
-/* ---------- the heap beside the wall ---------- */
-.pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,3vw,2.6rem);align-items:end;width:100%}
+/* ---------- returning vs new ---------- */
+.twoarch{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,3vw,2.6rem);align-items:end;width:100%}
 .ta{text-align:center}
 .ta .lbl{font-size:clamp(.66rem,.86vw,.9rem);letter-spacing:.2em;text-transform:uppercase;color:var(--brick);font-weight:600;margin-top:.7rem}
-.ta.is-new .lbl{color:var(--yellow-lo)}
 
 /* ---------- phase one scope ---------- */
 .scope{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.9rem,2.4vw,2.4rem) clamp(1rem,2.8vw,3rem);width:100%;text-align:left}
@@ -59,7 +58,7 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
 @media (max-aspect-ratio:1/1){
   .sol{grid-template-columns:1fr;gap:clamp(1.2rem,3vh,2.2rem)}
   .sol .shot{order:-1}
-  .motif{width:min(260px,46vw)}
+  .motif{width:min(240px,42vw)}
   .scope{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
@@ -68,18 +67,8 @@ h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
   .scope{grid-template-columns:1fr;gap:.7rem}
 }
 
-/* ---------- the motif slot, sized for what it carries ----------
-   A bond is wider than it is tall and carries a label over every course, so
-   each slot is set by the courses it holds rather than by one shared width. */
+/* ---------- the motif slot, sized for what it carries ---------- */
 .motif-pile{width:min(620px,60vw);margin-top:.5rem}
-.motif-pair{width:min(440px,38vw)}
-.motif-span{width:min(360px,30vw)}
-
-/* ---------- the three piers, squared off ----------
-   layout.css radiates them like voussoirs around a curve. This deck's motif
-   is coursed brickwork rather than a span, so here they stand level: three
-   bricks set on end, each one labelled. */
-.arcrow{padding-top:clamp(1rem,3vh,2.4rem)}
-.pier{border-radius:3px;border-top:4px solid rgba(124,63,42,.45)}
-.pier:nth-child(1),.pier:nth-child(2),.pier:nth-child(3){transform:none}
+.motif-pair{width:min(400px,36vw)}
+.motif-span{width:min(300px,26vw)}
 h2.scope-title{font-size:clamp(2rem,4.2vw,4.4rem)}

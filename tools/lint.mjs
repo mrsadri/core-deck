@@ -149,7 +149,7 @@ for (const file of (await walk('.')).sort()) {
   const text = await readFile(join(SITE_ROOT, file), 'utf8');
   for (const rule of RULES) {
     if (!rule.applies(file)) continue;
-    const problem = rule.check(text, file);
+    const problem = rule.check(text);
     if (problem) violations.push(`${file}: ${rule.name}: ${problem}`);
   }
 }

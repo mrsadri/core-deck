@@ -7,7 +7,7 @@
  *   pixels  SHA-256 of the settled screenshot   layout, colour, type, geometry
  *   text    the slide's rendered innerText      slide copy and slide order
  *   anims   --d and transition-delay per item   the enter animation
- *   motifs  per-brick geometry and reveal index arch, bond and pile order
+ *   motifs  per-brick geometry and reveal index arch builds and brick order
  *
  * The last three are read after scripting settles and are time independent,
  * so they are exact rather than sampled. Pixels are captured over the same
@@ -33,9 +33,6 @@ import { existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { promisify } from 'node:util';
-
-const run = promisify(execFile);
 
 const SITE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const BASELINE_DIR = join(SITE_ROOT, 'tools', 'baseline');
@@ -187,7 +184,7 @@ const PROBE_EXPRESSION = `(() => {
              (document.getElementById('cAll') || {}).textContent,
     ticksOn: document.querySelectorAll('#ticks b.on').length,
     anims: [...active.querySelectorAll('[data-anim]')].map(describe),
-    motifs: [...active.querySelectorAll('.vsr, .bk, .lb')].map(brick),
+    motifs: [...active.querySelectorAll('.vsr, .lb')].map(brick),
     photos: [...active.querySelectorAll('.niche img')].map(el => {
       const computed = getComputedStyle(el);
       return {
