@@ -30,11 +30,9 @@ a size other than 1280 x 832, change `--shot-ratio` once in
 
 ## Front Office Reports
 
-All seven wireframes are in place in `assets/screens/`.
+All seven wireframes are in place in `assets/screens/`, and both team photos
+in `assets/team/`.
 
-- [ ] **Amir Souri's photo.** Save it as `assets/team/amir-souri.jpg`. The
-  niche on slide 02 renders PHOTO PENDING until the file is there, and
-  `reports/config.js` already points at that name.
 - [ ] **Amir Reza Mahouti's photo.** Slide 02 uses the portrait already in
   `assets/team/amirreza-mahouti.jpg`, the one Core uses. Replace that file,
   or point `amirreza` in `reports/config.js` at a new one, if this deck

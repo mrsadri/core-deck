@@ -22,8 +22,8 @@ const REPORTS_CONFIG = Object.freeze({
     rules:     '../assets/screens/reports-campaign-rules.png'      // slide 11  campaign detail: what counts as an eligible sale
   }),
 
-  // Team photos for slide 02. A key pointed at a file that is not there yet
-  // renders a PHOTO PENDING niche, so dropping the file in is the whole job.
+  // Team photos for slide 02, both from the shared team assets. Set one to
+  // null and that niche renders a PHOTO PENDING tag.
   PHOTOS: Object.freeze({
     amir:     '../assets/team/amir-souri.jpg',
     amirreza: '../assets/team/amirreza-mahouti.jpg'

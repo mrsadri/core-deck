@@ -133,7 +133,7 @@ Navigation, hash routing and fullscreen behave exactly as in Core. See the table
 
 Everything that needs filling lives in `reports/config.js`. [PRESENTING.md](PRESENTING.md) is the full checklist.
 
-- **Amir Souri's photo.** Save it as `assets/team/amir-souri.jpg`. Until it is there, his niche on slide 2 renders PHOTO PENDING.
+- **Photos.** Done. Both portraits on slide 2 are in `assets/team/`. Point a key in `REPORTS_CONFIG.PHOTOS` at a file that is not there and that niche renders PHOTO PENDING instead.
 - **Wireframes.** All seven entries in `REPORTS_CONFIG.SCREENSHOTS` point at a file in `assets/screens/`. Replace one with a newer export and its highlights need checking against `reports/css/pins.css`.
 
 ## Design
