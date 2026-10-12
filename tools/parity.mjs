@@ -79,7 +79,8 @@ const DETERMINISM_FLAGS = [
 /** The decks under test, and how many slides each one has. */
 const DECKS = [
   { name: 'core', page: 'core/index.html', slides: 19 },
-  { name: 'customers', page: 'customers/index.html', slides: 14 }
+  { name: 'customers', page: 'customers/index.html', slides: 14 },
+  { name: 'reports', page: 'reports/index.html', slides: 14 }
 ];
 
 /** Viewports chosen to exercise every breakpoint in the stylesheets. */

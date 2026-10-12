@@ -1,0 +1,80 @@
+/* a display sentence on the cover, where the shared h1 is cut for one or two words */
+h1.say{font-size:clamp(2.3rem,5.6vw,6rem);line-height:.96;letter-spacing:-.03em;max-width:15ch;text-wrap:balance}
+h2.sm{font-size:clamp(1.9rem,3.5vw,3.7rem);max-width:22ch}
+h2.mid{font-size:clamp(2.1rem,4.4vw,4.7rem);max-width:24ch}
+.lead.sm{font-size:clamp(.95rem,1.45vw,1.5rem);max-width:38ch}
+.stack.narrow{gap:clamp(.7rem,1.5vh,1.2rem)}
+.stack.center .support{max-width:52ch}
+.stack.center .claim.sm{max-width:64ch}
+
+/* ---------- problem to solution layout ---------- */
+.sol{display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(1.6rem,4.5vw,5rem);align-items:center}
+/* a wide wireframe needs the wider column, a tall one needs the height */
+.sol.wide{grid-template-columns:.74fr 1.26fr}
+.sol.tall{grid-template-columns:1.16fr .84fr;--shot-h:74vh}
+.pnote{
+  display:flex;gap:.8rem;align-items:flex-start;
+  font-size:clamp(.88rem,1.22vw,1.26rem);line-height:1.42;
+  color:var(--brick);max-width:34ch;
+}
+.pnote::before{
+  content:"";flex:none;width:4px;align-self:stretch;min-height:1.4em;
+  background:rgba(124,63,42,.38);border-radius:2px;
+}
+.pnote b{font-weight:600;letter-spacing:.16em;text-transform:uppercase;font-size:.78em;color:var(--yellow-lo);display:block;margin-bottom:.25em}
+/* one sentence that carries the slide's point, set apart from the body copy */
+.claim{
+  font-family:var(--serif);font-size:clamp(1.05rem,1.7vw,1.85rem);line-height:1.25;letter-spacing:-.012em;
+  color:var(--brick-deep);max-width:44ch;text-wrap:balance;
+}
+.claim.sm{font-size:clamp(.95rem,1.3vw,1.4rem);max-width:34ch}
+
+/* ---------- the problems ---------- */
+.plist{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(.8rem,2.2vh,1.8rem) clamp(1rem,3vw,3.4rem);width:min(1100px,100%);text-align:left;
+}
+.pitem{display:flex;gap:.8rem;align-items:flex-start}
+.pitem .n{
+  font-family:var(--serif);font-size:clamp(.92rem,1.3vw,1.4rem);color:var(--orange);
+  line-height:1.2;flex:none;padding-top:.05em;
+}
+.pitem .t{font-size:clamp(.82rem,1.08vw,1.14rem);line-height:1.4;color:var(--brick)}
+.pitem .t b{display:block;font-size:1.14em;font-weight:600;color:var(--ink);letter-spacing:-.008em;margin-bottom:.15em}
+
+/* ---------- still to validate ---------- */
+.vlist{display:flex;flex-direction:column;width:min(1040px,100%);text-align:left}
+.vrow{
+  display:grid;grid-template-columns:auto minmax(0,.8fr) minmax(0,1.2fr);align-items:baseline;
+  gap:clamp(.7rem,1.6vw,1.6rem);
+  border-top:1px solid rgba(124,63,42,.22);padding-block:clamp(.5rem,1.3vh,.9rem);
+}
+.vrow:last-child{border-bottom:1px solid rgba(124,63,42,.22)}
+/* an open ring: asked, not yet answered */
+.vrow .ring{width:.8em;height:.8em;border-radius:50%;border:1.5px dashed var(--brick);align-self:center}
+.vrow .vt{font-family:var(--serif);font-size:clamp(1rem,1.5vw,1.6rem);line-height:1.2;letter-spacing:-.01em}
+.vrow .vs{font-size:clamp(.82rem,1.08vw,1.14rem);line-height:1.4;color:var(--brick)}
+
+/* ---------- what we are asking the room ---------- */
+.asks{
+  list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.6rem,1.6vh,1.1rem) clamp(1rem,2.6vw,2.8rem);width:min(1100px,100%);text-align:left;
+}
+.asks li{
+  font-size:clamp(.84rem,1.12vw,1.18rem);line-height:1.36;
+  border-top:1px solid rgba(124,63,42,.24);padding-top:.6em;
+}
+
+/* ---------- narrow and tall frames ---------- */
+@media (max-aspect-ratio:1/1){
+  .sol,.sol.wide,.sol.tall{grid-template-columns:1fr;gap:clamp(1rem,2.4vh,1.8rem);--shot-h:34vh}
+  .sol > :last-child{order:-1}
+  .asks{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px) and (max-aspect-ratio:1/1){
+  .sol,.sol.wide,.sol.tall{--shot-h:27vh}
+  .plist{grid-template-columns:1fr;gap:.6rem}
+  .vrow{grid-template-columns:auto minmax(0,1fr);gap:.1rem .7rem}
+  .vrow .vs{grid-column:2}
+  .asks{gap:.5rem .9rem}
+}

@@ -12,13 +12,13 @@ site/
   ARCHITECTURE.md              the map: every file, its job, and how to add a deck
   PRESENTING.md                the pre presentation checklist
   REFACTOR_PLAN.md             the plan this history followed, stage by stage
-  index.html                   the homepage: asks which deck, links to both
+  index.html                   the homepage: asks which deck, links to all three
   assets/                      every image, in one tree. See assets/README.md
     README.md                  the tree, and how to add a portrait
     brand/                     favicon.svg, apple-touch-icon.png
-    social/                    one Open Graph card per deck: core.jpg, customers.png
+    social/                    one Open Graph card per deck: core.jpg, customers.png, reports.png
     team/                      one portrait per person, plus claude-mark.svg
-    screens/                   My Customers panel screenshots, and their README
+    screens/                   panel screenshots and wireframes, and their README
   engine/
     css/
       tokens.css               every token, for both decks and the homepage
@@ -73,6 +73,23 @@ site/
     config.js                  the screenshot map, the photo map
     screens.js                 fills every [data-shot] frame, or marks it pending
     main.js                    calls DECK.start
+  reports/
+    index.html                 Front Office Reports: shell only
+    css/
+      team.css                 the two members beside the project facts
+      trace.css                the trace, this deck's motif: marks joined by a line
+      screens.css              the wireframe frame, its highlights and their legend
+      pins.css                 where each highlight sits on each wireframe
+      slides.css               the components only Reports' slides use
+    content/
+      team.js                  the 2 members, and the markup of the context slide
+      slides-opening.js        slides 01 to 05
+      slides-money.js          slides 06 to 08
+      slides-network.js        slides 09 to 11
+      slides-closing.js        slides 12 to 14
+    config.js                  the wireframe map, the photo map
+    screens.js                 fills every [data-shot] frame, or marks it pending
+    main.js                    calls DECK.start
   tools/
     parity.mjs                 the per slide parity harness
     lint.mjs                   the rules below, as code
@@ -103,7 +120,7 @@ runs. Both links point at a file, not a directory, so the page works over
 
 #### The deck shells
 
-**`core/index.html`, `customers/index.html`**
+**`core/index.html`, `customers/index.html`, `reports/index.html`**
 One responsibility: declare the document, link the stylesheets, provide the six
 element ids the engine needs, and load the scripts in order.
 May contain: `<meta>`, `<title>`, `<link>`, the `#deck` element, the HUD footer,
@@ -177,7 +194,7 @@ deck's config, or a deck specific class.
   decorators})` and calls `Object.freeze(DECK)`. Must be the last engine script
   a shell loads.
 
-#### `core/*` and `customers/*`
+#### `core/*`, `customers/*` and `reports/*`
 
 - **`css/team.css`** the team slide's grid and tier labels for that deck. May
   override `.niche` properties the engine leaves open, and may narrow `--tile`,
@@ -185,10 +202,20 @@ deck's config, or a deck specific class.
   override states the measurement that forced it.
 - **`css/slides.css`** the components only that deck's slides use. May not
   redefine an engine primitive.
-- **`css/screens.css`** (Customers only) the panel screenshot frame and its
-  pending state.
+- **`css/screens.css`** (Customers and Reports) the screenshot frame and its
+  pending state. Customers frames every capture to one ratio. Reports gives
+  each frame the ratio of its own wireframe, and also owns the highlight box
+  `.hl` and its numbered legend `.keys`.
+- **`css/trace.css`** (Reports only) the trace: a row of marks joined by a
+  line, with the states `is-key`, `is-off` and `cut`. It is built in CSS
+  alone, so it needs nothing from `engine/js/motif.js`.
+- **`css/pins.css`** (Reports only) the position of every highlight, as a
+  share of its wireframe's width and height. Replace a wireframe and its
+  boxes here need measuring again.
 - **`content/*.js`** each declares exactly one top level `const`, holding an
-  array of slide objects or, in `team.js`, a markup string. May name only its
+  array of slide objects or, in `team.js`, a markup string. A Reports slide
+  also carries `notes`, the presenter's line for it, which the engine
+  ignores. May name only its
   own deck's config const and `DECK`. May not contain a `style` attribute.
 - **`config.js`** declares exactly one top level `const`, frozen, holding every
   presentation time value: placeholder copy and its confirmation flag, the
@@ -243,6 +270,20 @@ Find the slide in the table, open that file, edit the html string. Nothing else 
 | My Customers | 12 | `scope` | Six capabilities, one section | `customers/content/slides-closing.js` |
 | My Customers | 13 | `discussion` | Does this fit the way you work? | `customers/content/slides-closing.js` |
 | My Customers | 14 | `closing` | One record each | `customers/content/slides-closing.js` |
+| Reports | 01 | `title` | Every number should explain itself | `reports/content/slides-opening.js` |
+| Reports | 02 | `context` | The project and the product, with the team | `reports/content/team.js` |
+| Reports | 03 | `purpose` | Review the design before we build it | `reports/content/slides-opening.js` |
+| Reports | 04 | `found` | The numbers exist. The story behind them does not | `reports/content/slides-opening.js` |
+| Reports | 05 | `direction` | From summary to investigation | `reports/content/slides-opening.js` |
+| Reports | 06 | `dashboard` | The business, at a glance | `reports/content/slides-money.js` |
+| Reports | 07 | `sales-commission` | A sale is not complete until its income is understandable | `reports/content/slides-money.js` |
+| Reports | 08 | `payments` | Every payment should be explainable | `reports/content/slides-money.js` |
+| Reports | 09 | `network` | See the network from the top. Drill into each branch | `reports/content/slides-network.js` |
+| Reports | 10 | `campaigns` | A reward should be trackable, not just promotional | `reports/content/slides-network.js` |
+| Reports | 11 | `campaign-detail` | From eligibility to payout | `reports/content/slides-network.js` |
+| Reports | 12 | `capabilities` | Six capabilities, one clearer financial experience | `reports/content/slides-closing.js` |
+| Reports | 13 | `validation` | The experience is clearer. Some rules still need validation | `reports/content/slides-closing.js` |
+| Reports | 14 | `feedback` | Does this fit the way Partners and the business actually work? | `reports/content/slides-closing.js` |
 
 ## The rules
 
@@ -251,8 +292,8 @@ These hold for every change, not just the refactor that introduced them.
 
 1. **File length.** No file the browser loads may exceed **200 physical lines**,
    counting blanks and comments, ignoring one trailing newline. That is every
-   `.css` and `.js` file under `engine/`, `core/` and `customers/`, and the
-   shells. `tools/` is exempt: it is not loaded by the browser.
+   `.css` and `.js` file under `engine/`, `core/`, `customers/` and
+   `reports/`, and the shells. `tools/` is exempt: it is not loaded by the browser.
 2. **Move, do not rewrite.** When code changes place, it travels verbatim.
    Change only what the task calls for. Do not reformat, do not reorder
    declarations, do not modernise, do not fix a typo in a comment, do not
@@ -282,11 +323,11 @@ These hold for every change, not just the refactor that introduced them.
    a second class (`tight`, `sm`, `narrow`, `pale`, `thin`). Engine functions are
    `camelCase` verbs on `DECK` (`buildMotifs`, `applyStagger`, `renderSlides`).
    Deck consts are `SCREAMING_SNAKE_CASE` prefixed with the deck name
-   (`CORE_`, `CUSTOMERS_`).
+   (`CORE_`, `CUSTOMERS_`, `REPORTS_`).
 8. **Comments explain why.** Carry every existing explanatory comment with the
    code it explains. Do not add a comment that restates the code.
-9. **Every commit ends working.** Both decks must open and present correctly
-   before a commit, and the homepage must reach both. A change is finished only
+9. **Every commit ends working.** Every deck must open and present correctly
+   before a commit, and the homepage must reach each one. A change is finished only
    when parity and lint both pass.
 10. **No web fonts.** No `@font-face`, no `fonts.googleapis.com`, no
     `fonts.gstatic.com`, no font file in `assets/`. Lint enforces this.
@@ -299,8 +340,9 @@ These hold for every change, not just the refactor that introduced them.
 
 Run `node tools/lint.mjs` before every commit.
 
-## Adding a third deck
+## Adding another deck
 
+Front Office Reports was added this way, and is the nearest example to copy.
 Nothing under `engine/` changes. Create:
 
 - `<deck>/index.html`, a shell: copy `customers/index.html` and change the
@@ -318,10 +360,11 @@ if the deck has assets to fill in, such as screenshots or portraits.
 
 Then add the deck to `DECKS` in `tools/parity.mjs`, with its page path and
 its slide count, and record a baseline for it. Add its shell to `SHELLS` in
-`tools/lint.mjs`, so the length and no markup rules reach it.
+`tools/lint.mjs`, and its folder to the three prefix checks beside it, so
+every rule reaches it.
 
 Finally give it a card on the homepage: copy one `.choice` block in
 `index.html`, point its `href` at the deck's `index.html` rather than its
 directory, and give its arch a `data-` attribute that says something true
-about the deck. Three cards will want `grid-template-columns:repeat(3,...)`
-in `home/css/home.css`.
+about the deck. A fourth card will want `grid-template-columns:repeat(4,...)`
+in `home/css/home.css`, and another `.choice:nth-child` beat for its entrance.

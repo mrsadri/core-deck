@@ -4,7 +4,7 @@ An internal presentation introducing Shoraka's core insurance platform to senior
 
 **Live:** https://mrsadri.github.io/core-deck/core/
 
-This repository hosts two decks. https://mrsadri.github.io/core-deck/ is a homepage that asks which one you want and links to both: Core, below, and [My Customers](#my-customers), which reuses the same engine and motif.
+This repository hosts three decks. https://mrsadri.github.io/core-deck/ is a homepage that asks which one you want and links to each: Core, below, [My Customers](#my-customers) and [Front Office Reports](#front-office-reports), which reuse the same engine.
 
 Core used to live at the root. It moved down to `core/` so the homepage could take its place, so an old link now lands on the chooser rather than on the deck.
 
@@ -98,11 +98,51 @@ Everything that needs filling lives in `customers/config.js`. [PRESENTING.md](PR
 
 If the real captures come back at a size other than 1280 x 832, change `--shot-ratio` once in `engine/css/tokens.css` and every frame follows.
 
+## Front Office Reports
+
+A design review of the redesigned reporting experience in the partner panel ("Front Office"): the dashboard, sales and commission, payments, network sales, and campaigns and rewards. The deck runs in a meeting where the wireframes are reviewed before implementation. Its one idea is that a financial number should not be a dead end: Number, Reason, Source, Detail.
+
+**Live:** https://mrsadri.github.io/core-deck/reports/
+
+Source: `reports/`. The brief it was built from is `newslides/front_office_reports_presentation_brief.md`, one level above this repository.
+
+### The deck
+
+14 slides. The arc runs context, problems, direction, the screens, capabilities, open questions, feedback:
+
+1. Every number should explain itself
+2. The project and the product, with the team
+3. Review the design before we build it
+4. The numbers exist. The story behind them does not
+5. From summary to investigation
+6. The business, at a glance (Dashboard)
+7. A sale is not complete until its income is understandable (Sales and Commission)
+8. Every payment should be explainable (Payments)
+9. See the network from the top. Drill into each branch (Network Sales)
+10. A reward should be trackable, not just promotional (Campaigns)
+11. From eligibility to payout (Campaign detail)
+12. Six capabilities, one clearer financial experience
+13. The experience is clearer. Some rules still need validation
+14. Does this fit the way Partners and the business actually work?
+
+Slides 6 to 11 each carry a wireframe with numbered highlights, and the same numbers are spelled out beside it. The wireframes are in Persian and are shown as they are. Every slide object carries a `notes` line, the presenter's words for it, taken from the brief.
+
+Navigation, hash routing and fullscreen behave exactly as in Core. See the table above.
+
+### Before presenting
+
+Everything that needs filling lives in `reports/config.js`. [PRESENTING.md](PRESENTING.md) is the full checklist.
+
+- **Amir Souri's photo.** Save it as `assets/team/amir-souri.jpg`. Until it is there, his niche on slide 2 renders PHOTO PENDING.
+- **Wireframes.** All seven entries in `REPORTS_CONFIG.SCREENSHOTS` point at a file in `assets/screens/`. Replace one with a newer export and its highlights need checking against `reports/css/pins.css`.
+
 ## Design
 
 The structural motif is the rowlock arch: bricks set on edge, radiating around a curve. It is generated in code rather than drawn, so the same primitive carries the argument across the deck. A partly built arch is the problem, an arch whose crown bricks are the only new work is core, and the keystone is the rules engine.
 
 My Customers extends the same primitive to a second argument. Loose bricks are the order list before anyone owns it, an arch is one customer record, a stone pulled clear of the curve is a search result, a band of yellow stones is the policies, and a dashed stone is anything beyond phase 1.
+
+Front Office Reports keeps the ground, the palette and the type, and swaps the arch for a motif of its own, the trace: a row of marks joined by a line, where each mark is a record and each line is the way back to the one before it. A solid mark can be seen today, the orange mark is the one a slide is about, and a dashed mark is one the Partner cannot reach yet. The arch still sits on its homepage card, partly built.
 
 Palette is kraft paper, brick brown, brick yellow, and a single accent in `#D97757`.
 

@@ -1,0 +1,57 @@
+/* ---------- where each highlight sits ----------
+   Every box is measured on the wireframe itself and written as a share of
+   its width and height, so it holds at any size the frame is drawn. A
+   wireframe that is replaced needs its boxes measured again. */
+
+/* the order the highlights appear in, on every frame */
+.hl.n2{--n:1}
+.hl.n3{--n:2}
+.hl.n4{--n:3}
+.hl.n5{--n:4}
+.hl.n6{--n:5}
+.hl.n7{--n:6}
+
+/* slide 06, the whole dashboard */
+[data-shot="dashboard"] .n1{left:5.6%;top:9.4%;width:90.4%;height:5.7%}
+[data-shot="dashboard"] .n2{left:5.6%;top:16%;width:21.9%;height:9%}
+[data-shot="dashboard"] .n3{left:74.2%;top:16%;width:21.8%;height:9%}
+[data-shot="dashboard"] .n4{left:51.3%;top:16%;width:21.9%;height:9%}
+[data-shot="dashboard"] .n5{left:5.6%;top:25.9%;width:90.4%;height:12.7%}
+[data-shot="dashboard"] .n6{left:5.6%;top:39.5%;width:90.4%;height:23.7%}
+[data-shot="dashboard"] .n7{left:5.6%;top:64.1%;width:90.4%;height:33.5%}
+
+/* slide 07, the totals and the breakdown table */
+[data-shot="sales"] .n1{left:1%;top:.6%;width:23.8%;height:18.9%}
+[data-shot="sales"] .n2{left:75.3%;top:.6%;width:23.8%;height:18.9%}
+[data-shot="sales"] .n3{left:38.4%;top:58.3%;width:11.4%;height:39.2%}
+[data-shot="sales"] .n4{left:84%;top:58.3%;width:13.9%;height:34.8%}
+
+/* slide 08, the first payment, expanded */
+[data-shot="payments"] .n1{left:38.6%;top:37.2%;width:12.4%;height:7%}
+[data-shot="payments"] .n2{left:22.4%;top:47.2%;width:27.4%;height:4.2%}
+[data-shot="payments"] .n3{left:22.4%;top:51.7%;width:27.4%;height:4.2%}
+[data-shot="payments"] .n4{left:66.6%;top:51.7%;width:30.4%;height:4.2%}
+[data-shot="payments"] .n5{left:66.6%;top:56.2%;width:30.4%;height:4.2%}
+[data-shot="payments"] .n6{left:82.6%;top:37.2%;width:14.4%;height:7%}
+[data-shot="payments"] .n7{left:3.3%;top:61.8%;width:14.8%;height:5.4%}
+
+/* slide 09, the network section */
+[data-shot="network"] .n1{left:76.6%;top:13.2%;width:17%;height:13.6%}
+[data-shot="network"] .n2{left:7.3%;top:12.3%;width:24.1%;height:14.8%}
+[data-shot="network"] .n3{left:7.3%;top:28.8%;width:24.1%;height:30.2%}
+[data-shot="network"] .n4{left:7.3%;top:69%;width:87%;height:26.6%}
+
+/* slide 10, the campaigns list */
+[data-shot="campaigns"] .n1{left:18.4%;top:2.8%;width:8.4%;height:3.4%}
+[data-shot="campaigns"] .n2{left:52%;top:29.6%;width:45.2%;height:8.6%}
+[data-shot="campaigns"] .n3{left:66.8%;top:7.6%;width:31.6%;height:10%}
+[data-shot="campaigns"] .n4{left:34.2%;top:7.6%;width:31.6%;height:10%}
+[data-shot="campaigns"] .n5{left:52.2%;top:24.5%;width:8.4%;height:3%}
+[data-shot="campaigns"] .n6{left:81.6%;top:42.7%;width:15.4%;height:3.1%}
+[data-shot="campaigns"] .n7{left:1.6%;top:7.6%;width:31.6%;height:10%}
+
+/* slide 11, the two halves of the campaign detail panel */
+[data-shot="rules"] .n1{left:3%;top:1.4%;width:94%;height:88%}
+[data-shot="progress"] .n2{left:3%;top:20.2%;width:94%;height:36.6%}
+[data-shot="progress"] .n3{left:3%;top:64.8%;width:94%;height:11.8%}
+[data-shot="progress"] .n4{left:3%;top:77.4%;width:94%;height:17.2%}

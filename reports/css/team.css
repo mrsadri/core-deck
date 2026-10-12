@@ -1,0 +1,30 @@
+/* ---------- the team and the project, side by side ---------- */
+.ctx{
+  display:grid;grid-template-columns:.9fr 1.1fr;align-items:center;
+  gap:clamp(1.6rem,5vw,5.5rem);width:min(1160px,100%);text-align:left;
+}
+/* two members, so the shared tile cap is the right size as it stands */
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1rem,2.6vw,3rem);justify-items:center}
+
+/* ---------- what the project is, read down ---------- */
+.facts{display:flex;flex-direction:column;width:100%}
+.fact{
+  display:grid;grid-template-columns:minmax(0,.42fr) minmax(0,1fr);align-items:baseline;
+  gap:clamp(.8rem,1.8vw,1.8rem);
+  border-top:1px solid rgba(124,63,42,.24);padding-block:clamp(.6rem,1.5vh,1.05rem);
+}
+.fact:last-child{border-bottom:1px solid rgba(124,63,42,.24)}
+.fact dt{font-size:clamp(.6rem,.8vw,.84rem);letter-spacing:.22em;text-transform:uppercase;color:var(--yellow-lo);font-weight:600}
+.fact dd{font-family:var(--serif);font-size:clamp(1.05rem,1.7vw,1.8rem);line-height:1.2;letter-spacing:-.01em}
+.fact dd.list{font-family:var(--sans);font-size:clamp(.86rem,1.14vw,1.2rem);line-height:1.5;letter-spacing:0;color:var(--brick)}
+
+@media (max-aspect-ratio:1/1){
+  .ctx{grid-template-columns:1fr;gap:clamp(1.2rem,3vh,2.2rem)}
+}
+/* A narrow, tall frame: the two tiles shrink so the project still fits
+   under them on one screen. */
+@media (max-width:760px) and (max-aspect-ratio:1/1){
+  :root{--tile:96px;--m-name:.78rem;--m-role:.7rem}
+  .niche{margin-bottom:.5rem}
+  .fact{grid-template-columns:1fr;gap:.2rem;padding-block:.5rem}
+}

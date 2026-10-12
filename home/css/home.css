@@ -1,7 +1,7 @@
 /* ---------- the chooser ---------- */
 /* The homepage is not a deck: no slides, no HUD, no navigation. It borrows
    the ground from base.css, the type scale from tokens.css and the arch from
-   motif.css, so it cannot drift away from the two decks it introduces.
+   motif.css, so it cannot drift away from the decks it introduces.
 
    .home carries .is-active because that is the engine's word for revealed,
    and the homepage is revealed for as long as it is open. It is what makes
@@ -26,9 +26,9 @@ body{overflow:auto}
 .ask{font-size:var(--h2);line-height:1;letter-spacing:-.022em;max-width:20ch}
 .home-foot{font-size:var(--support);color:var(--ink-38);max-width:48ch;line-height:1.5}
 
-/* ---------- the two cards ---------- */
+/* ---------- the three cards ---------- */
 .choices{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   gap:clamp(1rem,2.6vw,2.4rem);width:100%;
 }
 .choice{
@@ -56,7 +56,7 @@ body{overflow:auto}
 }
 .choice-fa{font-size:var(--support);color:var(--yellow-lo);line-height:1.3}
 .choice-sub{font-size:var(--support);color:var(--brick);max-width:32ch;line-height:1.45}
-/* pinned to the foot of the card, so the two counts sit on one line
+/* pinned to the foot of the card, so the counts sit on one line
    however much the copy above them differs in length */
 .choice-meta{
   font-size:clamp(.6rem,.78vw,.78rem);letter-spacing:.2em;text-transform:uppercase;
@@ -69,24 +69,27 @@ body{overflow:auto}
 .choices{animation:none}
 .home-grid > *:nth-child(1){--d:0}
 .home-grid > *:nth-child(2){--d:1}
-.home-grid > *:nth-child(4){--d:5}
+.home-grid > *:nth-child(4){--d:6}
 .choice:nth-child(1){--d:2}
 .choice:nth-child(2){--d:3}
+.choice:nth-child(3){--d:4}
 @keyframes rise{from{opacity:0;transform:translateY(18px)}}
 
 /* ---------- a narrow, tall frame ----------
    The cards stack, so the page gets taller exactly when it has less room.
-   Both cards have to stay above the fold: a chooser whose second choice is
-   below it is only asking half a question. */
+   Every card has to stay above the fold: a chooser whose last choice is
+   below it is only asking part of a question. With three cards stacked,
+   that is paid for with a smaller arch and tighter padding. */
 @media (max-aspect-ratio:1/1){
-  .home{padding-block:clamp(1.2rem,3.4vh,2.2rem)}
-  .home-grid{gap:clamp(1rem,2.6vh,1.8rem)}
-  .choices{grid-template-columns:1fr}
-  .choice-arch{width:min(150px,34%)}
+  .home{padding-block:clamp(1rem,2.6vh,2rem)}
+  .home-grid{gap:clamp(.8rem,2vh,1.4rem)}
+  .choices{grid-template-columns:1fr;gap:clamp(.7rem,1.6vh,1.2rem)}
+  .choice{gap:.45rem;padding:clamp(.9rem,1.8vh,1.4rem) clamp(1rem,2.2vw,2rem)}
+  .choice-arch{width:min(120px,26%)}
 }
 @media (max-width:760px) and (max-aspect-ratio:1/1){
-  .home-grid{gap:clamp(.9rem,2.4vh,1.4rem)}
-  .choice{gap:.45rem;padding:1rem .9rem}
+  .home-grid{gap:clamp(.7rem,1.8vh,1.2rem)}
+  .choice{gap:.35rem;padding:.75rem .9rem}
 }
 
 /* motion.css zeroes every duration, but an animation delay would still hold

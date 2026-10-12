@@ -1,14 +1,14 @@
 # Assets
 
-Every image in the project, in one tree. Both decks and the homepage reach it
+Every image in the project, in one tree. Every deck and the homepage reach it
 with the same prefix, `../assets/`, so no path depends on which deck is asking.
 
 | Folder | Holds | Used by |
 | --- | --- | --- |
 | `brand/` | `favicon.svg`, `apple-touch-icon.png` | every page |
 | `social/` | one Open Graph card per deck, named after it | the shell of that deck |
-| `team/` | one portrait per person, plus `claude-mark.svg` | `core/config.js`, `customers/config.js` |
-| `screens/` | panel screenshots for My Customers, and [its own README](screens/README.md) | `customers/config.js` |
+| `team/` | one portrait per person, plus `claude-mark.svg` | `core/config.js`, `customers/config.js`, `reports/config.js` |
+| `screens/` | panel screenshots for My Customers, wireframes for Front Office Reports, and [their README](screens/README.md) | `customers/config.js`, `reports/config.js` |
 
 Nothing here is generated at build time, because there is no build step. A file
 dropped in is served as it is.

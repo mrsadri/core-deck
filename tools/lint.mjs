@@ -18,7 +18,7 @@ const SITE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const TEXT = new Set(['.html', '.css', '.js', '.mjs', '.md']);
 
 /** The deck shells. Each one is content free: the engine renders the slides. */
-const SHELLS = ['core/index.html', 'customers/index.html'];
+const SHELLS = ['core/index.html', 'customers/index.html', 'reports/index.html'];
 
 /** Every page the browser loads. The homepage carries its own markup,
     because there is no engine rendering it, but obeys every other rule. */
@@ -32,19 +32,20 @@ function isBrowserFile(file) {
   const ext = extname(file);
   if (ext !== '.css' && ext !== '.js') return false;
   return file.startsWith('engine/') || file.startsWith('core/') ||
-    file.startsWith('customers/') || file.startsWith('home/');
+    file.startsWith('customers/') || file.startsWith('reports/') || file.startsWith('home/');
 }
 
 /** A deck file that declares slide content. */
 function isContentFile(file) {
-  return file.startsWith('core/content/') || file.startsWith('customers/content/');
+  return file.startsWith('core/content/') || file.startsWith('customers/content/') ||
+    file.startsWith('reports/content/');
 }
 
 /** A script written for this engine: engine or deck, never tools. */
 function isDeckScript(file) {
   if (extname(file) !== '.js') return false;
   return file.startsWith('engine/js/') || file.startsWith('core/') ||
-    file.startsWith('customers/') || file.startsWith('home/');
+    file.startsWith('customers/') || file.startsWith('reports/') || file.startsWith('home/');
 }
 
 function lineCount(text) {
