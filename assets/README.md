@@ -7,7 +7,7 @@ with the same prefix, `../assets/`, so no path depends on which deck is asking.
 | --- | --- | --- |
 | `brand/` | `favicon.svg`, `apple-touch-icon.png` | every page |
 | `social/` | one Open Graph card per deck, named after it | the shell of that deck |
-| `team/` | one portrait per person, plus `claude-mark.svg` | `core/config.js`, `customers/config.js`, `reports/config.js` |
+| `team/` | one portrait per person, plus `claude-mark.svg` | `core/config.js`, `customers/config.js`, `reports/config.js`, `pay/config.js` |
 | `screens/` | panel screenshots for My Customers, wireframes for Front Office Reports, and [their README](screens/README.md) | `customers/config.js`, `reports/config.js` |
 
 Nothing here is generated at build time, because there is no build step. A file

@@ -80,7 +80,8 @@ const DETERMINISM_FLAGS = [
 const DECKS = [
   { name: 'core', page: 'core/index.html', slides: 19 },
   { name: 'customers', page: 'customers/index.html', slides: 14 },
-  { name: 'reports', page: 'reports/index.html', slides: 14 }
+  { name: 'reports', page: 'reports/index.html', slides: 14 },
+  { name: 'pay', page: 'pay/index.html', slides: 20 }
 ];
 
 /** Viewports chosen to exercise every breakpoint in the stylesheets. */

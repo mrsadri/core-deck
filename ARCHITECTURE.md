@@ -12,11 +12,11 @@ site/
   ARCHITECTURE.md              the map: every file, its job, and how to add a deck
   PRESENTING.md                the pre presentation checklist
   REFACTOR_PLAN.md             the plan this history followed, stage by stage
-  index.html                   the homepage: asks which deck, links to all three
+  index.html                   the homepage: asks which deck, links to all four
   assets/                      every image, in one tree. See assets/README.md
     README.md                  the tree, and how to add a portrait
     brand/                     favicon.svg, apple-touch-icon.png
-    social/                    one Open Graph card per deck: core.jpg, customers.png, reports.png
+    social/                    one Open Graph card per deck: core.jpg, customers.png, reports.png, pay.png
     team/                      one portrait per person, plus claude-mark.svg
     screens/                   panel screenshots and wireframes, and their README
   engine/
@@ -90,6 +90,23 @@ site/
     config.js                  the wireframe map, the photo map
     screens.js                 fills every [data-shot] frame, or marks it pending
     main.js                    calls DECK.start
+  pay/
+    index.html                 Pay Link: shell only
+    css/
+      team.css                 the one member beside the project facts
+      rail.css                 the rail, this deck's motif: seven stops joined by a line
+      steps.css                the three columns every step slide is laid out in
+      slides.css               the components only Pay Link's slides use
+    content/
+      team.js                  the 1 member, and the markup of the context slide
+      slides-opening.js        slides 01 to 05
+      slides-seller.js         slides 06 to 08
+      slides-customer.js       slides 09 to 11
+      slides-pay.js            slides 12 to 15
+      slides-after.js          slides 16 to 20
+    config.js                  the photo map
+    rail.js                    fills every [data-rail] with the seven stops
+    main.js                    calls DECK.start
   tools/
     parity.mjs                 the per slide parity harness
     lint.mjs                   the rules below, as code
@@ -120,7 +137,7 @@ runs. Both links point at a file, not a directory, so the page works over
 
 #### The deck shells
 
-**`core/index.html`, `customers/index.html`, `reports/index.html`**
+**`core/index.html`, `customers/index.html`, `reports/index.html`, `pay/index.html`**
 One responsibility: declare the document, link the stylesheets, provide the six
 element ids the engine needs, and load the scripts in order.
 May contain: `<meta>`, `<title>`, `<link>`, the `#deck` element, the HUD footer,
@@ -194,7 +211,7 @@ deck's config, or a deck specific class.
   decorators})` and calls `Object.freeze(DECK)`. Must be the last engine script
   a shell loads.
 
-#### `core/*`, `customers/*` and `reports/*`
+#### `core/*`, `customers/*`, `reports/*` and `pay/*`
 
 - **`css/team.css`** the team slide's grid and tier labels for that deck. May
   override `.niche` properties the engine leaves open, and may narrow `--tile`,
@@ -209,11 +226,16 @@ deck's config, or a deck specific class.
 - **`css/trace.css`** (Reports only) the trace: a row of marks joined by a
   line, with the states `is-key`, `is-off` and `cut`. It is built in CSS
   alone, so it needs nothing from `engine/js/motif.js`.
+- **`css/rail.css`** (Pay Link only) the rail: seven bricks set on edge,
+  joined by a line, with the states `is-key` and `is-off`. The stops are
+  drawn by `pay/rail.js`, so a slide states only which one it is about.
+- **`css/steps.css`** (Pay Link only) the layout every step slide shares:
+  what the user does, what the system does, what the user gets.
 - **`css/pins.css`** (Reports only) the position of every highlight, as a
   share of its wireframe's width and height. Replace a wireframe and its
   boxes here need measuring again.
 - **`content/*.js`** each declares exactly one top level `const`, holding an
-  array of slide objects or, in `team.js`, a markup string. A Reports slide
+  array of slide objects or, in `team.js`, a markup string. A Reports or Pay Link slide
   also carries `notes`, the presenter's line for it, which the engine
   ignores. May name only its
   own deck's config const and `DECK`. May not contain a `style` attribute.
@@ -221,7 +243,7 @@ deck's config, or a deck specific class.
   presentation time value: placeholder copy and its confirmation flag, the
   screenshot map, the photo map. The only file a presenter edits before
   presenting.
-- **`copy.js`**, **`screens.js`** each declare exactly one top level `const`,
+- **`copy.js`**, **`screens.js`**, **`rail.js`** each declare exactly one top level `const`,
   holding a decorator function. May name their deck's config.
 - **`main.js`** composes the acts and calls `DECK.start`. No other statement.
 
@@ -284,6 +306,26 @@ Find the slide in the table, open that file, edit the html string. Nothing else 
 | Reports | 12 | `capabilities` | Six capabilities, one clearer financial experience | `reports/content/slides-closing.js` |
 | Reports | 13 | `validation` | The experience is clearer. Some rules still need validation | `reports/content/slides-closing.js` |
 | Reports | 14 | `feedback` | Does this fit the way Partners and the business actually work? | `reports/content/slides-closing.js` |
+| Pay Link | 01 | `title` | The customer pays, from a link | `pay/content/slides-opening.js` |
+| Pay Link | 02 | `context` | The project and the product | `pay/content/team.js` |
+| Pay Link | 03 | `reading` | Every click, and what it sets off | `pay/content/slides-opening.js` |
+| Pay Link | 04 | `scope` | Which orders this covers | `pay/content/slides-opening.js` |
+| Pay Link | 05 | `owner` | BimeBazar decides the money. We run the path to it | `pay/content/slides-opening.js` |
+| Pay Link | 06 | `link` | One link, bound to one order and one phone | `pay/content/slides-seller.js` |
+| Pay Link | 07 | `send` | Two SMS providers, so the link arrives | `pay/content/slides-seller.js` |
+| Pay Link | 08 | `seller-pay` | The seller can still pay it themselves | `pay/content/slides-seller.js` |
+| Pay Link | 09 | `open` | The first screen shows almost nothing | `pay/content/slides-customer.js` |
+| Pay Link | 10 | `code` | A code, sent to the phone the seller typed | `pay/content/slides-customer.js` |
+| Pay Link | 11 | `invoice` | The amount comes live from BimeBazar | `pay/content/slides-customer.js` |
+| Pay Link | 12 | `pay` | Checked again, then sent to the bank | `pay/content/slides-pay.js` |
+| Pay Link | 13 | `answers` | Seven answers, and what the screen does with each | `pay/content/slides-pay.js` |
+| Pay Link | 14 | `gate` | Two people can pay. One bank page at a time | `pay/content/slides-pay.js` |
+| Pay Link | 15 | `states` | Six words for where an attempt stands | `pay/content/slides-pay.js` |
+| Pay Link | 16 | `paid` | Who paid? Recorded only when there is one answer | `pay/content/slides-after.js` |
+| Pay Link | 17 | `commission` | Commission is set early, and frozen once paid | `pay/content/slides-after.js` |
+| Pay Link | 18 | `listing` | Unpaid orders now show up, with a label | `pay/content/slides-after.js` |
+| Pay Link | 19 | `trail` | Every attempt leaves a trail | `pay/content/slides-after.js` |
+| Pay Link | 20 | `questions` | Which step should we walk again? | `pay/content/slides-after.js` |
 
 ## The rules
 
@@ -292,8 +334,8 @@ These hold for every change, not just the refactor that introduced them.
 
 1. **File length.** No file the browser loads may exceed **200 physical lines**,
    counting blanks and comments, ignoring one trailing newline. That is every
-   `.css` and `.js` file under `engine/`, `core/`, `customers/` and
-   `reports/`, and the shells. `tools/` is exempt: it is not loaded by the browser.
+   `.css` and `.js` file under `engine/`, `core/`, `customers/`,
+   `reports/` and `pay/`, and the shells. `tools/` is exempt: it is not loaded by the browser.
 2. **Move, do not rewrite.** When code changes place, it travels verbatim.
    Change only what the task calls for. Do not reformat, do not reorder
    declarations, do not modernise, do not fix a typo in a comment, do not
@@ -323,7 +365,7 @@ These hold for every change, not just the refactor that introduced them.
    a second class (`tight`, `sm`, `narrow`, `pale`, `thin`). Engine functions are
    `camelCase` verbs on `DECK` (`buildMotifs`, `applyStagger`, `renderSlides`).
    Deck consts are `SCREAMING_SNAKE_CASE` prefixed with the deck name
-   (`CORE_`, `CUSTOMERS_`, `REPORTS_`).
+   (`CORE_`, `CUSTOMERS_`, `REPORTS_`, `PAY_`).
 8. **Comments explain why.** Carry every existing explanatory comment with the
    code it explains. Do not add a comment that restates the code.
 9. **Every commit ends working.** Every deck must open and present correctly
@@ -342,7 +384,8 @@ Run `node tools/lint.mjs` before every commit.
 
 ## Adding another deck
 
-Front Office Reports was added this way, and is the nearest example to copy.
+Front Office Reports and Pay Link were added this way. Reports is the nearest
+example for a deck with screenshots, Pay Link for one without.
 Nothing under `engine/` changes. Create:
 
 - `<deck>/index.html`, a shell: copy `customers/index.html` and change the
@@ -366,5 +409,5 @@ every rule reaches it.
 Finally give it a card on the homepage: copy one `.choice` block in
 `index.html`, point its `href` at the deck's `index.html` rather than its
 directory, and give its arch a `data-` attribute that says something true
-about the deck. A fourth card will want `grid-template-columns:repeat(4,...)`
-in `home/css/home.css`, and another `.choice:nth-child` beat for its entrance.
+about the deck. A fifth card will want another column, or a second row, in
+`home/css/home.css`, and another `.choice:nth-child` beat for its entrance.

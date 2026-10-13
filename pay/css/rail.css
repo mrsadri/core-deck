@@ -1,0 +1,74 @@
+/* ---------- the rail: the route one payment takes ----------
+   This deck's motif. Seven stops joined by a line, read left to right, and
+   the same seven on every slide, so the room always knows where it is. Each
+   stop is a brick set on edge, the same stone the arch is built from, laid
+   in a row here because the argument is about order, not about a span.
+
+   A solid stop is behind the user, the orange stop is the one the slide is
+   about, and a dashed stop is still ahead. pay/rail.js draws the stops and
+   gives each its state from one number on the slide.
+
+   --stop is the height of a stone and belongs to the motif alone, so it is
+   declared here next to the rules that use it. */
+.rail{
+  --stop:clamp(13px,1.3vw,19px);
+  --stone:calc(var(--stop) * .58);
+  display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);width:100%;
+}
+.rail.lg{--stop:clamp(20px,2.3vw,34px)}
+.rs{
+  position:relative;display:flex;flex-direction:column;align-items:center;
+  gap:.5rem;text-align:center;
+}
+/* the way here from the stop before */
+.rs::before{
+  content:"";position:absolute;top:calc(var(--stop) / 2 - 1px);
+  right:calc(50% + var(--stone) / 2 + 5px);width:calc(100% - var(--stone) - 10px);
+  border-top:2px solid rgba(124,63,42,.6);
+  transform:scaleX(0);transform-origin:0 50%;
+  transition:transform .5s var(--ease);transition-delay:calc(var(--n,0) * 90ms + 120ms);
+}
+.rs:first-child::before{content:none}
+.is-active .rs::before{transform:none}
+.rs i{
+  flex:none;width:var(--stone);height:var(--stop);border-radius:2px;
+  background:linear-gradient(180deg,var(--brick) 0%,var(--brick-deep) 100%);
+  box-shadow:inset 0 1px 0 rgba(231,216,189,.22);
+  opacity:0;transform:scale(.6);
+  transition:opacity .45s var(--ease), transform .45s var(--ease);
+  transition-delay:calc(var(--n,0) * 90ms + 200ms);
+}
+.is-active .rs i{opacity:1;transform:none}
+/* the stop this slide is about stands a little wider than the rest */
+.rs.is-key i{width:calc(var(--stone) * 1.5);background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%)}
+/* a stop not reached yet, and the line that is not walked yet */
+.rs.is-off i{background:none;box-shadow:none;border:1.5px dashed rgba(43,27,18,.42)}
+.rs.is-off::before{border-top:2px dashed rgba(43,27,18,.26)}
+/* the reveal runs along the rail, one stop after the other */
+.rs:nth-child(2){--n:1}
+.rs:nth-child(3){--n:2}
+.rs:nth-child(4){--n:3}
+.rs:nth-child(5){--n:4}
+.rs:nth-child(6){--n:5}
+.rs:nth-child(7){--n:6}
+
+/* ---------- what a stop says ---------- */
+.rk{
+  font-size:clamp(.56rem,.72vw,.78rem);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--brick);font-weight:600;line-height:1.3;
+}
+.rail.lg .rk{font-size:clamp(.6rem,.84vw,.9rem);letter-spacing:.2em}
+.rs.is-key .rk{color:var(--ink)}
+.rs.is-off .rk{color:var(--ink-38)}
+
+/* ---------- the slot a rail sits in ---------- */
+.rail-cover{width:min(820px,82vw)}
+.rail-row{width:min(760px,100%)}
+
+/* ---------- a narrow, tall frame ----------
+   Seven labels across a phone leave each about 48px, so the tracking that
+   suits a wide frame is given up for letters that fit. */
+@media (max-width:760px) and (max-aspect-ratio:1/1){
+  .rs{gap:.3rem}
+  .rk,.rail.lg .rk{font-size:.5rem;letter-spacing:.04em}
+}

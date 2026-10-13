@@ -4,7 +4,7 @@ An internal presentation introducing Shoraka's core insurance platform to senior
 
 **Live:** https://mrsadri.github.io/core-deck/core/
 
-This repository hosts three decks. https://mrsadri.github.io/core-deck/ is a homepage that asks which one you want and links to each: Core, below, [My Customers](#my-customers) and [Front Office Reports](#front-office-reports), which reuse the same engine.
+This repository hosts four decks. https://mrsadri.github.io/core-deck/ is a homepage that asks which one you want and links to each: Core, below, [My Customers](#my-customers), [Front Office Reports](#front-office-reports) and [Pay Link](#pay-link), which reuse the same engine.
 
 Core used to live at the root. It moved down to `core/` so the homepage could take its place, so an old link now lands on the chooser rather than on the deck.
 
@@ -136,6 +136,47 @@ Everything that needs filling lives in `reports/config.js`. [PRESENTING.md](PRES
 - **Photos.** Done. Both portraits on slide 2 are in `assets/team/`. Point a key in `REPORTS_CONFIG.PHOTOS` at a file that is not there and that niche renders PHOTO PENDING instead.
 - **Wireframes.** All seven entries in `REPORTS_CONFIG.SCREENSHOTS` point at a file in `assets/screens/`. Replace one with a newer export and its highlights need checking against `reports/css/pins.css`.
 
+## Pay Link
+
+A product demo of the recipient payment link: a seller sends a customer a link, and the customer pays a BimeBazar body or health invoice from it. The deck runs before the live demo, for a product audience. Its one idea is that every step is asked the same three questions: what the user does, what the system does, and what the user gets.
+
+**Live:** https://mrsadri.github.io/core-deck/pay/
+
+Source: `pay/`. The backend behaviour it was built from is `newSlides-by mohammadreza hosseinzade/2026-10-03-bb-body-health-product-flow.md`, one level above this repository. Every number on a slide comes from that document.
+
+### The deck
+
+20 slides. The arc runs context, the seller's side, the customer's side, the Pay click, and what happens after the bank:
+
+1. The customer pays, from a link
+2. The project and the product
+3. Every click, and what it sets off
+4. Which orders this covers
+5. BimeBazar decides the money. We run the path to it
+6. One link, bound to one order and one phone (step 01)
+7. Two SMS providers, so the link arrives (step 02)
+8. The seller can still pay it themselves
+9. The first screen shows almost nothing (step 03)
+10. A code, sent to the phone the seller typed (step 04)
+11. The amount comes live from BimeBazar (step 05)
+12. Checked again, then sent to the bank (step 06)
+13. Seven answers, and what the screen does with each
+14. Two people can pay. One bank page at a time
+15. Six words for where an attempt stands
+16. Who paid? Recorded only when there is one answer (step 07)
+17. Commission is set early, and frozen once paid
+18. Unpaid orders now show up, with a label
+19. Every attempt leaves a trail
+20. Which step should we walk again?
+
+The step slides share one layout, three columns with the system's column in the middle, under a rail that shows where in the route the slide sits. The deck carries no screenshots. Every slide object carries a `notes` line, the presenter's words for it.
+
+Navigation, hash routing and fullscreen behave exactly as in Core. See the table above.
+
+### Before presenting
+
+[PRESENTING.md](PRESENTING.md) is the full checklist. The one asset is the portrait on slide 2, in `PAY_CONFIG.PHOTOS` in `pay/config.js`.
+
 ## Design
 
 The structural motif is the rowlock arch: bricks set on edge, radiating around a curve. It is generated in code rather than drawn, so the same primitive carries the argument across the deck. A partly built arch is the problem, an arch whose crown bricks are the only new work is core, and the keystone is the rules engine.
@@ -143,6 +184,8 @@ The structural motif is the rowlock arch: bricks set on edge, radiating around a
 My Customers extends the same primitive to a second argument. Loose bricks are the order list before anyone owns it, an arch is one customer record, a stone pulled clear of the curve is a search result, a band of yellow stones is the policies, and a dashed stone is anything beyond phase 1.
 
 Front Office Reports keeps the ground, the palette and the type, and swaps the arch for a motif of its own, the trace: a row of marks joined by a line, where each mark is a record and each line is the way back to the one before it. A solid mark can be seen today, the orange mark is the one a slide is about, and a dashed mark is one the Partner cannot reach yet. The arch still sits on its homepage card, partly built.
+
+Pay Link does the same with a motif called the rail: seven bricks set on edge in a row, joined by a line, one for each stop a payment makes. A solid stop is behind the user, the orange stop is the one a slide is about, and a dashed stop is still ahead. Its homepage arch has one stone missing, the invoice handed to someone else.
 
 Palette is kraft paper, brick brown, brick yellow, and a single accent in `#D97757`.
 

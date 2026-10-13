@@ -1,0 +1,89 @@
+/* a display sentence on the cover, where the shared h1 is cut for one or two words */
+h1.say{font-size:clamp(2.3rem,5.6vw,6rem);line-height:.96;letter-spacing:-.03em;max-width:15ch;text-wrap:balance}
+h2.sm{font-size:clamp(1.7rem,3.2vw,3.4rem);max-width:26ch}
+h2.mid{font-size:clamp(2.1rem,4.4vw,4.7rem);max-width:24ch}
+.lead.sm{font-size:clamp(.95rem,1.45vw,1.5rem);max-width:38ch}
+.stack.center .support{max-width:64ch}
+/* one sentence that carries the slide's point, set apart from the body copy */
+.claim{
+  font-family:var(--serif);font-size:clamp(1.05rem,1.7vw,1.85rem);line-height:1.25;letter-spacing:-.012em;
+  color:var(--brick-deep);max-width:44ch;text-wrap:balance;
+}
+.claim.sm{font-size:clamp(.95rem,1.3vw,1.4rem)}
+.stack.center .claim.sm{max-width:64ch}
+/* a word the system itself uses, shown the way it is spelled there */
+.outs code,.states code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:-.01em}
+
+/* ---------- two sides of one line ---------- */
+.pair{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(1rem,2.6vw,3rem);width:min(1120px,100%);text-align:left;align-items:stretch;
+}
+.side{
+  border-top:2px solid var(--orange);background:rgba(231,216,189,.55);border-radius:0 0 6px 6px;
+  padding:clamp(.7rem,1.6vh,1.2rem) clamp(.8rem,1.5vw,1.6rem) clamp(.8rem,1.8vh,1.3rem);
+}
+/* the side that stays as it was */
+.side.dim{background:none;border-top:2px dashed rgba(43,27,18,.38)}
+
+/* ---------- every answer, one per line ---------- */
+.outs{display:flex;flex-direction:column;width:min(1160px,100%);text-align:left}
+.orow{
+  display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1fr) minmax(0,1.1fr);align-items:baseline;
+  gap:clamp(.7rem,1.6vw,1.8rem);
+  border-top:1px solid rgba(124,63,42,.22);padding-block:clamp(.34rem,.95vh,.66rem);
+  font-size:clamp(.86rem,1.22vw,1.3rem);line-height:1.36;color:var(--brick);
+}
+.orow:last-child{border-bottom:1px solid rgba(124,63,42,.22)}
+.orow.head{border-top:0;padding-top:0}
+.orow.head span{font-size:clamp(.58rem,.76vw,.8rem);letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--yellow-lo)}
+.orow code{font-size:.94em;color:var(--ink)}
+.orow .see{color:var(--ink)}
+
+/* ---------- how long the gate stays shut ----------
+   The bars share one scale, 17 minutes across, so the short one really is
+   60 seconds of it. */
+.spans{display:flex;flex-direction:column;gap:clamp(.7rem,1.9vh,1.4rem);width:min(1120px,100%);text-align:left}
+.srow{
+  display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.2fr) minmax(0,1fr);align-items:center;
+  gap:clamp(.8rem,1.8vw,2rem);
+}
+.srow .sn{font-family:var(--serif);font-size:clamp(1rem,1.5vw,1.6rem);line-height:1.2;letter-spacing:-.01em}
+.srow .sd{font-size:clamp(.86rem,1.22vw,1.3rem);line-height:1.38;color:var(--brick)}
+.srow .sd b{font-weight:600;color:var(--ink)}
+.track{position:relative;height:clamp(12px,1.7vh,18px);border-radius:3px;background:rgba(43,27,18,.09)}
+.track i{
+  position:absolute;inset:0 auto 0 0;border-radius:3px;
+  background:linear-gradient(180deg,var(--brick) 0%,var(--brick-deep) 100%);
+  transform:scaleX(0);transform-origin:0 50%;transition:transform .7s var(--ease) .35s;
+}
+.is-active .track i{transform:none}
+.track .full{width:100%;background:linear-gradient(180deg,var(--orange) 0%,#c05f3d 100%)}
+.track .brief{width:5.9%}
+/* nothing is held, so there is no bar to draw */
+.track.open{background:none;border:1.5px dashed rgba(43,27,18,.34)}
+
+/* ---------- where an attempt stands ---------- */
+.states{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.7rem,1.9vh,1.5rem) clamp(1rem,2.6vw,3rem);width:min(1120px,100%);text-align:left;
+}
+.state{border-top:1px solid rgba(124,63,42,.24);padding-top:.6em;font-size:clamp(.86rem,1.22vw,1.3rem);line-height:1.4;color:var(--brick)}
+.state code{display:block;font-size:1.22em;color:var(--ink);margin-bottom:.2em}
+.state.is-key{border-top:2px solid var(--orange)}
+
+/* ---------- narrow and tall frames ---------- */
+@media (max-aspect-ratio:1/1){
+  .states{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .srow{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
+  .srow .sd{grid-column:1 / -1}
+}
+@media (max-width:760px) and (max-aspect-ratio:1/1){
+  .pair{grid-template-columns:1fr;gap:.6rem}
+  .side{padding:.5rem .65rem .55rem}
+  .orow{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:.05rem .7rem;font-size:.72rem;line-height:1.3;padding-block:.3rem}
+  .orow > :last-child{grid-column:1 / -1}
+  .orow.head > :last-child{display:none}
+  .state{font-size:.72rem;line-height:1.32}
+  .srow .sd{font-size:.72rem}
+}

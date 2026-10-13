@@ -53,9 +53,33 @@ in `assets/team/`.
   deck's own title slide, made with headless Chrome. It is a placeholder
   for a designed card, not a design.
 
+## Pay Link
+
+The deck carries no screenshots, so there is nothing to capture. Every number
+on a slide comes from the backend behaviour document it was built from.
+
+- [ ] **The role on slide 02.** `pay/content/team.js` reads "Backend" under
+  Mohammadreza Hosseinzadeh. It was not given, so confirm the wording, and
+  add anyone else who belongs on the slide.
+- [ ] **The deck's name.** "Pay Link" and "Recipient payment link" are
+  working titles. Change them in `pay/index.html`, the title slide in
+  `pay/content/slides-opening.js`, and the card in `index.html`.
+- [ ] **The numbers.** Six hours, ten minutes, one minute, two minutes,
+  fifteen minutes and seventeen minutes all come from the document dated
+  2026-10-03. If the backend has changed one since, change it on the slide.
+- [ ] **The plain words.** Slides say "pass" for the capability, "fingerprint"
+  for a hash and "gate" for the shared order guard, so a product audience can
+  follow. Slides 13 and 15 keep the system's own spelling, in code type.
+- [ ] **The speaker notes.** Each slide's `notes` line in `pay/content/` was
+  written for this deck, not taken from a brief. Nothing shows them on
+  screen: read them before the demo.
+- [ ] **The social card.** `assets/social/pay.png` is a render of the deck's
+  own title slide, made with headless Chrome. It is a placeholder for a
+  designed card, not a design.
+
 ## Every deck
 
-- [ ] Open the homepage and click through to each of the three decks, so you are not hunting
+- [ ] Open the homepage and click through to each of the four decks, so you are not hunting
   for a URL in front of the room. Core now lives at `core/`, not at the root.
 - [ ] Open each deck at every viewport you will present at, and walk it end to
   end. `node tools/parity.mjs check` proves nothing moved since the last
